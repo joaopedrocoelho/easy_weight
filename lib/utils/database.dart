@@ -1,6 +1,7 @@
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
-import 'package:new_app/models/records.dart';
+import 'package:new_app/models/weight_record.dart';
+import 'package:intl/intl.dart';
 
 class RecordsDatabase {
   RecordsDatabase._privateConstructor();
@@ -48,21 +49,50 @@ class RecordsDatabase {
     return id;
   }
 
-  Future<List<Map<String, dynamic>>> getRecords() async {
+  Future<List<WeightRecord>> getRecords() async {
     final db = await instance.database;
+
+    print("db: $db");
+
     List<Map<String, dynamic>> records = await db.rawQuery(
         'SELECT * FROM $tableRecords ORDER BY date(${RecordFields.date}) ASC');
 
-    print('records: $records');
-    return records;
-  }
-}
+    List<WeightRecord> recordsConverted = toWeightRecordList(records);
 
-/// Generate a modifiable result set
-List<Map<String, dynamic>> makeModifiableResults(
-    List<Map<String, dynamic>> results) {
-  // Generate modifiable
-  return List<Map<String, dynamic>>.generate(
-      results.length, (index) => Map<String, dynamic>.from(results[index]),
-      growable: true);
+    recordsConverted.forEach((record) {
+      print('record: ${record.date} - ${record.weight} - ${record.note}');
+    });
+
+    return recordsConverted;
+  }
+
+  Future<int> updateRecord(WeightRecord record) async {
+    final db = await instance.database;
+
+    String date = DateFormat('yyyy-MM-dd').format(record.date).toString();
+    print("record.date:${record.date}");
+    print("date: $date");
+
+    return db.update(
+      tableRecords,
+      record.toJson(),
+      where: '${RecordFields.date} = ?',
+      whereArgs: [date],
+    );
+  }
+
+  Future<int> delete(WeightRecord record) async {
+    final db = await instance.database;
+
+    String date = DateFormat('yyyy-MM-dd').format(record.date).toString();
+
+    return db.delete(
+      tableRecords,
+      where: '${RecordFields.date} = ?',
+      whereArgs: [date],
+    );
+  }
+
+  /// Generate a modifiable result set
+
 }

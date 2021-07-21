@@ -1,3 +1,5 @@
+import 'package:new_app/models/weight_record.dart';
+
 extension ExtendedIterable<E> on Iterable<E> {
   /// Like Iterable<T>.map but callback have index as second argument
   Iterable<T> mapIndexed<T>(T Function(E e, int i) f) {
@@ -24,3 +26,23 @@ List splitPairs(List list) {
 
   return pairs;
 }
+
+List<T> removeOdds<T>(List<T> list) {
+  int len = list.length;
+  List<T> filtered = [];
+
+  for (int i = 0; i < len; i++) {
+    if (i % 2 == 0) {
+      filtered.add(list[i]);
+    }
+  }
+
+  return filtered;
+}
+
+/* makeModifiableResults(List<WeightRecord> results) {
+  // Generate modifiable
+  return List<Map<String, dynamic>>.generate(
+      results.length, (index) => Map<String, dynamic>.from(results[index]),
+      growable: true);
+} */

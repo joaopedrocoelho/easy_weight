@@ -1,17 +1,29 @@
 import 'package:flutter/material.dart';
-import 'package:new_app/widgets/date_picker.dart';
-import 'package:intl/intl.dart';
-import 'package:new_app/models/records.dart';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+
+import 'package:new_app/models/records_model.dart';
+import 'package:new_app/widgets/add_record_form/add_note.dart';
+import 'package:new_app/widgets/add_record_form/add_weight.dart';
+import 'package:new_app/widgets/add_record_form/neu_close_button.dart';
+import 'package:new_app/widgets/add_record_form/neu_date_picker.dart';
+import 'package:new_app/widgets/add_record_form/neu_form_container.dart';
+import 'package:new_app/widgets/buttons/cancel_button.dart';
+import 'package:new_app/widgets/buttons/save_button.dart';
+
+import 'package:new_app/models/weight_record.dart';
 import 'package:new_app/utils/database.dart';
+import 'package:provider/provider.dart';
 
 class AddRecord extends StatefulWidget {
   final AnimationController animationController;
+  final bool visible;
   final VoidCallback setVisible;
   final VoidCallback setInvisible;
-  final Future<dynamic> Function() setRefresh;
+  final Function() setRefresh; //not sure if neeeded
 
   AddRecord(
       {required this.animationController,
+      required this.visible,
       required this.setVisible,
       required this.setInvisible,
       required this.setRefresh});
@@ -27,15 +39,13 @@ class _AddRecordState extends State<AddRecord>
   bool isLoading = false;
 
   //form fields state
-  double _weight = 0.0;
+  double _weight = 0;
   DateTime _date = DateTime.now();
-  String _formattedDate = '';
   String _note = '';
 
   void _setDate(DateTime newDate) {
     setState(() {
       _date = newDate;
-      _formattedDate = DateFormat('MM/dd').format(newDate);
     });
   }
 
@@ -44,11 +54,24 @@ class _AddRecordState extends State<AddRecord>
         new WeightRecord(date: _date, weight: _weight, note: _note);
     final record = await RecordsDatabase.instance.addRecord(newRecord);
 
+    // List<WeightRecord> recordsClone = graph.records;
+
     print('record: $record');
 
     widget.setInvisible();
     widget.setRefresh();
     return record;
+  }
+
+  Future updateRecord() async {
+    WeightRecord editedRecord =
+        new WeightRecord(date: _date, weight: _weight, note: _note);
+    final record = await RecordsDatabase.instance.updateRecord(editedRecord);
+
+    print('record: $record');
+
+    widget.setInvisible();
+    widget.setRefresh();
   }
 
   @override
@@ -75,193 +98,89 @@ class _AddRecordState extends State<AddRecord>
           parent: widget.animationController, curve: Curves.ease)),
       child: Align(
         alignment: Alignment.bottomCenter,
-        child: Container(
-          height: 420,
-          padding: EdgeInsets.all(20.0),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(20.0),
-          ),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Add a record',
-                      style: TextStyle(
-                        backgroundColor: Colors.white,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
+        child: Visibility(
+          visible: widget.visible,
+          child: NeuFormContainer(
+            child: Form(
+              key: _formKey,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Add a record',
+                        style: Theme.of(context).textTheme.headline5,
+                        textAlign: TextAlign.start,
                       ),
-                      textAlign: TextAlign.start,
-                    ),
-                    Container(
-                      width: 20.0,
-                      height: 20.0,
-                      decoration: const ShapeDecoration(
-                        color: Colors.grey,
-                        shape: CircleBorder(),
+                      NeuCloseButton(onPressed: widget.setInvisible),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 30.0,
+                  ),
+                  AddWeightTextField(
+                      hintFocus: hintFocus,
+                      initialValue: _weight.toString(),
+                      onSaved: (value) {
+                        setState(() {
+                          _weight = double.parse(value!);
+                        });
+                      }),
+                  SizedBox(
+                    height: 30.0,
+                  ),
+                  NeuDatePicker(
+                      callback: _setDate, currentDate: DateTime.now()),
+                  SizedBox(
+                    height: 30.0,
+                  ),
+                  AddNoteTextField(
+                      initialValue: _note,
+                      onSaved: (value) {
+                        setState(() {
+                          _note = value!;
+                        });
+                      }),
+                  SizedBox(
+                    height: 30.0,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                          child: CancelButton(onPressed: widget.setInvisible)),
+                      SizedBox(
+                        width: 20.0,
                       ),
-                      child: IconButton(
-                        icon: Icon(
-                          Icons.close_rounded,
-                        ),
-                        color: Colors.black,
-                        iconSize: 15.0,
-                        padding: EdgeInsets.all(0.0),
-                        onPressed: widget.setInvisible,
-                      ),
-                    )
-                  ],
-                ),
-                SizedBox(
-                  height: 30.0,
-                ),
-                TextFormField(
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter weight';
-                      }
-                      return null;
-                    },
-                    onSaved: (value) {
-                      setState(() {
-                        _weight = double.parse(value!);
-                      });
-                    },
-                    focusNode: hintFocus,
-                    keyboardType: TextInputType.number,
-                    cursorColor: Colors.black,
-                    decoration: InputDecoration(
-                      fillColor: Colors.grey,
-                      filled: true,
-                      hintText: "Weight (kg)",
-                      hintStyle: TextStyle(fontSize: 15.0, color: Colors.black),
-                      labelStyle:
-                          TextStyle(color: Colors.white, fontSize: 20.0),
-                      contentPadding: EdgeInsets.all(16.0),
-                      focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(25.0),
-                          borderSide:
-                              BorderSide(width: 0.0, color: Colors.grey)),
-                      enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(25.0),
-                          borderSide:
-                              BorderSide(width: 0.0, color: Colors.grey)),
-                      errorBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(25.0),
-                          borderSide:
-                              BorderSide(width: 0.0, color: Colors.grey)),
-                      disabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(25.0),
-                          borderSide:
-                              BorderSide(width: 0.0, color: Colors.grey)),
-                    )),
-                SizedBox(
-                  height: 30.0,
-                ),
-                DatePicker(_setDate),
-                SizedBox(
-                  height: 30.0,
-                ),
-                TextFormField(
-                    keyboardType: TextInputType.text,
-                    initialValue: '',
-                    onSaved: (value) {
-                      setState(() {
-                        _note = value!;
-                      });
-                    },
-                    cursorColor: Colors.black,
-                    decoration: InputDecoration(
-                      fillColor: Colors.grey,
-                      filled: true,
-                      hintText: "Add Note",
-                      hintStyle: TextStyle(fontSize: 15.0, color: Colors.black),
-                      contentPadding: EdgeInsets.all(16.0),
-                      focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(25.0),
-                          borderSide:
-                              BorderSide(width: 0.0, color: Colors.grey)),
-                      enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(25.0),
-                          borderSide:
-                              BorderSide(width: 0.0, color: Colors.grey)),
-                      errorBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(25.0),
-                          borderSide:
-                              BorderSide(width: 0.0, color: Colors.grey)),
-                      disabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(25.0),
-                          borderSide:
-                              BorderSide(width: 0.0, color: Colors.grey)),
-                    )),
-                SizedBox(
-                  height: 30.0,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: ElevatedButton(
-                        onPressed: widget.setInvisible,
-                        child: Padding(
-                          padding: EdgeInsets.all(20.0),
-                          child: Text(
-                            'CANCEL',
-                            style: TextStyle(color: Colors.red),
-                          ),
-                        ),
-                        style: ButtonStyle(
-                            backgroundColor:
-                                MaterialStateProperty.all(Colors.white),
-                            shape: MaterialStateProperty.all<
-                                    RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(30.0),
-                                    side: BorderSide(
-                                        color: Colors.red, width: 1.0)))),
-                      ),
-                    ),
-                    SizedBox(
-                      width: 20.0,
-                    ),
-                    Expanded(
-                      child: ElevatedButton(
-                          onPressed: () async {
-                            // Validate returns true if the form is valid, or false oRtherwise.
-                            if (_formKey.currentState!.validate()) {
-                              _formKey.currentState!.save();
-                              addRecord();
+                      Expanded(child: SaveButton(
+                        onPressed: () async {
+                          // Validate returns true if the form is valid, or false otherwise.
+                          if (_formKey.currentState!.validate()) {
+                            _formKey.currentState!.save();
 
-                              /* ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                      content: Text(
-                                          '$_weight $_formattedDate $_note'))); */
-                            }
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.all(20.0),
-                            child: Text('OK'),
-                          ),
-                          style: ButtonStyle(
-                              backgroundColor:
-                                  MaterialStateProperty.all(Colors.blue),
-                              shape: MaterialStateProperty.all<
-                                      RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(30.0),
-                                      side: BorderSide(
-                                          color: Colors.blue, width: 1.0))))),
-                    )
-                  ],
-                )
-              ],
+                            WeightRecord newRecord = new WeightRecord(
+                                date: _date, weight: _weight, note: _note);
+
+                            List<WeightRecord> recordsClone =
+                                Provider.of<RecordsListModel>(context,
+                                        listen: false)
+                                    .records;
+                            recordsClone.add(newRecord);
+                            Provider.of<RecordsListModel>(context,
+                                    listen: false)
+                                .updateRecordsList(recordsClone);
+
+                            addRecord();
+                          }
+                        },
+                      ))
+                    ],
+                  )
+                ],
+              ),
             ),
           ),
         ),

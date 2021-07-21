@@ -1,56 +1,59 @@
 import 'package:flutter/material.dart';
-import 'package:new_app/models/records.dart';
-import 'package:new_app/utils/database.dart';
+import 'package:new_app/models/button_mode.dart';
+import 'package:new_app/models/records_model.dart';
+import 'package:new_app/models/weight_record.dart';
+import 'package:new_app/widgets/buttons/edit_buttons.dart';
+import 'package:new_app/widgets/graph_container.dart';
+import 'package:new_app/widgets/list-view/records_list_view.dart';
+import 'package:new_app/widgets/stats/current_weight_stats.dart';
+import 'package:new_app/widgets/stats/stats_container.dart';
+import 'package:provider/provider.dart';
 
-import 'package:fl_chart/fl_chart.dart';
 import 'package:new_app/widgets/add_record_form.dart';
-import 'package:new_app/utils/indexed_iterables.dart';
-import 'package:new_app/widgets/custom_graph.dart';
-import 'package:new_app/widgets/graph.dart';
+import 'package:new_app/widgets/edit_record_form.dart';
 
 class Home extends StatefulWidget {
+  final List<WeightRecord> list;
+
+  Home({required this.list});
+
   @override
   _HomeState createState() => _HomeState();
 }
 
 class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
-  late List<Map> records;
   bool isLoading = false;
-  late List<FlSpot> chartPoints;
+  bool _isAddFormVisible = false;
+  bool _isEditFormVisible = false;
 
-  Future loadRecords() async {
-    setState(() => isLoading = true);
-
-    this.records = await RecordsDatabase.instance.getRecords();
-
-    chartPoints = this.records.mapIndexed((record, index) {
-      //return points for the graph
-      return FlSpot(index.toDouble(), record['weight']);
-    }).toList();
-    print('load records : $records');
-    print('chartPoints: $chartPoints');
-
-    setState(() => isLoading = false);
-  }
-
-  void _setVisible() {
+  void _setVisible(String form) {
     setState(() {
+      if (form == 'add') {
+        _isAddFormVisible = true;
+      } else {
+        _isEditFormVisible = true;
+      }
       _animationController.forward();
     });
   }
 
-  void _setinVisible() {
+  void _setinVisible(String form) {
     setState(() {
+      if (form == 'add') {
+        _isAddFormVisible = false;
+      } else {
+        _isEditFormVisible = false;
+      }
       _animationController.reverse();
     });
   }
 
   @override
   void initState() {
-    loadRecords();
     _animationController =
         AnimationController(vsync: this, duration: Duration(milliseconds: 100));
+
     super.initState();
   }
 
@@ -62,65 +65,69 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: Colors.black,
-        body: Stack(children: [
-          Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-            isLoading
-                ? CircularProgressIndicator()
-                : records.isEmpty
-                    ? Text(
-                        'No Records',
-                        style: TextStyle(color: Colors.white, fontSize: 24),
+    return Consumer2<RecordsListModel, ButtonMode>(
+        builder: (context, recordsModel, buttonMode, child) {
+      final bool mode = context.read<ButtonMode>().isEditing;
+
+      return Scaffold(
+        body: Stack(
+          children:[ Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                /* RecordsListView(records: recordsModel.records), */
+                Container(
+                  height: MediaQuery.of(context).size.height,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      CurrentWeightStats(),
+                      recordsModel.records.isNotEmpty
+                          ? GraphContainer(
+                              records: recordsModel.records, context: context)
+                          : Text('empty'),
+                      Align(
+                        alignment: Alignment.bottomRight,
+                        child: Padding(
+                          padding: const EdgeInsets.only(right: 10, bottom: 20),
+                          child: EditButtons(
+                            addOnPressed: () {
+                              _setVisible(mode ? 'edit' : 'add');
+                            },
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+               
+              ]),
+               context.watch<ButtonMode>().isEditing
+                    ? EditRecord(
+                        animationController: _animationController,
+                        visible: _isEditFormVisible,
+                        setVisible: () {
+                          _setVisible('edit');
+                        },
+                        setInvisible: () {
+                          _setinVisible('edit');
+                        },
+                        setRefresh: () {},
+                        date: context.read<ButtonMode>().date,
+                        weight: context.read<ButtonMode>().weight,
+                        note: context.read<ButtonMode>().note,
                       )
-                    : Graph(
-                        chartPoints: chartPoints,
-                        records: this.records) //buildRecordList(),
+                    : AddRecord(
+                        animationController: _animationController,
+                        visible: _isAddFormVisible,
+                        setVisible: () {
+                          _setVisible('add');
+                        },
+                        setInvisible: () {
+                          _setinVisible('add');
+                        },
+                        setRefresh: () {}),
           ]),
-          Align(
-            alignment: Alignment.bottomRight,
-            child: Padding(
-              padding: const EdgeInsets.only(right: 30, bottom: 50),
-              child: FloatingActionButton(
-                child: Icon(Icons.add),
-                onPressed: _setVisible,
-              ),
-            ),
-          ),
-          AddRecord(
-              animationController: _animationController,
-              setVisible: _setVisible,
-              setInvisible: _setinVisible,
-              setRefresh: loadRecords)
-        ]));
-  }
-
-  Widget buildRecordList() => ListView.builder(
-        scrollDirection: Axis.vertical,
-        shrinkWrap: true,
-        itemCount: records.length,
-        itemBuilder: (context, index) {
-          return ListTile(
-            title: Text(
-              '${records[index][RecordFields.date]} ${records[index][RecordFields.weight]} ${records[index][RecordFields.note]}',
-              style: TextStyle(color: Colors.white, fontSize: 15),
-            ),
-          );
-        },
       );
-
-  Widget buildRecordLineChart() => LineChart(LineChartData(
-          gridData: FlGridData(
-              show: true,
-              getDrawingHorizontalLine: (value) {
-                return FlLine(
-                  color: Colors.deepOrange,
-                  strokeWidth: 1,
-                );
-              }),
-          lineBarsData: [
-            LineChartBarData(
-              spots: chartPoints,
-            )
-          ]));
+    });
+  }
 }

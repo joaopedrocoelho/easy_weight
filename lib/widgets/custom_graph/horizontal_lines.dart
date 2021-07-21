@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 
 class DrawHorizontalLines extends StatefulWidget {
   final double lineHeight;
@@ -13,9 +14,12 @@ class DrawHorizontalLines extends StatefulWidget {
 class _DrawHorizontalLinesState extends State<DrawHorizontalLines> {
   @override
   Widget build(BuildContext context) {
+    final theme = NeumorphicTheme.currentTheme(context);
+
     return CustomPaint(
       foregroundPainter: LinePainter(
-          lineHeight: widget.lineHeight, graphWidth: widget.graphWidth),
+          lineHeight: widget.lineHeight, graphWidth: widget.graphWidth,
+          color: theme.shadowDarkColor),
     );
   }
 }
@@ -23,15 +27,16 @@ class _DrawHorizontalLinesState extends State<DrawHorizontalLines> {
 class LinePainter extends CustomPainter {
   late double lineHeight;
   late double graphWidth;
+  late Color color;
 
-  LinePainter({required this.lineHeight, required this.graphWidth});
+  LinePainter({required this.lineHeight, required this.graphWidth, required this.color});
 
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = Colors.blueGrey
+      ..color = color
       ..strokeCap = StrokeCap.square
-      ..strokeWidth = 2;
+      ..strokeWidth = 1.2;
 
     //for every two points one line is drawn
 
