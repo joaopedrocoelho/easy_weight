@@ -1,60 +1,61 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:new_app/utils/render_graph.dart';
-import 'package:provider/provider.dart';
+
 import 'package:new_app/utils/indexed_iterables.dart';
 
-class SideTitles extends StatefulWidget {
+class SideTitles extends StatelessWidget {
   final List<int> sideTitleWeights;
-  final double yHeight;
+  final double graphHeight;
   final double maxDisplayedWeight;
+  final double minDisplayedWeight;
+  final double paddingTop;
+  final double bottomTitlesHeight;
 
   SideTitles(
       {required this.sideTitleWeights,
-      required this.yHeight,
-      required this.maxDisplayedWeight});
+      required this.graphHeight,
+      required this.maxDisplayedWeight,
+      required this.minDisplayedWeight,
+      required this.paddingTop,
+      required this.bottomTitlesHeight});
 
-  @override
-  _SideTitlesState createState() => _SideTitlesState();
-}
-
-Size _textSize(String text, TextStyle style) {
-  final TextPainter textPainter = TextPainter(
-      text: TextSpan(text: text, style: style),
-      maxLines: 1,
-      textDirection: TextDirection.ltr)
-    ..layout(minWidth: 0, maxWidth: double.infinity);
-  return textPainter.size;
-}
-
-Size whatsTheSize = _textSize(
-    "48",
-    TextStyle(
-      color: Colors.white,
-      fontSize: 14.0,
-      fontWeight: FontWeight.w700,
-    ));
-
-class _SideTitlesState extends State<SideTitles> {
+  
   late List<Widget> titles;
 
   @override
   Widget build(BuildContext context) {
     final theme = NeumorphicTheme.currentTheme(context);
-    
 
-    //print('whatstheSize: $whatsTheSize');
+    Size _textSize(String text, TextStyle style) {
+    final TextPainter textPainter = TextPainter(
+        text: TextSpan(text: text, style: style),
+        maxLines: 1,
+        textDirection: TextDirection.ltr)
+      ..layout(minWidth: 0, maxWidth: double.infinity);
+    return textPainter.size;
+  } 
+
+  
+
+
+  
     //render left side guide weights
     List<Widget> renderSideTitleWeights() {
-      List<Widget> titles = widget.sideTitleWeights.mapIndexed((weight, index) {
+      List<Widget> titles = sideTitleWeights.mapIndexed((weight, index) {
+        Size whatsTheSize = _textSize(weight.toString(), theme.textTheme.caption!);
+        print('whatstheSize: ${whatsTheSize}');
+        print(
+            'sidetitlePos ${yPos(weight.toDouble(), graphHeight, maxDisplayedWeight, minDisplayedWeight) - graphHeight}');
         return Positioned(
-          bottom: ((widget.yHeight / 5) * (index + 1)) + 5,
-          child: Text(weight.toString(),
-              style: TextStyle(
-                color: theme.shadowDarkColor,
-                fontSize: 14.0,
-                fontWeight: FontWeight.w700,
-              )),
+          bottom:  yPos(weight.toDouble(), graphHeight, maxDisplayedWeight,
+                  minDisplayedWeight) 
+               - (whatsTheSize.height * 0.5)  // this makes the title centered ,
+              ,
+          child: Text(
+            weight.toString(),
+            style: theme.textTheme.caption,
+          ),
         );
       }).toList();
 
@@ -64,6 +65,7 @@ class _SideTitlesState extends State<SideTitles> {
     titles = renderSideTitleWeights();
 
     return Container(
+     /*  color: Colors.amberAccent, */
       child: Stack(
         alignment: Alignment.center,
         children: titles,

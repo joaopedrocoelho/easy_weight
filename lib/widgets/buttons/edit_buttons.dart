@@ -30,7 +30,7 @@ class _EditButtonsState extends State<EditButtons> {
 
     return Consumer<ButtonMode>(builder: (context, buttonMode, child) {
       return Padding(
-        padding: EdgeInsets.only(top: 10),
+        padding: const EdgeInsets.all(20.0),
         child: Container(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.end,

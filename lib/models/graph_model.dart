@@ -15,8 +15,8 @@ class GraphModel extends ChangeNotifier {
   double minDisplayedWeight = 0;
   double maxDisplayedWeight = 0;
   double yPxPerKg = 0;
-  double yHeight = 0;
-  double xWidth = 0;
+  double graphHeight = 0;
+  double graphWidth = 0;
   //List<int> sideTitleWeights
   double lowerThirdScale = 0;
   double range = 0;
@@ -45,7 +45,7 @@ class GraphModel extends ChangeNotifier {
     maxWeightIndex = getMaxWeightIndex(records);
     range = maxWeight - minWeight;
 
-    xWidth = records.length > 8
+    graphWidth = records.length > 8
         ? MediaQuery.of(context).size.width * (records.length / 8)
         : MediaQuery.of(context).size.width;
 
@@ -57,7 +57,7 @@ class GraphModel extends ChangeNotifier {
         (maxDisplayedWeight - minDisplayedWeight);
     scale = 3 * lowerThirdScale;
 
-    yPxPerKg = (maxDisplayedWeight - minDisplayedWeight) / yHeight;
+    yPxPerKg = (maxDisplayedWeight - minDisplayedWeight) / graphHeight;
     /* for (int i = minWeight.ceil(); i <= maxWeight + paddingTop; i += fator) {
       sideTitleWeights.add(i);
     } */

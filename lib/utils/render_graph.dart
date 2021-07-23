@@ -11,9 +11,10 @@ import 'package:new_app/widgets/custom_graph/lines.dart';
 import 'package:new_app/widgets/custom_graph/spots.dart';
 
 double setMinDisplayedWeight(double minWeight, double maxDisplayedWeight) {
-  double minYPos = (3 * minWeight - maxDisplayedWeight) / 2;
-
-  return minYPos;
+  //according to https://chezvoila.com/blog/yaxis/
+  double minDisp = (3 * minWeight - maxDisplayedWeight) / 2;
+  print('minDisplayedWeight: $minDisp');
+  return minDisp;
 }
 
 double setMaxDisplayedWeight(double range, double maxWeight) {
@@ -28,42 +29,76 @@ double setMaxDisplayedWeight(double range, double maxWeight) {
   return maxDispWeight;
 }
 
-double yPos(double weight, /*double yPxPerKg,*/ double yHeight,
-    double maxDisplayedWeight) {
-  double newFormula = (weight * yHeight) / maxDisplayedWeight;
-  //double oldformula = weight * yPxPerKg;
-  //print('weight: $weight , yPos: $result');
-  //print('weight: $weight , AlternateFormula: $newFormula');
-  return limitDecimals(newFormula, 2);
+double yPos(double weight, /*double yPxPerKg,*/ double graphHeight,
+    double maxDisplayedWeight, double minDisplayedWeight) {
+  
+  double results =
+      ((weight - minDisplayedWeight) * graphHeight) / (maxDisplayedWeight - minDisplayedWeight);
+
+  //print('weight: $weight , AlternateFormula: $results');
+  
+  return limitDecimals(results, 2);
 }
 
-double findWeight(double yPos, double maxDisplayedWeight, double yHeight) {
-  return (yPos * maxDisplayedWeight) / yHeight;
+double findWeight(double yPos, double maxDisplayedWeight, double graphHeight) {
+  return (yPos * maxDisplayedWeight) / graphHeight;
 }
 
 //add the Y coordinates for Spots!
-List<Map<String, dynamic>> addYPos(
-    List<WeightRecord> records, double yHeight, double maxDisplayedWeight) {
+List<Map<String, dynamic>> addYPos(List<WeightRecord> records,
+    double graphHeight, double maxDisplayedWeight, double minDisplayedWeight) {
   List<Map<String, dynamic>> spotsYPos =
       records.map((record) => record.toJson()).toList();
 
   spotsYPos.forEachIndexed((record, index) {
-    record['yPos'] =
-        yPos(record[RecordFields.weight], yHeight, maxDisplayedWeight);
+    record['yPos'] = yPos(record[RecordFields.weight], graphHeight,
+        maxDisplayedWeight, minDisplayedWeight);
   });
 
   return spotsYPos;
 }
 
+//render side Titles
+List<int> renderSideTitleWeights(
+    double minDisplayedWeight, double maxDisplayedWeight) {
+  List<int> sideTitleWeights = [];
+
+  sideTitleWeights.add(minDisplayedWeight.ceil());
+
+  int fator = ((maxDisplayedWeight - minDisplayedWeight) / 4).ceil();
+  print('fator: $fator');
+
+  //this was causing a memory leak somehow
+  /* for (var i = fator; i < maxDisplayedWeight.ceil(); i + fator) {
+    sideTitleWeights.add((minDisplayedWeight + i).ceil());
+  }  */
+
+  sideTitleWeights.add(minDisplayedWeight.ceil() + fator);
+  sideTitleWeights.add(minDisplayedWeight.ceil() + fator * 2);
+  sideTitleWeights.add(minDisplayedWeight.ceil() + fator * 3);
+  sideTitleWeights.add(maxDisplayedWeight.ceil());
+
+  print('sideTitleWeights: $sideTitleWeights');
+
+  return sideTitleWeights;
+}
+
 //draw the horizontal guidelines
-List<DrawHorizontalLines> renderHorizontalLines(double xWidth, double yHeight,
-    double maxDisplayedWeight, List<int> sideTitleWeights) {
+List<DrawHorizontalLines> renderHorizontalLines(
+    double graphWidth,
+    double graphHeight,
+    double paddingTop,
+    double maxDisplayedWeight,
+    double minDisplayedWeight,
+    List<int> sideTitleWeights) {
   List<DrawHorizontalLines> horizontalLines =
       sideTitleWeights.mapIndexed((weight, index) {
     return DrawHorizontalLines(
-        graphWidth: xWidth,
-        lineHeight:
-            (yHeight - yPos(weight.toDouble(), yHeight, maxDisplayedWeight)));
+        graphWidth: graphWidth,
+        lineHeight: (graphHeight -
+                yPos(weight.toDouble(), graphHeight, maxDisplayedWeight,
+                    minDisplayedWeight)) +
+            paddingTop);
   }).toList();
 
   return horizontalLines;
@@ -72,12 +107,14 @@ List<DrawHorizontalLines> renderHorizontalLines(double xWidth, double yHeight,
 //render the spots of the graph
 List<GraphSpot> renderSpots(
     List<WeightRecord> records,
-    double yHeight,
+    double graphHeight,
     double maxDisplayedWeight,
+    double minDisplayedWeight,
     int paddingLeft,
     int? selectedIndex,
     void Function(int listIndex) callback) {
-  List<Map> spotsYPos = addYPos(records, yHeight, maxDisplayedWeight);
+  List<Map> spotsYPos =
+      addYPos(records, graphHeight, maxDisplayedWeight, minDisplayedWeight);
 
   List<Map> spotsXPos = spotsYPos; //add the X coordinates
   spotsXPos.forEachIndexed((record, index) {
@@ -106,7 +143,8 @@ List<GraphSpot> renderSpots(
 }
 
 //render the lines that connect the spots
-List<DrawLines> renderLines(double yHeight, double xWidth, List<GraphSpot> spots) {
+List<DrawLines> renderLines(
+    double graphHeight, double graphWidth, List<GraphSpot> spots) {
   List pairs = splitPairs(spots);
   List<DrawLines> lines = [];
 
@@ -116,8 +154,8 @@ List<DrawLines> renderLines(double yHeight, double xWidth, List<GraphSpot> spots
           lineCoordinates: Coordinates(
               startCoords: CoordValues(x: pair[0].x, y: pair[0].y),
               endCoords: CoordValues(x: pair[1].x, y: pair[1].y)),
-          yHeight: yHeight,
-          xWidth: xWidth));
+          graphHeight: graphHeight,
+          graphWidth: graphWidth));
     }
   });
 

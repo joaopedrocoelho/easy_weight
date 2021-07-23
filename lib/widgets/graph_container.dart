@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:new_app/models/weight_record.dart';
-import 'package:linked_scroll_controller/linked_scroll_controller.dart';
+
 import 'package:new_app/utils/format_weight.dart';
 import 'package:new_app/utils/render_graph.dart';
-import 'package:new_app/widgets/custom_graph/bottom_titles.dart';
+
+import 'package:new_app/widgets/custom_graph/bottom_titles_row.dart';
 import 'package:new_app/widgets/custom_graph/gradient_fill.dart';
 import 'package:new_app/widgets/custom_graph/horizontal_lines.dart';
 import 'package:new_app/widgets/custom_graph/lines.dart';
 import 'package:new_app/widgets/custom_graph/side_titles.dart';
 import 'package:new_app/widgets/custom_graph/spots.dart';
-import 'package:new_app/widgets/neumorphic/neumorphic_border_container.dart';
 
 class GraphContainer extends StatefulWidget {
   final List<WeightRecord> records;
@@ -42,22 +42,17 @@ class _GraphContainerState extends State<GraphContainer> {
 
   late int fator;
 
-  late LinkedScrollControllerGroup _controllers;
-  ScrollController _graphController = ScrollController();
-  ScrollController _bottomTitlesController = ScrollController();
+  late ScrollController _graphController;
 
   @override
   void initState() {
     super.initState();
-
-    //scrolling controllers for bottom titles and graph
-    _controllers = LinkedScrollControllerGroup();
-    _graphController = _controllers.addAndGet();
-    _bottomTitlesController = _controllers.addAndGet();
+    _graphController = ScrollController();
 
     WidgetsBinding.instance?.addPostFrameCallback((_) {
-      if (_graphController.hasClients && widget.records.length >= 8)
-        _controllers.jumpTo(_graphController.position.maxScrollExtent);
+      if (_graphController.hasClients) {
+        _graphController.jumpTo(_graphController.position.maxScrollExtent);
+      }
     });
   }
 
@@ -72,102 +67,100 @@ class _GraphContainerState extends State<GraphContainer> {
     double minDisplayedWeight =
         setMinDisplayedWeight(minWeight, maxDisplayedWeight);
 
-    //print('minDisplayedWeight: $minDisplayedWeight');
+    double paddingTop = 0;
 
-    double yHeight = MediaQuery.of(widget.context).size.height / 2;
+    double graphHeight = MediaQuery.of(widget.context).size.height /2;
 
-    /*   double yPxPerKg = (maxDisplayedWeight - minDisplayedWeight) / yHeight;
-    print("yPxPerKg: $yPxPerKg"); */
-    double xWidth = widget.records.length > 8
-        ? MediaQuery.of(widget.context).size.width * (widget.records.length / 8)
-        : MediaQuery.of(widget.context).size.width;
+    double graphWidth = //50 is the space between dates
+        widget.records.length * 50 > MediaQuery.of(widget.context).size.width
+            ? (widget.records.length * 50)
+            : MediaQuery.of(widget.context).size.width;
 
-        
-
+    //https://chezvoila.com/blog/yaxis/
     double lowerThirdScale = (minWeight - minDisplayedWeight) /
         (maxDisplayedWeight - minDisplayedWeight);
 
-    double scale = 3 * lowerThirdScale;
+    double bottomTitlesHeight = 0;
 
-    List<int> sideTitleWeights = [];
+    List<int> sideTitleWeights = renderSideTitleWeights(minDisplayedWeight, 
+    maxDisplayedWeight);
 
-    double one5thOfTheHeight = (yHeight / 5);
+    
+   
 
-    for (int i = 1; i < 5; i++) {
-      sideTitleWeights.add(
-          findWeight(one5thOfTheHeight * i, maxDisplayedWeight, yHeight)
-              .ceil());
-    }
-    sideTitleWeights.add(maxDisplayedWeight.ceil());
+    List<GraphSpot> spots = renderSpots(
+        widget.records,
+        graphHeight + bottomTitlesHeight,
+        maxDisplayedWeight,
+        minDisplayedWeight,
+        paddingLeft,
+        _selectedIndex,
+        onGraphSpotTap);
 
-    List<GraphSpot> spots = renderSpots(widget.records, yHeight,
-        maxDisplayedWeight, paddingLeft, _selectedIndex, onGraphSpotTap);
-
-    List<DrawLines> graphLines = renderLines(yHeight , MediaQuery.of(widget.context).size.width, spots);
+    List<DrawLines> graphLines = renderLines(graphHeight + bottomTitlesHeight,
+        MediaQuery.of(widget.context).size.width, spots);
 
     List<DrawHorizontalLines> horizontalGuidelines = renderHorizontalLines(
-        xWidth, yHeight, maxDisplayedWeight, sideTitleWeights);
+        graphWidth,
+        graphHeight,
+        paddingTop,
+        maxDisplayedWeight,
+        minDisplayedWeight,
+        sideTitleWeights);
 
     List<GFCoordinates> gradientFillBelowGraphCoordinates =
         renderGradientFill(spots);
 
     List<Widget> graphWidgetsList = [
+      BottomTitlesRow(
+          records: widget.records,
+          graphWidth: graphWidth,
+          bottomTitlesHeight: bottomTitlesHeight),
       ...horizontalGuidelines,
-       PaintFill(
+      PaintFill(
           fillCoordinates: gradientFillBelowGraphCoordinates,
-          yHeight: yHeight ),
+          graphHeight: graphHeight + bottomTitlesHeight),
       ...graphLines,
       ...spots,
     ];
 
-    return Column(mainAxisAlignment: MainAxisAlignment.end, children: [
+    return Column(mainAxisAlignment: MainAxisAlignment.start, children: [
       //bottom titles widget
+
       Row(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          /* SizedBox(width: MediaQuery.of(context).size.width / 10), */
           Container(
-            width: MediaQuery.of(context).size.width * 0.9,
-            child: SingleChildScrollView(
-                controller: _bottomTitlesController,
-                scrollDirection: Axis.horizontal,
-                padding: EdgeInsets.only(
-                    left: MediaQuery.of(context).size.width / 10),
-                child: BottomTitles(records: widget.records, xWidth: xWidth)),
-          ),
-        ],
-      ),
-      Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+              height: graphHeight,
+              width: MediaQuery.of(context).size.width / 10,
+              child: SideTitles(
+                sideTitleWeights: sideTitleWeights,
+                graphHeight: graphHeight,
+                paddingTop: paddingTop,
+                bottomTitlesHeight: 30,
+                maxDisplayedWeight: maxDisplayedWeight,
+                minDisplayedWeight: minDisplayedWeight,
+              )),
           //graph widget
           Container(
-            width: xWidth,
-            height: yHeight,
+            width: MediaQuery.of(context).size.width * 0.9,
+            height: graphHeight ,
             child: SingleChildScrollView(
               controller: _graphController,
               padding: EdgeInsets.only(right: 20),
               scrollDirection: Axis.horizontal,
-              child: Container(
-                width: xWidth,
-                child: Stack(
-                  children: [
-                    Container(
-                        height: yHeight,
-                        width: MediaQuery.of(context).size.width / 10,
-                        child: SideTitles(
-                          sideTitleWeights: sideTitleWeights,
-                          yHeight: yHeight,
-                          maxDisplayedWeight: maxDisplayedWeight,
-                        )),
-                    ...graphWidgetsList
-                  ],
-                  //SideTitles widget
-    
-                  clipBehavior: Clip.none,
-                ),
+              child: Stack(
+                children: [
+                  Container(
+                    color: Colors.lightGreenAccent,
+                    width: graphWidth,
+                  ),
+                  ...graphWidgetsList
+                ],
+                //SideTitles widget
+
+                clipBehavior: Clip.none,
               ),
             ),
           ),

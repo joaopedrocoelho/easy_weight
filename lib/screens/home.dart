@@ -70,15 +70,14 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
       final bool mode = context.read<ButtonMode>().isEditing;
 
       return Scaffold(
-        body: Stack(
-          children:[ Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                /* RecordsListView(records: recordsModel.records), */
-                Container(
-                  height: MediaQuery.of(context).size.height,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
+        body: SafeArea(
+          child: Stack(
+            children:[ Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  /* RecordsListView(records: recordsModel.records), */
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       CurrentWeightStats(),
                       recordsModel.records.isNotEmpty
@@ -87,46 +86,43 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                           : Text('empty'),
                       Align(
                         alignment: Alignment.bottomRight,
-                        child: Padding(
-                          padding: const EdgeInsets.only(right: 10, bottom: 20),
-                          child: EditButtons(
-                            addOnPressed: () {
-                              _setVisible(mode ? 'edit' : 'add');
-                            },
-                          ),
+                        child: EditButtons(
+                          addOnPressed: () {
+                            _setVisible(mode ? 'edit' : 'add');
+                          },
                         ),
                       ),
                     ],
                   ),
-                ),
-               
-              ]),
-               context.watch<ButtonMode>().isEditing
-                    ? EditRecord(
-                        animationController: _animationController,
-                        visible: _isEditFormVisible,
-                        setVisible: () {
-                          _setVisible('edit');
-                        },
-                        setInvisible: () {
-                          _setinVisible('edit');
-                        },
-                        setRefresh: () {},
-                        date: context.read<ButtonMode>().date,
-                        weight: context.read<ButtonMode>().weight,
-                        note: context.read<ButtonMode>().note,
-                      )
-                    : AddRecord(
-                        animationController: _animationController,
-                        visible: _isAddFormVisible,
-                        setVisible: () {
-                          _setVisible('add');
-                        },
-                        setInvisible: () {
-                          _setinVisible('add');
-                        },
-                        setRefresh: () {}),
-          ]),
+                 
+                ]),
+                 context.watch<ButtonMode>().isEditing
+                      ? EditRecord(
+                          animationController: _animationController,
+                          visible: _isEditFormVisible,
+                          setVisible: () {
+                            _setVisible('edit');
+                          },
+                          setInvisible: () {
+                            _setinVisible('edit');
+                          },
+                          setRefresh: () {},
+                          date: context.read<ButtonMode>().date,
+                          weight: context.read<ButtonMode>().weight,
+                          note: context.read<ButtonMode>().note,
+                        ) 
+                      : AddRecord(
+                          animationController: _animationController,
+                          visible: _isAddFormVisible,
+                          setVisible: () {
+                            _setVisible('add');
+                          },
+                          setInvisible: () {
+                            _setinVisible('add');
+                          },
+                          setRefresh: () {}),
+            ]),
+        ),
       );
     });
   }

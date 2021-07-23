@@ -3,10 +3,10 @@ import 'dart:ui' as ui;
 
 class DrawLines extends StatefulWidget {
   final Coordinates lineCoordinates;
-  final double yHeight;
-  final double xWidth;
+  final double graphHeight;
+  final double graphWidth;
 
-  DrawLines({required this.lineCoordinates, required this.yHeight, required this.xWidth});
+  DrawLines({required this.lineCoordinates, required this.graphHeight, required this.graphWidth});
 
   @override
   _DrawLinesState createState() => _DrawLinesState();
@@ -17,7 +17,7 @@ class _DrawLinesState extends State<DrawLines> {
   Widget build(BuildContext context) {
     return CustomPaint(
       foregroundPainter: LinePainter(
-          coordinates: widget.lineCoordinates, yHeight: widget.yHeight, xWidth: widget.yHeight),
+          coordinates: widget.lineCoordinates, graphHeight: widget.graphHeight, graphWidth: widget.graphHeight),
     );
   }
 }
@@ -38,10 +38,10 @@ class Coordinates {
 
 class LinePainter extends CustomPainter {
   late Coordinates coordinates;
-  late double yHeight;
-  late double xWidth;
+  late double graphHeight;
+  late double graphWidth;
 
-  LinePainter({required this.coordinates, required this.xWidth, required this.yHeight});
+  LinePainter({required this.coordinates, required this.graphWidth, required this.graphHeight});
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -49,7 +49,7 @@ class LinePainter extends CustomPainter {
       ..color = Color(0xFF295AE3)
       ..shader = ui.Gradient.linear(
         Offset(0, 0),
-        Offset(xWidth, 0),
+        Offset(graphWidth, 0),
         [
           Color(0xFF12c2e9),
           Color(0xFFc471ed),
@@ -69,20 +69,20 @@ class LinePainter extends CustomPainter {
     /*  Path path = Path();
 
     path.moveTo(
-        coordinates.startCoords.x + 15, yHeight - coordinates.startCoords.y);
+        coordinates.startCoords.x + 15, graphHeight - coordinates.startCoords.y);
     path.quadraticBezierTo(
         ((coordinates.endCoords.x + 15) - coordinates.startCoords.x) * 2,
         (coordinates.endCoords.y - coordinates.startCoords.y) / 8,
         coordinates.endCoords.x + 15,
-        yHeight - coordinates.endCoords.y);
+        graphHeight - coordinates.endCoords.y);
  */
     //for every two points one line is drawn
 
     canvas.drawLine(
       //the 15 is to center the lines with the spots after adding the weight labels.
       Offset(
-          coordinates.startCoords.x + 15, yHeight - coordinates.startCoords.y),
-      Offset(coordinates.endCoords.x + 15, yHeight - coordinates.endCoords.y),
+          coordinates.startCoords.x + 15, graphHeight - coordinates.startCoords.y),
+      Offset(coordinates.endCoords.x + 15, graphHeight - coordinates.endCoords.y),
       paint,
     );
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:new_app/models/weight_record.dart';
 import 'package:new_app/utils/render_graph.dart';
 import 'package:new_app/utils/indexed_iterables.dart';
@@ -7,9 +8,12 @@ import 'package:intl/intl.dart';
 
 class BottomTitles extends StatefulWidget {
   final List<WeightRecord> records;
-  final double xWidth;
+  final double graphWidth;
+  final double height;
 
-  const BottomTitles({Key? key, required this.records, required this.xWidth})
+  const BottomTitles(
+      {Key? key, required this.records, required this.graphWidth,
+      required this.height})
       : super(key: key);
 
   @override
@@ -19,6 +23,8 @@ class BottomTitles extends StatefulWidget {
 class _BottomTitlesState extends State<BottomTitles> {
   @override
   Widget build(BuildContext context) {
+    final theme = NeumorphicTheme.currentTheme(context);
+
     //display only every other date
     List<Widget> renderBottomTitles() {
       List<DateTime> recordDates =
@@ -33,8 +39,7 @@ class _BottomTitlesState extends State<BottomTitles> {
           left: (index * 100),
           child: Text(
             "$date",
-            style: TextStyle(
-                color: Colors.white, fontSize: 14, fontWeight: FontWeight.bold),
+            style: theme.textTheme.caption,
           ),
         );
       }).toList();
@@ -43,7 +48,7 @@ class _BottomTitlesState extends State<BottomTitles> {
     }
 
     return Container(
-      width: widget.xWidth,
+      width: widget.graphWidth,
       height: 30,
       child: Stack(
         children: renderBottomTitles(),

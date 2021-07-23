@@ -5,9 +5,9 @@ import 'dart:ui' as ui;
 
 class PaintFill extends StatefulWidget {
   final List<GFCoordinates> fillCoordinates;
-  final double yHeight;
+  final double graphHeight;
 
-  PaintFill({required this.fillCoordinates, required this.yHeight});
+  PaintFill({required this.fillCoordinates, required this.graphHeight});
 
   @override
   _DrawLinesState createState() => _DrawLinesState();
@@ -22,7 +22,7 @@ class _DrawLinesState extends State<PaintFill> {
           ? CustomPaint(
               foregroundPainter: FillPainter(
                   fillCoordinates: widget.fillCoordinates,
-                  yHeight: widget.yHeight),
+                  graphHeight: widget.graphHeight),
             )
           : null,
     );
@@ -45,9 +45,9 @@ class GFCoordinates {
 
 class FillPainter extends CustomPainter {
   late List<GFCoordinates> fillCoordinates;
-  late double yHeight;
+  late double graphHeight;
 
-  FillPainter({required this.fillCoordinates, required this.yHeight});
+  FillPainter({required this.fillCoordinates, required this.graphHeight});
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -56,14 +56,14 @@ class FillPainter extends CustomPainter {
       ..color = Colors.red
       ..shader = ui.Gradient.linear(
         Offset(0, 0),
-        Offset(0, yHeight),
+        Offset(0, graphHeight),
         [
-          Color(0xFF1EBAE3),
-          Color(0xFF1EBAE3).withOpacity(0),
+          Color(0xff94E2FF),
+          Color(0xFF94E2FF).withOpacity(0),
         ],
         [
           0.2,
-          0.7
+          0.5
         ]
       )
       ..style = PaintingStyle.fill;
@@ -71,14 +71,14 @@ class FillPainter extends CustomPainter {
     Path path = Path();
 
     /* 
-    path.lineTo(0, yHeight - fillCoordinates[0].startCoords.y);
+    path.lineTo(0, graphHeight - fillCoordinates[0].startCoords.y);
     path.lineTo(fillCoordinates[0].startCoords.x + 15,
-        yHeight - fillCoordinates[0].startCoords.y); */
-  path.moveTo(20, yHeight);
+        graphHeight - fillCoordinates[0].startCoords.y); */
+  path.moveTo(20, graphHeight);
     fillCoordinates.forEachIndexed((element, index) {
-      path.lineTo(element.startCoords.x + 15, yHeight - element.startCoords.y);
+      path.lineTo(element.startCoords.x + 15, graphHeight  - element.startCoords.y);
 
-      path.lineTo(element.endCoords.x + 15, yHeight - element.endCoords.y);
+      path.lineTo(element.endCoords.x + 15, graphHeight - element.endCoords.y);
     });
 
     canvas.drawPath(path, paint);
