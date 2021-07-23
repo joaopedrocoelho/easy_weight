@@ -24,7 +24,7 @@ class BottomTitlesRow extends StatelessWidget {
         children: [
           /* SizedBox(width: MediaQuery.of(context).size.width / 10), */
           Container(
-            color: Colors.amber,
+            /* color: Colors.amber, */
             width: MediaQuery.of(context).size.width * 0.9,
             child: BottomTitles(records: records, 
             graphWidth: graphWidth, 

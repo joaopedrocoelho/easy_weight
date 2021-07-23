@@ -48,9 +48,9 @@ class SideTitles extends StatelessWidget {
         print(
             'sidetitlePos ${yPos(weight.toDouble(), graphHeight, maxDisplayedWeight, minDisplayedWeight) - graphHeight}');
         return Positioned(
-          bottom:  yPos(weight.toDouble(), graphHeight, maxDisplayedWeight,
+          bottom:  (yPos(weight.toDouble(), graphHeight, maxDisplayedWeight,
                   minDisplayedWeight) 
-               - (whatsTheSize.height * 0.5)  // this makes the title centered ,
+               - (whatsTheSize.height * 0.5)) + bottomTitlesHeight  // this makes the title centered ,
               ,
           child: Text(
             weight.toString(),

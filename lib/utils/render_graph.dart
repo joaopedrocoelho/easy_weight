@@ -33,7 +33,7 @@ double yPos(double weight, /*double yPxPerKg,*/ double graphHeight,
     double maxDisplayedWeight, double minDisplayedWeight) {
   
   double results =
-      ((weight - minDisplayedWeight) * graphHeight) / (maxDisplayedWeight - minDisplayedWeight);
+      ((weight - minDisplayedWeight) * (graphHeight - 30)) / (maxDisplayedWeight - minDisplayedWeight);
 
   //print('weight: $weight , AlternateFormula: $results');
   
@@ -108,13 +108,14 @@ List<DrawHorizontalLines> renderHorizontalLines(
 List<GraphSpot> renderSpots(
     List<WeightRecord> records,
     double graphHeight,
+    double bottomTitlesHeight,
     double maxDisplayedWeight,
     double minDisplayedWeight,
     int paddingLeft,
     int? selectedIndex,
     void Function(int listIndex) callback) {
   List<Map> spotsYPos =
-      addYPos(records, graphHeight, maxDisplayedWeight, minDisplayedWeight);
+      addYPos(records, graphHeight,  maxDisplayedWeight, minDisplayedWeight);
 
   List<Map> spotsXPos = spotsYPos; //add the X coordinates
   spotsXPos.forEachIndexed((record, index) {
@@ -130,7 +131,8 @@ List<GraphSpot> renderSpots(
   List<GraphSpot> spots = spotsXPos.mapIndexed<GraphSpot>((record, index) {
     return GraphSpot(
         x: record['xPos'],
-        y: record['yPos'],
+        y: record['yPos'] ,
+        bottomTitlesHeight: bottomTitlesHeight,
         date: DateTime.parse(record['record_date']),
         weight: record['weight'],
         note: record['note'],

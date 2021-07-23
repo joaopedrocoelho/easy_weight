@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 class GraphSpot extends StatefulWidget {
   final double x;
   final double y;
+  final double bottomTitlesHeight;
   final DateTime date;
   final double weight;
   final String note;
@@ -17,6 +18,7 @@ class GraphSpot extends StatefulWidget {
   GraphSpot(
       {required this.x,
       required this.y,
+      required this.bottomTitlesHeight,
       required this.date,
       required this.weight,
       required this.note,
@@ -36,7 +38,7 @@ class _GraphSpotState extends State<GraphSpot> {
         return Positioned(
           left: widget.x - 5, //minus half of the width of the spot to center
           bottom: widget.y -
-              12, //minus half of the height of the spot and padding to center
+              12 + widget.bottomTitlesHeight, //minus half of the height of the spot and padding to center
           child: GestureDetector(
             onTap: () {
               widget.onGraphSpotTap(widget.id);
@@ -51,16 +53,15 @@ class _GraphSpotState extends State<GraphSpot> {
               children: [
                 Neumorphic(
                   style: NeumorphicStyle(
-                    boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(5)),
+                    boxShape:
+                        NeumorphicBoxShape.roundRect(BorderRadius.circular(5)),
                     color: Color(0xFF12A3F8),
                     depth: 2,
                     intensity: 0.8,
-
-
                   ),
                   child: Container(
                     width: 40,
-                                       child: Padding(
+                    child: Padding(
                       padding: const EdgeInsets.all(1.0),
                       child: Text(widget.weight.toStringAsFixed(1),
                           textAlign: TextAlign.center,
@@ -83,18 +84,14 @@ class _GraphSpotState extends State<GraphSpot> {
                     padding: const EdgeInsets.all(7.0),
                     child: Neumorphic(
                       style: NeumorphicStyle(
-                         boxShape: NeumorphicBoxShape.circle(),
-                         color: Color(0xFF12A3F8),
-                         shape: NeumorphicShape.convex,
-                         intensity: 0.8,
-                         depth:3
-                      ),
-                     
-
+                          boxShape: NeumorphicBoxShape.circle(),
+                          color: Color(0xFF12A3F8),
+                          shape: NeumorphicShape.convex,
+                          intensity: 0.8,
+                          depth: 3),
                       child: Container(
                         width: 12,
                         height: 12,
-                       
                       ),
                     ),
                   ),

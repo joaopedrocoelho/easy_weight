@@ -80,7 +80,7 @@ class _GraphContainerState extends State<GraphContainer> {
     double lowerThirdScale = (minWeight - minDisplayedWeight) /
         (maxDisplayedWeight - minDisplayedWeight);
 
-    double bottomTitlesHeight = 0;
+    double bottomTitlesHeight = 30;
 
     List<int> sideTitleWeights = renderSideTitleWeights(minDisplayedWeight, 
     maxDisplayedWeight);
@@ -90,14 +90,15 @@ class _GraphContainerState extends State<GraphContainer> {
 
     List<GraphSpot> spots = renderSpots(
         widget.records,
-        graphHeight + bottomTitlesHeight,
+        graphHeight ,
+        bottomTitlesHeight,
         maxDisplayedWeight,
         minDisplayedWeight,
         paddingLeft,
         _selectedIndex,
         onGraphSpotTap);
 
-    List<DrawLines> graphLines = renderLines(graphHeight + bottomTitlesHeight,
+    List<DrawLines> graphLines = renderLines(graphHeight,
         MediaQuery.of(widget.context).size.width, spots);
 
     List<DrawHorizontalLines> horizontalGuidelines = renderHorizontalLines(
@@ -112,14 +113,11 @@ class _GraphContainerState extends State<GraphContainer> {
         renderGradientFill(spots);
 
     List<Widget> graphWidgetsList = [
-      BottomTitlesRow(
-          records: widget.records,
-          graphWidth: graphWidth,
-          bottomTitlesHeight: bottomTitlesHeight),
-      ...horizontalGuidelines,
+    
+      /* ...horizontalGuidelines, */
       PaintFill(
           fillCoordinates: gradientFillBelowGraphCoordinates,
-          graphHeight: graphHeight + bottomTitlesHeight),
+          graphHeight: graphHeight),
       ...graphLines,
       ...spots,
     ];
@@ -132,20 +130,20 @@ class _GraphContainerState extends State<GraphContainer> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-              height: graphHeight,
+              height: graphHeight+ bottomTitlesHeight,
               width: MediaQuery.of(context).size.width / 10,
               child: SideTitles(
                 sideTitleWeights: sideTitleWeights,
                 graphHeight: graphHeight,
                 paddingTop: paddingTop,
-                bottomTitlesHeight: 30,
+                bottomTitlesHeight: bottomTitlesHeight,
                 maxDisplayedWeight: maxDisplayedWeight,
                 minDisplayedWeight: minDisplayedWeight,
               )),
           //graph widget
           Container(
             width: MediaQuery.of(context).size.width * 0.9,
-            height: graphHeight ,
+            height: graphHeight + bottomTitlesHeight,
             child: SingleChildScrollView(
               controller: _graphController,
               padding: EdgeInsets.only(right: 20),
@@ -153,9 +151,13 @@ class _GraphContainerState extends State<GraphContainer> {
               child: Stack(
                 children: [
                   Container(
-                    color: Colors.lightGreenAccent,
+                    
                     width: graphWidth,
                   ),
+                              BottomTitlesRow(
+          records: widget.records,
+          graphWidth: graphWidth,
+          bottomTitlesHeight: bottomTitlesHeight),
                   ...graphWidgetsList
                 ],
                 //SideTitles widget

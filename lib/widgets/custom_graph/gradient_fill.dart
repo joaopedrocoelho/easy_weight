@@ -62,8 +62,8 @@ class FillPainter extends CustomPainter {
           Color(0xFF94E2FF).withOpacity(0),
         ],
         [
-          0.2,
-          0.5
+          0.3,
+          0.7
         ]
       )
       ..style = PaintingStyle.fill;
