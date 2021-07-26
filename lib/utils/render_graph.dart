@@ -13,7 +13,7 @@ import 'package:new_app/widgets/custom_graph/spots.dart';
 double setMinDisplayedWeight(double minWeight, double maxDisplayedWeight) {
   //according to https://chezvoila.com/blog/yaxis/
   double minDisp = (3 * minWeight - maxDisplayedWeight) / 2;
-  print('minDisplayedWeight: $minDisp');
+  //print('minDisplayedWeight: $minDisp');
   return minDisp;
 }
 
@@ -66,7 +66,7 @@ List<int> renderSideTitleWeights(
   sideTitleWeights.add(minDisplayedWeight.ceil());
 
   int fator = ((maxDisplayedWeight - minDisplayedWeight) / 4).ceil();
-  print('fator: $fator');
+  //print('fator: $fator');
 
   //this was causing a memory leak somehow
   /* for (var i = fator; i < maxDisplayedWeight.ceil(); i + fator) {
@@ -78,7 +78,7 @@ List<int> renderSideTitleWeights(
   sideTitleWeights.add(minDisplayedWeight.ceil() + fator * 3);
   sideTitleWeights.add(maxDisplayedWeight.ceil());
 
-  print('sideTitleWeights: $sideTitleWeights');
+  //print('sideTitleWeights: $sideTitleWeights');
 
   return sideTitleWeights;
 }
@@ -170,7 +170,7 @@ List<GFCoordinates> renderGradientFill(List spots) {
   List<GFCoordinates> fill = [];
 
   if (spots.length == 1) {
-    print("only one spot!");
+    //print("only one spot!");
     return fill;
   } else {
     List pairs = splitPairs(spots);

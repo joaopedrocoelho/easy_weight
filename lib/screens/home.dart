@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:new_app/models/button_mode.dart';
 import 'package:new_app/models/records_model.dart';
 import 'package:new_app/models/weight_record.dart';
+import 'package:new_app/utils/render_stats.dart';
 import 'package:new_app/widgets/buttons/edit_buttons.dart';
 import 'package:new_app/widgets/graph_container.dart';
 import 'package:new_app/widgets/list-view/records_list_view.dart';
@@ -69,17 +70,29 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
         builder: (context, recordsModel, buttonMode, child) {
       final bool mode = context.read<ButtonMode>().isEditing;
 
+    
+
       return Scaffold(
         body: SafeArea(
-          child: Stack(
-            children:[ Column(
+          child: Stack(children: [
+            Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   /* RecordsListView(records: recordsModel.records), */
                   Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      CurrentWeightStats(),
+                      recordsModel.records.isNotEmpty
+                          ? CurrentWeightStats(
+                              currentWeight:
+                                  renderCurrentWeight(recordsModel.records),
+                              weekTrend: renderWeekTrend(recordsModel.records),
+                              monthTrend:
+                                  renderMonthTrend(recordsModel.records),
+                                allTimeTrend: renderTotal(recordsModel.records),)
+                          : SizedBox(
+                              height: 200,
+                            ),
                       recordsModel.records.isNotEmpty
                           ? GraphContainer(
                               records: recordsModel.records, context: context)
@@ -94,34 +107,33 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                       ),
                     ],
                   ),
-                 
                 ]),
-                 context.watch<ButtonMode>().isEditing
-                      ? EditRecord(
-                          animationController: _animationController,
-                          visible: _isEditFormVisible,
-                          setVisible: () {
-                            _setVisible('edit');
-                          },
-                          setInvisible: () {
-                            _setinVisible('edit');
-                          },
-                          setRefresh: () {},
-                          date: context.read<ButtonMode>().date,
-                          weight: context.read<ButtonMode>().weight,
-                          note: context.read<ButtonMode>().note,
-                        ) 
-                      : AddRecord(
-                          animationController: _animationController,
-                          visible: _isAddFormVisible,
-                          setVisible: () {
-                            _setVisible('add');
-                          },
-                          setInvisible: () {
-                            _setinVisible('add');
-                          },
-                          setRefresh: () {}),
-            ]),
+            context.watch<ButtonMode>().isEditing
+                ? EditRecord(
+                    animationController: _animationController,
+                    visible: _isEditFormVisible,
+                    setVisible: () {
+                      _setVisible('edit');
+                    },
+                    setInvisible: () {
+                      _setinVisible('edit');
+                    },
+                    setRefresh: () {},
+                    date: context.read<ButtonMode>().date,
+                    weight: context.read<ButtonMode>().weight,
+                    note: context.read<ButtonMode>().note,
+                  )
+                : AddRecord(
+                    animationController: _animationController,
+                    visible: _isAddFormVisible,
+                    setVisible: () {
+                      _setVisible('add');
+                    },
+                    setInvisible: () {
+                      _setinVisible('add');
+                    },
+                    setRefresh: () {}),
+          ]),
         ),
       );
     });

@@ -1,6 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 
+double renderPadding(String period) {
+  double padding = 0.0;
+  switch (period) {
+    case 'Month':
+      padding = 8.0;
+      break;
+
+    case 'Week':
+      padding = 15.0;
+      break;
+    case 'Total':
+      padding = 17.0;
+      break;
+  }
+
+  return padding;
+}
+
 class WeightTrend extends StatelessWidget {
   final double variation;
   final String period;
@@ -12,7 +30,7 @@ class WeightTrend extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = NeumorphicTheme.currentTheme(context);
 
-    double padding = period == 'Month' ? 8.0 : 15.0;
+    
 
     Icon setIcon(double variation) {
       if (variation > 0) {
@@ -28,22 +46,19 @@ class WeightTrend extends StatelessWidget {
     }
 
     return Container(
-      
-    
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Text(period,
-          style: theme.textTheme.caption),
+          Text(period, style: theme.textTheme.caption),
           Padding(
-            padding:  EdgeInsets.only(left: padding ),
+            padding: EdgeInsets.only(left: renderPadding(period)),
             child: setIcon(variation),
           ),
           Padding(
-            padding:  EdgeInsets.only(left: 8.0),
-            child: Text('${variation > 0 ? '+' : '' }${variation.toString()}kg',
-            style: theme.textTheme.subtitle2?.copyWith(height:1)),
+            padding: EdgeInsets.only(left: 8.0),
+            child: Text('${variation > 0 ? '+' : ''}${variation.toString()}kg',
+                style: theme.textTheme.subtitle2?.copyWith(height: 1)),
           )
         ],
       ),

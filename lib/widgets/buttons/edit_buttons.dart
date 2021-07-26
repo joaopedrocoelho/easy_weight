@@ -17,11 +17,27 @@ class EditButtons extends StatefulWidget {
 }
 
 class _EditButtonsState extends State<EditButtons> {
-  final double _deleteWidth = 0;
-  final double _deleteHeight = 0;
+
+   bool _editVisibility = false;
 
   Future deleteRecordFromDB(WeightRecord deletedRecord) async {
     await RecordsDatabase.instance.delete(deletedRecord);
+  }
+
+  void _setEditVisible() {
+    Future.delayed(Duration(milliseconds: 500), () {
+      setState(() {
+        _editVisibility = true;
+      });
+    });
+  }
+
+  void _setEditInVisible() {
+    Future.delayed(Duration(milliseconds: 300), () {
+      setState(() {
+        _editVisibility = false;
+      });
+    });
   }
 
   @override
@@ -29,6 +45,11 @@ class _EditButtonsState extends State<EditButtons> {
     final theme = NeumorphicTheme.currentTheme(context);
 
     return Consumer<ButtonMode>(builder: (context, buttonMode, child) {
+        buttonMode.isEditing ?  _setEditVisible() :
+          _setEditInVisible();
+
+
+
       return Padding(
         padding: const EdgeInsets.all(20.0),
         child: Container(
@@ -36,6 +57,7 @@ class _EditButtonsState extends State<EditButtons> {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               //delete button
+              if(_editVisibility)  
               NeuButton(
                 child: Icon(
                   Icons.delete_outline_rounded,
@@ -54,19 +76,23 @@ class _EditButtonsState extends State<EditButtons> {
                   deleteRecordFromDB(deletedRecord);
                   buttonMode.setAdd();
                 },
+                isVisible: buttonMode.isEditing,
               ),
               SizedBox(
                 width: 20.0,
               ),
-              NeuButton(
-                addOnPressed: widget.addOnPressed,
-                child: Icon(
-                    (buttonMode.isEditing == true)
-                        ? Icons.mode_edit_outline_rounded
-                        : Icons.add_circle_outline_rounded,
-                    color: theme.defaultTextColor,
-                    size: 30),
-              ),
+              if (_editVisibility) 
+                NeuButton(
+                    addOnPressed: widget.addOnPressed,
+                    child: Icon(Icons.mode_edit_outline_rounded,
+                        color: theme.defaultTextColor, size: 30),
+                    isVisible: buttonMode.isEditing),
+              if (!_editVisibility)
+                NeuButton(
+                    addOnPressed: widget.addOnPressed,
+                    child: Icon(Icons.add_circle_outline_rounded,
+                        color: theme.defaultTextColor, size: 30),
+                    isVisible: !buttonMode.isEditing),
             ],
           ),
         ),

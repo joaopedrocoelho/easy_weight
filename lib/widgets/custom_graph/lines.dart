@@ -57,7 +57,7 @@ class LinePainter extends CustomPainter {
         ],
         [
           0,
-          0.5,
+          0.6,
           1
         ]
       )

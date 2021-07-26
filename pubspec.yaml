@@ -58,6 +58,7 @@ flutter:
           weight: 700
         - asset: assets/fonts/NotoSansTC-Black.otf
           weight: 900
+
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.

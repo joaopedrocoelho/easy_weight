@@ -4,35 +4,41 @@ import 'package:new_app/widgets/stats/big_weight_headline.dart';
 import 'package:new_app/widgets/stats/weight_trend.dart';
 
 class CurrentWeightStats extends StatelessWidget {
-  const CurrentWeightStats({Key? key}) : super(key: key);
+  final double currentWeight;
+  final double weekTrend;
+  final double monthTrend;
+  final double allTimeTrend;
+
+  const CurrentWeightStats(
+      {Key? key,
+      required this.currentWeight,
+      required this.weekTrend,
+      required this.monthTrend,
+      required this.allTimeTrend})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final theme = NeumorphicTheme.currentTheme(context);
 
-
     return Padding(
-      padding: const EdgeInsets.only(left:20.0, right: 20.0, bottom:20.0, top:10),
+      padding:
+          const EdgeInsets.only(left: 20.0, right: 20.0, bottom: 20.0, top: 10),
       child: Container(
-        
-        child: 
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-              
-              Text('Current', style: theme.textTheme.caption),
-              BigWeightHeadline(weight: 80.5),
-             
-              WeightTrend(variation: -0.5, period: 'Week'),
-        
-              WeightTrend(variation: 5.5, period: 'Month')
-              ]),
-             
-            
-          
-        ),
-      
+        child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(bottom:3.0),
+                child: Text('Current', style: theme.textTheme.caption),
+              ),
+              BigWeightHeadline(weight: currentWeight),
+              WeightTrend(variation: weekTrend, period: 'Week'),
+              WeightTrend(variation: monthTrend, period: 'Month'),
+              WeightTrend(variation: allTimeTrend, period: 'Total')
+            ]),
+      ),
     );
   }
 }
