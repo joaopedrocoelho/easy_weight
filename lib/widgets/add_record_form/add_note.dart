@@ -23,7 +23,7 @@ class AddNoteTextField extends StatelessWidget {
         ),
         child: TextFormField(
           keyboardType: TextInputType.text,
-          initialValue: initialValue,
+          
           onSaved: onSaved,
           cursorColor: theme.defaultTextColor,
           decoration: InputDecoration(

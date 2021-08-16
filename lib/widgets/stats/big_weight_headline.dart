@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 
 class BigWeightHeadline extends StatelessWidget {
-  final double weight;
+  final double? weight;
     
     const BigWeightHeadline({Key? key, required this.weight}) : super(key: key);
 
@@ -16,7 +16,7 @@ class BigWeightHeadline extends StatelessWidget {
                             textBaseline: TextBaseline.alphabetic,
                             children: [
                               Text(
-                                weight.toString(),
+                                weight == null? '0.0' : weight.toString(),
                                 style: 
                                 Theme.of(context).textTheme.bodyText1?.copyWith(
                                   fontSize: 70, 

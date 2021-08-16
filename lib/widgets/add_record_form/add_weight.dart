@@ -17,7 +17,7 @@ class AddWeightTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = NeumorphicTheme.currentTheme(context);
     final bodyText1 = theme.textTheme.bodyText1;
-  
+
 
     return Neumorphic(
         style: NeumorphicStyle(
@@ -41,9 +41,10 @@ class AddWeightTextField extends StatelessWidget {
             decoration: InputDecoration(
               hintText: "Weight (kg)",
               hintStyle: bodyText1?.copyWith(fontSize: 16),
-            contentPadding: EdgeInsets.only(top:14.0, left:18, right: 14, bottom:18),
+              contentPadding:
+                  EdgeInsets.only(top: 14.0, left: 18, right: 14, bottom: 18),
               labelStyle: TextStyle(color: Colors.white, fontSize: 20.0),
-           
+
               /* focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(25.0),
                   borderSide: BorderSide(width: 0.0, color: Colors.grey)),

@@ -113,7 +113,7 @@ List<GraphSpot> renderSpots(
     double minDisplayedWeight,
     int paddingLeft,
     int? selectedIndex,
-    void Function(int listIndex) callback) {
+    void Function(int listIndex, BuildContext context) callback) {
   List<Map> spotsYPos =
       addYPos(records, graphHeight,  maxDisplayedWeight, minDisplayedWeight);
 

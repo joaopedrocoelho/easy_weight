@@ -20,7 +20,7 @@ double renderPadding(String period) {
 }
 
 class WeightTrend extends StatelessWidget {
-  final double variation;
+  final double? variation;
   final String period;
 
   const WeightTrend({Key? key, required this.variation, required this.period})
@@ -32,11 +32,11 @@ class WeightTrend extends StatelessWidget {
 
     
 
-    Icon setIcon(double variation) {
-      if (variation > 0) {
+    Icon setIcon(double? variation) {
+      if (variation != null && variation > 0) {
         return Icon(Icons.trending_up_rounded,
             size: 30, color: Color(0xffe8407a));
-      } else if (variation == 0) {
+      } else if (variation == 0 || variation == null) {
         return Icon(Icons.trending_flat_rounded,
             size: 30, color: theme.defaultTextColor);
       } else {
@@ -57,8 +57,13 @@ class WeightTrend extends StatelessWidget {
           ),
           Padding(
             padding: EdgeInsets.only(left: 8.0),
-            child: Text('${variation > 0 ? '+' : ''}${variation.toString()}kg',
-                style: theme.textTheme.subtitle2?.copyWith(height: 1)),
+            child: 
+            variation != null ?
+            Text('${variation! > 0 ? '+' : ''}${variation.toString()}kg',
+                style: theme.textTheme.subtitle2?.copyWith(height: 1)) :
+            Text('0.0kg',
+                style: theme.textTheme.subtitle2?.copyWith(height: 1))
+                ,
           )
         ],
       ),

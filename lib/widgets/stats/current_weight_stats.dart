@@ -4,10 +4,10 @@ import 'package:new_app/widgets/stats/big_weight_headline.dart';
 import 'package:new_app/widgets/stats/weight_trend.dart';
 
 class CurrentWeightStats extends StatelessWidget {
-  final double currentWeight;
-  final double weekTrend;
-  final double monthTrend;
-  final double allTimeTrend;
+  final double? currentWeight;
+  final double? weekTrend;
+  final double? monthTrend;
+  final double? allTimeTrend;
 
   const CurrentWeightStats(
       {Key? key,

@@ -2,53 +2,66 @@ import 'package:new_app/models/weight_record.dart';
 
 import 'package:new_app/utils/format_weight.dart';
 
-double renderCurrentWeight(List<WeightRecord> records) {
-  double lastRecordedWeight = records.last.weight;
+double? renderCurrentWeight(List<WeightRecord> records) {
+  if (records.isNotEmpty) {
+    double lastRecordedWeight = records.last.weight;
 
-  return limitDecimals(lastRecordedWeight, 1);
+    return limitDecimals(lastRecordedWeight, 1);
+  } else
+    return null;
 }
 
-double renderWeekTrend(List<WeightRecord> records) {
-  DateTime today = DateTime.now();
-  DateTime oneWeekBefore = today.subtract(Duration(days: 7));
-  double currentWeight = renderCurrentWeight(records);
+double? renderWeekTrend(List<WeightRecord> records) {
+  if (records.isNotEmpty && renderCurrentWeight(records) != null) {
+    DateTime currentWeightDate = records.last.date;
+    DateTime oneWeekBefore = currentWeightDate.subtract(Duration(days: 7));
+    double currentWeight = renderCurrentWeight(records)!;
 
-  //print("oneWeekBefore: $oneWeekBefore");
-  List<WeightRecord> recordsOfThisWeek = [...records];
-  recordsOfThisWeek
-      .removeWhere((record) => record.date.isBefore(oneWeekBefore));
+    //print("oneWeekBefore: $oneWeekBefore");
+    List<WeightRecord> recordsOfThisWeek = [...records];
+    recordsOfThisWeek
+        .removeWhere((record) => record.date.isBefore(oneWeekBefore));
 
-  double thisWeekMaxWeight = findMaxWeight(recordsOfThisWeek);
+    double thisWeekMaxWeight = findMaxWeight(recordsOfThisWeek);
 
-  //print('thisWeekMaxWeight: $thisWeekMaxWeight');
-  //print('currentWeight: $currentWeight');
+    //print('thisWeekMaxWeight: $thisWeekMaxWeight');
+    //print('currentWeight: $currentWeight');
 
-  double average = currentWeight - thisWeekMaxWeight;
+    double average = currentWeight - thisWeekMaxWeight;
 
-  return limitDecimals(average, 1);
+    return limitDecimals(average, 1);
+  } else {
+    return null;
+  }
 }
 
-double renderMonthTrend(List<WeightRecord> records) {
-  DateTime today = DateTime.now();
-  DateTime oneMonthBefore = today.subtract(Duration(days: 30));
-  double currentWeight = renderCurrentWeight(records);
+double? renderMonthTrend(List<WeightRecord> records) {
+  if (records.isNotEmpty && renderCurrentWeight(records) != null) {
+    DateTime currentWeightDate = records.last.date;
+    DateTime oneMonthBefore = currentWeightDate.subtract(Duration(days: 30));
+    double currentWeight = renderCurrentWeight(records)!;
 
-  List<WeightRecord> recordsOfThisMonth = [...records];
+    List<WeightRecord> recordsOfThisMonth = [...records];
 
-  recordsOfThisMonth
-      .removeWhere((record) => record.date.isBefore(oneMonthBefore));
+    recordsOfThisMonth
+        .removeWhere((record) => record.date.isBefore(oneMonthBefore));
 
-  double thisMonthMaxWeight = findMaxWeight(recordsOfThisMonth);
-  //print('thisMonthMaxWeight: $thisMonthMaxWeight');
+    double thisMonthMaxWeight = findMaxWeight(recordsOfThisMonth);
+    //print('thisMonthMaxWeight: $thisMonthMaxWeight');
 
-  double average = currentWeight - thisMonthMaxWeight;
+    double average = currentWeight - thisMonthMaxWeight;
 
-  return limitDecimals(average, 1);
+    return limitDecimals(average, 1);
+  } else
+    return null;
 }
 
-double renderTotal(List<WeightRecord> records) {
-  double currentWeight = renderCurrentWeight(records);
-  double maxWeight = findMaxWeight(records);
+double? renderTotal(List<WeightRecord> records) {
+  if (records.isNotEmpty) {
+    double currentWeight = renderCurrentWeight(records)!;
+    double maxWeight = findMaxWeight(records);
 
-  return limitDecimals(currentWeight - maxWeight, 1);
+    return limitDecimals(currentWeight - maxWeight, 1);
+  } else
+    return null;
 }

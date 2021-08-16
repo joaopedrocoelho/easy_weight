@@ -29,7 +29,7 @@ class _NeuButtonState extends State<NeuButton> {
 
   void _setVisible() {
     
-    Future.delayed(Duration(milliseconds: 300), () {
+    Future.delayed(Duration(milliseconds: 150), () {
       setState(() {
         _opacity = 1;
       });
@@ -47,8 +47,9 @@ class _NeuButtonState extends State<NeuButton> {
 
     return TweenAnimationBuilder<double>(
         tween: widget.isVisible ? _startAnimation : _reverseAnimation,
-        duration: Duration(milliseconds: 150),
+        duration: Duration(milliseconds: 100),
         builder: (_, depth, __) {
+          //print('depth: $depth');
           return NeumorphicButton(
               onPressed: widget.isVisible ? widget.addOnPressed : () {},
               style: NeumorphicStyle(
@@ -58,14 +59,14 @@ class _NeuButtonState extends State<NeuButton> {
                 shadowLightColor: Color(0xffFAFDFF),
                 depth: depth,
                 surfaceIntensity: 0.3,
-                intensity: 0.8,
+                intensity: 0.9,
                 shape: NeumorphicShape.convex,
                 boxShape:
                     NeumorphicBoxShape.roundRect(BorderRadius.circular(15)),
               ),
               child: Center(
                   child: AnimatedOpacity(
-                      duration: Duration(milliseconds: 150),
+                      duration: Duration(milliseconds: 100),
                       opacity: _opacity,
                       child: widget.child)));
         });

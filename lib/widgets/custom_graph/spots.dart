@@ -13,7 +13,7 @@ class GraphSpot extends StatefulWidget {
   final String note;
   final int id;
   final bool selected;
-  final void Function(int listIndex) onGraphSpotTap;
+  final void Function(int listIndex, BuildContext context) onGraphSpotTap;
 
   GraphSpot(
       {required this.x,
@@ -35,15 +35,20 @@ class _GraphSpotState extends State<GraphSpot> {
   Widget build(BuildContext context) {
     return Consumer<ButtonMode>(
       builder: (context, mode, child) {
+        bool _selected = widget.id == mode.selectedIndex ? true : false;
+        
+
         return Positioned(
           left: widget.x - 5, //minus half of the width of the spot to center
           bottom: widget.y -
-              12 + widget.bottomTitlesHeight, //minus half of the height of the spot and padding to center
+              12 +
+              widget
+                  .bottomTitlesHeight, //minus half of the height of the spot and padding to center
           child: GestureDetector(
             onTap: () {
-              widget.onGraphSpotTap(widget.id);
-              !widget.selected
-                  ? mode.setEditing(WeightRecord(
+              mode.onGraphSpotTap(widget.id);
+             
+              !_selected ? mode.setEditing(WeightRecord(
                       date: widget.date,
                       weight: widget.weight,
                       note: widget.note))
@@ -73,7 +78,7 @@ class _GraphSpotState extends State<GraphSpot> {
                   ),
                 ),
                 DecoratedBox(
-                  decoration: widget.selected
+                  decoration: _selected
                       ? BoxDecoration(
                           shape: BoxShape.circle,
                           border:

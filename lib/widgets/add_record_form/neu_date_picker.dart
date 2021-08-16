@@ -2,60 +2,54 @@ import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:intl/intl.dart';
 import 'package:new_app/models/button_mode.dart';
+import 'package:new_app/models/records_model.dart';
 import 'package:new_app/models/weight_record.dart';
+import 'package:new_app/utils/format_date.dart';
+
 import 'package:provider/provider.dart';
-  
 
 typedef void SetDate(DateTime date);
 
 class NeuDatePicker extends StatefulWidget {
   final SetDate callback;
   final DateTime currentDate;
+  final List<WeightRecord> records;
+  final List<DateTime> usedDates;
+  final String formattedCurrentDate;
 
-  NeuDatePicker({required this.callback, required this.currentDate});
+  NeuDatePicker(
+      {required this.callback,
+      required this.currentDate,
+      required this.records,
+      required this.usedDates,
+      required this.formattedCurrentDate});
 
   @override
   _NeuDatePickerState createState() => _NeuDatePickerState();
 }
 
 class _NeuDatePickerState extends State<NeuDatePicker> {
-  late String _formattedNow;
-  late DateTime _currentDate;
-  late String _formattedCurrentDate;
-  late List<DateTime> _usedDates;
-  bool _isDisabled = false;
-
-  List<DateTime> getUsedDates(List<WeightRecord> records) {
-    List<DateTime> usedDates = [];
-    if (records.isNotEmpty) {
-      records.forEach((record) => {usedDates.add(record.date)});
-    }
-    return usedDates;
-  }
+  String _selectedDate = '';
 
   Future<Null> _selectDate(
       BuildContext context, List<DateTime> usedDates) async {
     dynamic _datePicker = await showDatePicker(
         context: context,
-        initialDate: _currentDate,
+        initialDate: widget.currentDate,
         firstDate: DateTime(2000),
         lastDate: DateTime.now(),
         selectableDayPredicate: (date) {
-          usedDates.remove(
-            _currentDate,
-          );
-          print("usedDates: $usedDates");
+          //print('usedDates from _selectDate:$usedDates');
           return usedDates.contains(date) ? false : true;
         });
 
-    if (_datePicker != null && _datePicker != _currentDate) {
+    if (_datePicker != null) {
       setState(() {
-        _currentDate = _datePicker;
-        _formattedNow = DateFormat('MM/dd').format(
-          _currentDate,
+        _selectedDate = DateFormat('MM/dd').format(
+          _datePicker,
         );
         widget.callback(
-          _currentDate,
+          _datePicker,
         );
       });
     }
@@ -63,11 +57,7 @@ class _NeuDatePickerState extends State<NeuDatePicker> {
 
   @override
   void initState() {
-    _currentDate = DateTime(widget.currentDate.year, widget.currentDate.month,
-        widget.currentDate.day);
-    _formattedCurrentDate = DateFormat('MM/dd').format(
-      _currentDate,
-    );
+    print("usedDates: ${widget.usedDates}");
 
     super.initState();
   }
@@ -76,41 +66,38 @@ class _NeuDatePickerState extends State<NeuDatePicker> {
   Widget build(BuildContext context) {
     final theme = NeumorphicTheme.currentTheme(context);
     final bodyText1 = theme.textTheme.bodyText1;
+   
 
     return Consumer<ButtonMode>(
       builder: (context, mode, child) {
         return NeumorphicButton(
-            style :NeumorphicStyle(
-          shape: NeumorphicShape.concave,
-          boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(25)),
-          depth: -3,
-          intensity: 0.9,
-          
-        ),
-        padding:EdgeInsets.only(top:14.0, left:18, right: 14, bottom:18),
-        onPressed: mode.isEditing
-                ? null
-                : () {
-                    _selectDate(context, []);
-                  },
-        child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  '$_formattedCurrentDate',
-                  style: bodyText1?.copyWith(fontSize: 16),
+                style: NeumorphicStyle(
+                  shape: NeumorphicShape.concave,
+                  boxShape:
+                      NeumorphicBoxShape.roundRect(BorderRadius.circular(25)),
+                  depth: -3,
+                  intensity: 0.9,
                 ),
-                Icon(
-                  Icons.calendar_today,
-                  color: theme.defaultTextColor,
-                ),
-              ],
-            )
+                padding:
+                    EdgeInsets.only(top: 14.0, left: 18, right: 14, bottom: 18),
+                onPressed: () {
+                  _selectDate(context, widget.usedDates);
+                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      '${_selectedDate != '' && !widget.usedDates.contains(_selectedDate) ? _selectedDate : widget.formattedCurrentDate}',
+                      style: bodyText1?.copyWith(fontSize: 16),
+                    ),
+                    Icon(
+                      Icons.calendar_today,
+                      color: theme.defaultTextColor,
+                    ),
+                  ],
+                ))
 
-        )
-        
-        
-        /* TextButton(
+            /* TextButton(
             style: ButtonStyle(
               backgroundColor: MaterialStateProperty.all(Colors.grey),
               shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -129,7 +116,7 @@ class _NeuDatePickerState extends State<NeuDatePicker> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  '$_formattedCurrentDate',
+                  '$_selectedDate',
                   style: TextStyle(color: Colors.black, fontSize: 15.0),
                 ),
                 Icon(
@@ -137,7 +124,8 @@ class _NeuDatePickerState extends State<NeuDatePicker> {
                   color: Colors.black,
                 ),
               ],
-            )) */;
+            )) */
+            ;
       },
     );
   }

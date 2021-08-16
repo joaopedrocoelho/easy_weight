@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:new_app/models/button_mode.dart';
 import 'package:new_app/models/weight_record.dart';
 
 import 'package:new_app/utils/format_weight.dart';
@@ -11,6 +12,8 @@ import 'package:new_app/widgets/custom_graph/horizontal_lines.dart';
 import 'package:new_app/widgets/custom_graph/lines.dart';
 import 'package:new_app/widgets/custom_graph/side_titles.dart';
 import 'package:new_app/widgets/custom_graph/spots.dart';
+
+import 'package:provider/provider.dart';
 
 class GraphContainer extends StatefulWidget {
   final List<WeightRecord> records;
@@ -25,13 +28,13 @@ class GraphContainer extends StatefulWidget {
 
 class _GraphContainerState extends State<GraphContainer> {
   int? _selectedIndex;
-  void onGraphSpotTap(int index) {
+  void onGraphSpotTap(int index, BuildContext context) {
     setState(() {
-      _selectedIndex == index ? _selectedIndex = null : _selectedIndex = index;
+      Provider.of<ButtonMode>(context).selectedIndex == index ? _selectedIndex = null : _selectedIndex = index;
     });
   }
 
-  //late List<HorizontalLine> horizontalGuidelines;
+  late bool isGraphWidthBiggerThanScreenWidth;
 
 //stateless
   int paddingTop = 20;
@@ -48,10 +51,20 @@ class _GraphContainerState extends State<GraphContainer> {
   void initState() {
     super.initState();
     _graphController = ScrollController();
+  }
 
+  void scrollGraphToEnd() {
     WidgetsBinding.instance?.addPostFrameCallback((_) {
       if (_graphController.hasClients) {
         _graphController.jumpTo(_graphController.position.maxScrollExtent);
+      }
+    });
+  }
+
+  void scrollGraphToStart() {
+    WidgetsBinding.instance?.addPostFrameCallback((_) {
+      if (_graphController.hasClients) {
+        _graphController.jumpTo(_graphController.position.minScrollExtent);
       }
     });
   }
@@ -69,12 +82,19 @@ class _GraphContainerState extends State<GraphContainer> {
 
     double paddingTop = 0;
 
-    double graphHeight = MediaQuery.of(widget.context).size.height /2;
+    double graphHeight = MediaQuery.of(widget.context).size.height / 2;
 
     double graphWidth = //50 is the space between dates
         widget.records.length * 50 > MediaQuery.of(widget.context).size.width
             ? (widget.records.length * 50)
-            : MediaQuery.of(widget.context).size.width;
+            : MediaQuery.of(widget.context).size.width * 0.9;
+
+//if graphWidth is bigger than scroll to the end
+
+        (graphWidth > MediaQuery.of(widget.context).size.width * 0.9 && 
+        Provider.of<ButtonMode>(context).isEditing == false)
+        ? scrollGraphToEnd()
+        : scrollGraphToStart();
 
     //https://chezvoila.com/blog/yaxis/
     double lowerThirdScale = (minWeight - minDisplayedWeight) /
@@ -82,15 +102,12 @@ class _GraphContainerState extends State<GraphContainer> {
 
     double bottomTitlesHeight = 30;
 
-    List<int> sideTitleWeights = renderSideTitleWeights(minDisplayedWeight, 
-    maxDisplayedWeight);
-
-    
-   
+    List<int> sideTitleWeights =
+        renderSideTitleWeights(minDisplayedWeight, maxDisplayedWeight);
 
     List<GraphSpot> spots = renderSpots(
         widget.records,
-        graphHeight ,
+        graphHeight,
         bottomTitlesHeight,
         maxDisplayedWeight,
         minDisplayedWeight,
@@ -98,8 +115,8 @@ class _GraphContainerState extends State<GraphContainer> {
         _selectedIndex,
         onGraphSpotTap);
 
-    List<DrawLines> graphLines = renderLines(graphHeight,
-        MediaQuery.of(widget.context).size.width, spots);
+    List<DrawLines> graphLines = renderLines(
+        graphHeight, MediaQuery.of(widget.context).size.width, spots);
 
     List<DrawHorizontalLines> horizontalGuidelines = renderHorizontalLines(
         graphWidth,
@@ -113,7 +130,6 @@ class _GraphContainerState extends State<GraphContainer> {
         renderGradientFill(spots);
 
     List<Widget> graphWidgetsList = [
-    
       /* ...horizontalGuidelines, */
       PaintFill(
           fillCoordinates: gradientFillBelowGraphCoordinates,
@@ -130,7 +146,7 @@ class _GraphContainerState extends State<GraphContainer> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-              height: graphHeight+ bottomTitlesHeight,
+              height: graphHeight + bottomTitlesHeight,
               width: MediaQuery.of(context).size.width / 10,
               child: SideTitles(
                 sideTitleWeights: sideTitleWeights,
@@ -151,13 +167,12 @@ class _GraphContainerState extends State<GraphContainer> {
               child: Stack(
                 children: [
                   Container(
-                    
                     width: graphWidth,
                   ),
-                              BottomTitlesRow(
-          records: widget.records,
-          graphWidth: graphWidth,
-          bottomTitlesHeight: bottomTitlesHeight),
+                  BottomTitlesRow(
+                      records: widget.records,
+                      graphWidth: graphWidth,
+                      bottomTitlesHeight: bottomTitlesHeight),
                   ...graphWidgetsList
                 ],
                 //SideTitles widget

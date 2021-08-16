@@ -44,9 +44,9 @@ class SideTitles extends StatelessWidget {
     List<Widget> renderSideTitleWeights() {
       List<Widget> titles = sideTitleWeights.mapIndexed((weight, index) {
         Size whatsTheSize = _textSize(weight.toString(), theme.textTheme.caption!);
-        print('whatstheSize: ${whatsTheSize}');
-        print(
-            'sidetitlePos ${yPos(weight.toDouble(), graphHeight, maxDisplayedWeight, minDisplayedWeight) - graphHeight}');
+        //print('whatstheSize: ${whatsTheSize}');
+       // print(
+        //    'sidetitlePos ${yPos(weight.toDouble(), graphHeight, maxDisplayedWeight, minDisplayedWeight) - graphHeight}');
         return Positioned(
           bottom:  (yPos(weight.toDouble(), graphHeight, maxDisplayedWeight,
                   minDisplayedWeight) 

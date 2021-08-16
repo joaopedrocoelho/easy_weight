@@ -13,3 +13,12 @@ int daysBetween(DateTime from, DateTime to) {
   to = DateTime(to.year, to.month, to.day);
   return (to.difference(from).inHours / 24).round();
 }
+
+
+DateTime findLastAvailableDate(List<DateTime> usedDates, DateTime currentDate) {
+      DateTime lastAvailableDate = DateTime(currentDate.year,currentDate.month,currentDate.day);
+  while (usedDates.contains(lastAvailableDate)) { 
+        lastAvailableDate = lastAvailableDate.subtract(Duration(days: 1));
+   }   
+   return lastAvailableDate;
+}

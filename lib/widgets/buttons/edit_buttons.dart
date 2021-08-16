@@ -25,7 +25,7 @@ class _EditButtonsState extends State<EditButtons> {
   }
 
   void _setEditVisible() {
-    Future.delayed(Duration(milliseconds: 500), () {
+    Future.delayed(Duration(milliseconds: 100), () {
       setState(() {
         _editVisibility = true;
       });
@@ -33,7 +33,7 @@ class _EditButtonsState extends State<EditButtons> {
   }
 
   void _setEditInVisible() {
-    Future.delayed(Duration(milliseconds: 300), () {
+    Future.delayed(Duration(milliseconds: 100), () {
       setState(() {
         _editVisibility = false;
       });
@@ -57,7 +57,7 @@ class _EditButtonsState extends State<EditButtons> {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               //delete button
-              if(_editVisibility)  
+              if(_editVisibility) 
               NeuButton(
                 child: Icon(
                   Icons.delete_outline_rounded,
@@ -81,18 +81,13 @@ class _EditButtonsState extends State<EditButtons> {
               SizedBox(
                 width: 20.0,
               ),
-              if (_editVisibility) 
-                NeuButton(
+               NeuButton(
                     addOnPressed: widget.addOnPressed,
-                    child: Icon(Icons.mode_edit_outline_rounded,
+                    child: _editVisibility ? Icon(Icons.mode_edit_outline_rounded,
+                        color: theme.defaultTextColor, size: 30) : Icon(Icons.add_circle_outline_rounded,
                         color: theme.defaultTextColor, size: 30),
-                    isVisible: buttonMode.isEditing),
-              if (!_editVisibility)
-                NeuButton(
-                    addOnPressed: widget.addOnPressed,
-                    child: Icon(Icons.add_circle_outline_rounded,
-                        color: theme.defaultTextColor, size: 30),
-                    isVisible: !buttonMode.isEditing),
+                    isVisible: true),
+              
             ],
           ),
         ),

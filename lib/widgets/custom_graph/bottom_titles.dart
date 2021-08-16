@@ -12,7 +12,9 @@ class BottomTitles extends StatefulWidget {
   final double height;
 
   const BottomTitles(
-      {Key? key, required this.records, required this.graphWidth,
+      {Key? key,
+      required this.records,
+      required this.graphWidth,
       required this.height})
       : super(key: key);
 
@@ -30,7 +32,10 @@ class _BottomTitlesState extends State<BottomTitles> {
       List<DateTime> recordDates =
           widget.records.map((record) => record.date).toList();
 
-      List<DateTime> removedOddDates = removeOdds(recordDates);
+
+      List<DateTime> removedOddDates = removeOdds<DateTime>(recordDates);
+
+    
 
       List<Widget> bottomTitles = removedOddDates.mapIndexed((evenDate, index) {
         String date = DateFormat('MM/dd').format(evenDate);
@@ -46,6 +51,9 @@ class _BottomTitlesState extends State<BottomTitles> {
 
       return bottomTitles;
     }
+
+    List<Widget> bottomTitles = renderBottomTitles();
+
 
     return Container(
       width: widget.graphWidth,

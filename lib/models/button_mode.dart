@@ -4,6 +4,7 @@ import 'package:new_app/widgets/custom_graph/spots.dart';
 
 class ButtonMode with ChangeNotifier {
   bool isEditing = false;
+  int? selectedIndex;
   double weight = 0.0;
   DateTime date = DateTime.now();
   String note = '';
@@ -22,4 +23,8 @@ class ButtonMode with ChangeNotifier {
     isEditing = false;
     notifyListeners();
   }
+
+  void onGraphSpotTap(int index) {
+        selectedIndex == index ? selectedIndex = null : selectedIndex = index;
+     }
 }//
