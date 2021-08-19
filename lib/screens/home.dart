@@ -118,7 +118,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
               left: 0,
               child: Container(
                 width: 100,
-                height: 50,
+               
                 child: UnitToggle())),
             Positioned(
               bottom: 0,

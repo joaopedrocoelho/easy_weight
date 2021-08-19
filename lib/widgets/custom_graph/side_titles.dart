@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:new_app/models/weight_unit.dart';
 import 'package:new_app/utils/render_graph.dart';
 
+import 'package:provider/provider.dart';
 import 'package:new_app/utils/indexed_iterables.dart';
 
 class SideTitles extends StatelessWidget {
@@ -20,56 +22,57 @@ class SideTitles extends StatelessWidget {
       required this.paddingTop,
       required this.bottomTitlesHeight});
 
-  
   late List<Widget> titles;
 
   @override
   Widget build(BuildContext context) {
     final theme = NeumorphicTheme.currentTheme(context);
 
-    Size _textSize(String text, TextStyle style) {
-    final TextPainter textPainter = TextPainter(
-        text: TextSpan(text: text, style: style),
-        maxLines: 1,
-        textDirection: TextDirection.ltr)
-      ..layout(minWidth: 0, maxWidth: double.infinity);
-    return textPainter.size;
-  } 
+    return Consumer<WeightUnit>(builder: (context, unit, child) {
+      Size _textSize(String text, TextStyle style) {
+        final TextPainter textPainter = TextPainter(
+            text: TextSpan(text: text, style: style),
+            maxLines: 1,
+            textDirection: TextDirection.ltr)
+          ..layout(minWidth: 0, maxWidth: double.infinity);
+        return textPainter.size;
+      }
 
-  
+      //render left side guide weights
+      List<Widget> renderSideTitleWeights() {
+        List<Widget> titles = sideTitleWeights.mapIndexed((weight, index) {
+          Size whatsTheSize =
+              _textSize(weight.toString(), theme.textTheme.caption!);
 
+          String weightToPound = (weight * 2.20462).toStringAsFixed(0);
 
-  
-    //render left side guide weights
-    List<Widget> renderSideTitleWeights() {
-      List<Widget> titles = sideTitleWeights.mapIndexed((weight, index) {
-        Size whatsTheSize = _textSize(weight.toString(), theme.textTheme.caption!);
-        //print('whatstheSize: ${whatsTheSize}');
-       // print(
-        //    'sidetitlePos ${yPos(weight.toDouble(), graphHeight, maxDisplayedWeight, minDisplayedWeight) - graphHeight}');
-        return Positioned(
-          bottom:  (yPos(weight.toDouble(), graphHeight, maxDisplayedWeight,
-                  minDisplayedWeight) 
-               - (whatsTheSize.height * 0.5)) + bottomTitlesHeight  // this makes the title centered ,
-              ,
-          child: Text(
-            weight.toString(),
-            style: theme.textTheme.caption,
-          ),
-        );
-      }).toList();
+          return Positioned(
+            bottom: (yPos(weight.toDouble(), graphHeight, maxDisplayedWeight,
+                        minDisplayedWeight) -
+                    (whatsTheSize.height * 0.5)) +
+                bottomTitlesHeight // this makes the title centered ,
+            ,
+            child: Text(
+              unit.usePounds? 
+              weightToPound :
+              weight.toString(),
+              style: theme.textTheme.caption,
+            ),
+          );
+        }).toList();
 
-      return titles;
-    }
+        return titles;
+      }
 
-    titles = renderSideTitleWeights();
+      titles = renderSideTitleWeights();
 
-    return Container(
-     /*  color: Colors.amberAccent, */
-      child: Stack(
-        alignment: Alignment.center,
-        children: titles,
-      ),
-    );
+      return Container(
+        /*  color: Colors.amberAccent, */
+        child: Stack(
+          alignment: Alignment.center,
+          children: titles,
+        ),
+      );
+    });
   }
 }

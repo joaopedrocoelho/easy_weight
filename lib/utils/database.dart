@@ -45,14 +45,14 @@ class RecordsDatabase {
 
     final id = await db.insert(tableRecords, record.toJson());
 
-    print('record id : $id');
+   // print('record id : $id');
     return id;
   }
 
   Future<List<WeightRecord>> getRecords() async {
     final db = await instance.database;
 
-    print("db: $db");
+    //print("db: $db");
 
     List<Map<String, dynamic>> records = await db.rawQuery(
         'SELECT * FROM $tableRecords ORDER BY date(${RecordFields.date}) ASC');
@@ -60,7 +60,7 @@ class RecordsDatabase {
     List<WeightRecord> recordsConverted = toWeightRecordList(records);
 
     recordsConverted.forEach((record) {
-      print('record: ${record.date} - ${record.weight} - ${record.note}');
+     // print('record: ${record.date} - ${record.weight} - ${record.note}');
     });
 
     return recordsConverted;
@@ -70,8 +70,8 @@ class RecordsDatabase {
     final db = await instance.database;
 
     String date = DateFormat('yyyy-MM-dd').format(record.date).toString();
-    print("record.date:${record.date}");
-    print("date: $date");
+    //print("record.date:${record.date}");
+   // print("date: $date");
 
     return db.update(
       tableRecords,

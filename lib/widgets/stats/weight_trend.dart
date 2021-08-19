@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:new_app/models/weight_unit.dart';
+import 'package:provider/provider.dart';
 
 double renderPadding(String period) {
   double padding = 0.0;
@@ -30,8 +32,6 @@ class WeightTrend extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = NeumorphicTheme.currentTheme(context);
 
-    
-
     Icon setIcon(double? variation) {
       if (variation != null && variation > 0) {
         return Icon(Icons.trending_up_rounded,
@@ -45,28 +45,42 @@ class WeightTrend extends StatelessWidget {
       }
     }
 
-    return Container(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Text(period, style: theme.textTheme.caption),
-          Padding(
-            padding: EdgeInsets.only(left: renderPadding(period)),
-            child: setIcon(variation),
-          ),
-          Padding(
-            padding: EdgeInsets.only(left: 8.0),
-            child: 
-            variation != null ?
-            Text('${variation! > 0 ? '+' : ''}${variation.toString()}kg',
-                style: theme.textTheme.subtitle2?.copyWith(height: 1)) :
-            Text('0.0kg',
-                style: theme.textTheme.subtitle2?.copyWith(height: 1))
-                ,
-          )
-        ],
-      ),
-    );
+    return Consumer<WeightUnit>(builder: (context, unit, child) {
+      String variationToPound = 
+      variation != null ?
+      (variation! * 2.20462).toStringAsFixed(1) :
+      '0.0lb';
+
+
+      Text variationTextKg = variation != null
+          ? Text('${variation! > 0 ? '+' : ''}${variation.toString()}kg',
+              style: theme.textTheme.subtitle2?.copyWith(height: 1))
+          : Text('0.0kg',
+              style: theme.textTheme.subtitle2?.copyWith(height: 1));
+
+      Text variationTextPound = variation  != null
+          ? Text('${variation! > 0 ? '+' : ''}${variationToPound}lb',
+              style: theme.textTheme.subtitle2?.copyWith(height: 1))
+          : Text('0.0lb',
+              style: theme.textTheme.subtitle2?.copyWith(height: 1));
+
+      return Container(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(period, style: theme.textTheme.caption),
+            Padding(
+              padding: EdgeInsets.only(left: renderPadding(period)),
+              child: setIcon(variation),
+            ),
+            Padding(
+              padding: EdgeInsets.only(left: 8.0),
+              child: unit.usePounds ? variationTextPound : variationTextKg,
+            )
+          ],
+        ),
+      );
+    });
   }
 }

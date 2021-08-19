@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:new_app/models/button_mode.dart';
 import 'package:new_app/models/records_model.dart';
+import 'package:new_app/models/weight_unit.dart';
 
 import 'package:new_app/widgets/add_record_form/add_note.dart';
 import 'package:new_app/widgets/add_record_form/add_weight.dart';
@@ -80,11 +81,12 @@ class _EditRecordState extends State<EditRecord>
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<ButtonMode>(builder: (context, buttonMode, child) {
+    return Consumer2<ButtonMode, WeightUnit>(builder: (context, buttonMode, unit, child) {
       String _initialWeight = buttonMode.weight.toString();
       FocusScopeNode currentFocus = FocusScope.of(context);
 
-      print('currentFocus: ${currentFocus.focusedChild}');
+      
+
 
       return SlideTransition(
           position: Tween<Offset>(
@@ -119,9 +121,15 @@ class _EditRecordState extends State<EditRecord>
                         hintFocus: hintFocus,
                         initialValue: _weight.toString(),
                         onSaved: (value) {
-                          setState(() {
-                            _weight = double.parse(value!);
-                          });
+                         unit.usePounds
+                            ? setState(() {
+                                print('hey pound');
+                                _weight = (double.parse(value!) / 2.20462)
+                                    .ceilToDouble();
+                              })
+                            : setState(() {
+                                _weight = double.parse(value!);
+                              });
                         }),
                     SizedBox(
                       height: 30.0,
@@ -159,8 +167,8 @@ class _EditRecordState extends State<EditRecord>
                           if (_formKey.currentState!.validate()) {
                             _formKey.currentState!.save();
 
-                            print(
-                                '_weight : $_weight widget.date: ${widget.date} note:$_note');
+                            //print(
+                             //   '_weight : $_weight widget.date: ${widget.date} note:$_note');
                             WeightRecord editedRecord = new WeightRecord(
                                 date: widget.date,
                                 weight: _weight,

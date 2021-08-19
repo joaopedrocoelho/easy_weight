@@ -15,27 +15,27 @@ class NeuDatePicker extends StatefulWidget {
   final DateTime currentDate;
   final List<WeightRecord> records;
   final List<DateTime> usedDates;
-  final String formattedCurrentDate;
+  final String selectedDate;
 
   NeuDatePicker(
       {required this.callback,
       required this.currentDate,
       required this.records,
       required this.usedDates,
-      required this.formattedCurrentDate});
+      required this.selectedDate});
 
   @override
   _NeuDatePickerState createState() => _NeuDatePickerState();
 }
 
 class _NeuDatePickerState extends State<NeuDatePicker> {
-  String _selectedDate = '';
+
 
   Future<Null> _selectDate(
-      BuildContext context, List<DateTime> usedDates) async {
+      BuildContext context, List<DateTime> usedDates, DateTime initialDate) async {
     dynamic _datePicker = await showDatePicker(
         context: context,
-        initialDate: widget.currentDate,
+        initialDate: initialDate,
         firstDate: DateTime(2000),
         lastDate: DateTime.now(),
         selectableDayPredicate: (date) {
@@ -45,9 +45,7 @@ class _NeuDatePickerState extends State<NeuDatePicker> {
 
     if (_datePicker != null) {
       setState(() {
-        _selectedDate = DateFormat('MM/dd').format(
-          _datePicker,
-        );
+             
         widget.callback(
           _datePicker,
         );
@@ -57,7 +55,7 @@ class _NeuDatePickerState extends State<NeuDatePicker> {
 
   @override
   void initState() {
-    print("usedDates: ${widget.usedDates}");
+    print("selectedDate: ${widget.selectedDate}");
 
     super.initState();
   }
@@ -66,10 +64,9 @@ class _NeuDatePickerState extends State<NeuDatePicker> {
   Widget build(BuildContext context) {
     final theme = NeumorphicTheme.currentTheme(context);
     final bodyText1 = theme.textTheme.bodyText1;
-   
 
-    return Consumer<ButtonMode>(
-      builder: (context, mode, child) {
+    return Consumer<RecordsListModel>(
+      builder: (context, records, child) {
         return NeumorphicButton(
                 style: NeumorphicStyle(
                   shape: NeumorphicShape.concave,
@@ -81,13 +78,13 @@ class _NeuDatePickerState extends State<NeuDatePicker> {
                 padding:
                     EdgeInsets.only(top: 14.0, left: 18, right: 14, bottom: 18),
                 onPressed: () {
-                  _selectDate(context, widget.usedDates);
+                  _selectDate(context, widget.usedDates, records.lastAvailableDate); 
                 },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      '${_selectedDate != '' && !widget.usedDates.contains(_selectedDate) ? _selectedDate : widget.formattedCurrentDate}',
+                      records.formattedCurrentDate,
                       style: bodyText1?.copyWith(fontSize: 16),
                     ),
                     Icon(

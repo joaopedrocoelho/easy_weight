@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:new_app/models/button_mode.dart';
+import 'package:new_app/models/weight_unit.dart';
+import 'package:provider/provider.dart';
 
 class AddWeightTextField extends StatelessWidget {
   final String initialValue;
@@ -18,8 +21,11 @@ class AddWeightTextField extends StatelessWidget {
     final theme = NeumorphicTheme.currentTheme(context);
     final bodyText1 = theme.textTheme.bodyText1;
 
+    return Consumer2<WeightUnit, ButtonMode>(
+      builder: (context, unit, mode, child) {
 
-    return Neumorphic(
+      
+      return Neumorphic(
         style: NeumorphicStyle(
           shape: NeumorphicShape.concave,
           boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(25)),
@@ -27,7 +33,7 @@ class AddWeightTextField extends StatelessWidget {
           intensity: 0.9,
         ),
         child: TextFormField(
-            initialValue: initialValue,
+            initialValue: mode.addWeight == null? '' : mode.addWeight.toString(),
             validator: (value) {
               if (value == null || value.isEmpty) {
                 return 'Please enter weight';
@@ -39,7 +45,7 @@ class AddWeightTextField extends StatelessWidget {
             keyboardType: TextInputType.number,
             cursorColor: theme.defaultTextColor,
             decoration: InputDecoration(
-              hintText: "Weight (kg)",
+              hintText: unit.usePounds ? "Weight (lb)" : "Weight (kg)",
               hintStyle: bodyText1?.copyWith(fontSize: 16),
               contentPadding:
                   EdgeInsets.only(top: 14.0, left: 18, right: 14, bottom: 18),
@@ -58,5 +64,8 @@ class AddWeightTextField extends StatelessWidget {
                   borderRadius: BorderRadius.circular(25.0),
                   borderSide: BorderSide(width: 0.0, color: Colors.grey)), */
             )));
+
+      });
+    
   }
 }

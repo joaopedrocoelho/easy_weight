@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 
+import 'package:intl/intl.dart';
+import 'package:new_app/models/button_mode.dart';
 import 'package:new_app/models/records_model.dart';
-import 'package:new_app/utils/format_date.dart';
+import 'package:new_app/models/weight_unit.dart';
+
 import 'package:new_app/widgets/add_record_form/add_note.dart';
 import 'package:new_app/widgets/add_record_form/add_weight.dart';
 import 'package:new_app/widgets/add_record_form/neu_close_button.dart';
@@ -45,11 +48,7 @@ class _AddRecordState extends State<AddRecord>
   DateTime _date = DateTime.now();
   String _note = '';
 
-  void _setDate(DateTime newDate) {
-    setState(() {
-      _date = newDate;
-    });
-  }
+//datepicker selected date
 
   Future addRecord() async {
     WeightRecord newRecord =
@@ -58,7 +57,7 @@ class _AddRecordState extends State<AddRecord>
 
     // List<WeightRecord> recordsClone = graph.records;
 
-    print('record: $record');
+    //print('record: $record');
 
     widget.setInvisible();
     widget.setRefresh();
@@ -87,108 +86,125 @@ class _AddRecordState extends State<AddRecord>
     ).animate(CurvedAnimation(
         parent: widget.animationController, curve: Curves.ease));
 
-   FocusScopeNode currentFocus = FocusScope.of(context);
+    FocusScopeNode currentFocus = FocusScope.of(context);
 
+    return Consumer3<WeightUnit, RecordsListModel, ButtonMode>(
+        builder: (context, unit, records, mode, child) {
+      void _setDate(DateTime newDate) {
+        setState(() {
+          _date = newDate;
+          records.newFormattedDate(newDate);
+        });
+      }
 
-
-    return SlideTransition(
-      position: _offsetAnimation,
-      child: Align(
-        alignment: Alignment.bottomCenter,
-        child: NeuFormContainer(
-          child: Form(
-            key: _formKey,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Add a record',
-                      style: Theme.of(context).textTheme.headline5,
-                      textAlign: TextAlign.start,
-                    ),
-                    NeuCloseButton(onPressed: widget.setInvisible),
-                  ],
-                ),
-                SizedBox(
-                  height: 30.0,
-                ),
-                AddWeightTextField(
-                    hintFocus: hintFocus,
-                    initialValue: _weight.toString(),
-                    onSaved: (value) {
-                      setState(() {
-                        _weight = double.parse(value!);
-                      });
-                    }),
-                SizedBox(
-                  height: 30.0,
-                ),
-                NeuDatePicker(
+      return SlideTransition(
+        position: _offsetAnimation,
+        child: Align(
+          alignment: Alignment.bottomCenter,
+          child: NeuFormContainer(
+            child: Form(
+              key: _formKey,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Add a record',
+                        style: Theme.of(context).textTheme.headline5,
+                        textAlign: TextAlign.start,
+                      ),
+                      NeuCloseButton(onPressed: widget.setInvisible),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 30.0,
+                  ),
+                  AddWeightTextField(
+                      hintFocus: hintFocus,
+                      initialValue: _weight.toString(),
+                      onSaved: (value) {
+                        unit.usePounds
+                            ? setState(() {
+                                _weight = (double.parse(value!) / 2.20462)
+                                    .ceilToDouble();
+                              })
+                            : setState(() {
+                                _weight = double.parse(value!);
+                              });
+                      }),
+                  SizedBox(
+                    height: 30.0,
+                  ),
+                  NeuDatePicker(
                     callback: _setDate,
-                    currentDate: context.watch<RecordsListModel>().lastAvailableDate,
+                    currentDate:
+                        context.watch<RecordsListModel>().lastAvailableDate,
                     records: widget.records,
                     usedDates: context.watch<RecordsListModel>().usedDates,
-                    formattedCurrentDate: context.watch<RecordsListModel>().formattedCurrentDate,),
-                    
-                SizedBox(
-                  height: 30.0,
-                ),
-                AddNoteTextField(
-                    initialValue: _note,
-                    onSaved: (value) {
-                      setState(() {
-                        _note = value!;
-                      });
-                    }),
-                SizedBox(
-                  height: 30.0,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                        child: CancelButton(onPressed: widget.setInvisible)),
-                    SizedBox(
-                      width: 20.0,
-                    ),
-                    Expanded(child: SaveButton(
-                      onPressed: () async {
-                        // Validate returns true if the form is valid, or false otherwise.
-                        if (_formKey.currentState!.validate()) {
-                          _formKey.currentState!.save();
+                    selectedDate: records.formattedCurrentDate,
+                  ),
+                  SizedBox(
+                    height: 30.0,
+                  ),
+                  AddNoteTextField(
+                      initialValue: _note,
+                      onSaved: (value) {
+                        setState(() {
+                          _note = value!;
+                        });
+                      }),
+                  SizedBox(
+                    height: 30.0,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                          child: CancelButton(onPressed: widget.setInvisible)),
+                      SizedBox(
+                        width: 20.0,
+                      ),
+                      Expanded(child: SaveButton(
+                        onPressed: () async {
+                          // Validate returns true if the form is valid, or false otherwise.
+                          if (_formKey.currentState!.validate()) {
+                            _formKey.currentState!.save();
 
-                          WeightRecord newRecord = new WeightRecord(
-                              date: _date, weight: _weight, note: _note);
+                            WeightRecord newRecord = new WeightRecord(
+                                date: _date, weight: _weight, note: _note);
 
-                          List<WeightRecord> recordsClone =
-                              Provider.of<RecordsListModel>(context,
-                                      listen: false)
-                                  .records;
-                          recordsClone.add(newRecord);
-                          Provider.of<RecordsListModel>(context, listen: false)
-                              .updateRecordsList(recordsClone);
+                            List<WeightRecord> recordsClone =
+                                Provider.of<RecordsListModel>(context,
+                                        listen: false)
+                                    .records;
+                            recordsClone.add(newRecord);
+                            Provider.of<RecordsListModel>(context,
+                                    listen: false)
+                                .updateRecordsList(recordsClone);
 
-                          addRecord();
-                          setState(() {
-                            _note = '';
-                            _weight = 0.0;
-                          });
+                            addRecord();
+                            setState(() {
+                              _note = '';
+                              _weight = 0.0;
+                            });
 
-                          currentFocus.focusedChild?.unfocus();
-                        }
-                      },
-                    ))
-                  ],
-                )
-              ],
+                            mode.clearData();
+
+                            currentFocus.focusedChild?.unfocus();
+                          }
+                        },
+                      ))
+                    ],
+                  )
+                ],
+              ),
             ),
           ),
         ),
-      ),
-    );
+      );
+    });
   }
 }

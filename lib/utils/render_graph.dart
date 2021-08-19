@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:new_app/models/graph_model.dart';
 import 'package:new_app/models/weight_record.dart';
 
 import 'package:new_app/utils/format_weight.dart';

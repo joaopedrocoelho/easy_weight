@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:new_app/models/weight_unit.dart';
+import 'package:provider/provider.dart';
 
 class EditWeightTextField extends StatefulWidget {
   final String initialValue;
@@ -23,7 +25,7 @@ class _EditWeightTextFieldState extends State<EditWeightTextField> {
   @override
   void initState() {
     // TODO: implement initState
-    
+
     super.initState();
   }
 
@@ -32,8 +34,9 @@ class _EditWeightTextFieldState extends State<EditWeightTextField> {
     final theme = NeumorphicTheme.currentTheme(context);
     final bodyText1 = theme.textTheme.bodyText1;
 
-    
-    return Neumorphic(
+    return Consumer<WeightUnit>(builder: (context, unit, child) {
+
+      return Neumorphic(
       style: NeumorphicStyle(
         shape: NeumorphicShape.concave,
         boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(25)),
@@ -53,7 +56,7 @@ class _EditWeightTextFieldState extends State<EditWeightTextField> {
           keyboardType: TextInputType.number,
           cursorColor: theme.defaultTextColor,
           decoration: InputDecoration(
-            hintText: "Weight (kg)",
+            hintText: unit.usePounds? "Weight (lb)" : "Weight (kg)",
             hintStyle: bodyText1?.copyWith(fontSize: 16),
             contentPadding:
                 EdgeInsets.only(top: 14.0, left: 18, right: 14, bottom: 18),
@@ -73,5 +76,8 @@ class _EditWeightTextFieldState extends State<EditWeightTextField> {
                     borderSide: BorderSide(width: 0.0, color: Colors.grey)), */
           )),
     );
+    });
+
+    
   }
 }

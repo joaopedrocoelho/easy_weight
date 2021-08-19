@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:new_app/models/records_model.dart';
 import 'package:new_app/models/weight_record.dart';
+import 'package:new_app/models/weight_unit.dart';
 import 'package:new_app/widgets/provide_records.dart';
 
 import 'package:provider/provider.dart';
@@ -14,9 +15,13 @@ void main() {
 }
 
 Future<List<WeightRecord>> _getRecords(BuildContext context) async {
+  Provider.of<RecordsListModel>(context, listen: false)
+      .isLoading = true;
   List<WeightRecord> records = await RecordsDatabase.instance.getRecords();
   Provider.of<RecordsListModel>(context, listen: false)
       .updateRecordsList(records);
+Provider.of<RecordsListModel>(context, listen: false)
+      .isLoading = false; 
   return records;
 }
 
@@ -36,6 +41,7 @@ class MyApp extends StatelessWidget {
                         
         headline3: TextStyle(fontFamily: 'Noto Sans', color: 
         Color(0xff223761), fontSize: 35, fontWeight: FontWeight.w800),
+       
         headline5:TextStyle(fontFamily: 'Noto Sans', color: 
         Color(0xff223761), fontSize: 20, fontWeight: FontWeight.w800),
         button: TextStyle(fontFamily: 'Noto Sans', color: 
@@ -67,6 +73,7 @@ class MyApp extends StatelessWidget {
           providers: [
             ChangeNotifierProvider(create: (context) => RecordsListModel()),
             ChangeNotifierProvider(create: (context) => ButtonMode()),
+            ChangeNotifierProvider(create: (context) => WeightUnit()),
             FutureProvider<List<WeightRecord>?>(
                 create: (context) {
                   return _getRecords(context);

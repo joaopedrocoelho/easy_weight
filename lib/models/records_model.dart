@@ -10,13 +10,15 @@ class RecordsListModel extends ChangeNotifier {
 
   String formattedCurrentDate = '';
 
+  bool isLoading = false;
+
   void updateRecordsList(List<WeightRecord> newRecords) {
     this.records = newRecords;
     this.usedDates = getUsedDates(this.records);
     this.lastAvailableDate = findLastAvailableDate(usedDates, DateTime.now());
     this.formattedCurrentDate = DateFormat('MM/dd').format(
-          this.lastAvailableDate,
-        );
+      this.lastAvailableDate,
+    );
 
     notifyListeners();
   }
@@ -64,5 +66,10 @@ class RecordsListModel extends ChangeNotifier {
       lastAvailableDate = lastAvailableDate.subtract(Duration(days: 1));
     }
     return lastAvailableDate;
+  }
+
+  void newFormattedDate(DateTime newDate) {
+    formattedCurrentDate = DateFormat('MM/dd').format(newDate);
+    notifyListeners();
   }
 }

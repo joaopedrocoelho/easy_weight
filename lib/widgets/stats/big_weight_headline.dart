@@ -1,34 +1,36 @@
 import 'package:flutter/material.dart';
-
-
+import 'package:new_app/models/weight_unit.dart';
+import 'package:provider/provider.dart';
 
 class BigWeightHeadline extends StatelessWidget {
   final double? weight;
-    
-    const BigWeightHeadline({Key? key, required this.weight}) : super(key: key);
+
+  const BigWeightHeadline({Key? key, required this.weight}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      
-      child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.baseline,
-                            textBaseline: TextBaseline.alphabetic,
-                            children: [
-                              Text(
-                                weight == null? '0.0' : weight.toString(),
-                                style: 
-                                Theme.of(context).textTheme.bodyText1?.copyWith(
-                                  fontSize: 70, 
-                                  fontWeight: FontWeight.w300,
-                                  
-                                  textBaseline: TextBaseline.alphabetic,
-                                  height:1
-                                  ),
-                              ),
-                              Text('kg',
-                                  style: Theme.of(context).textTheme.bodyText1)
-                            ]),
-    );
+    return Consumer<WeightUnit>(builder: (context, unit, child) {
+      String weightKg = weight == null ? '0.0' : weight.toString();
+
+      String weightToPound =
+          weight != null ? ((weight! * 2.20462).toStringAsFixed(0)) : '0.0';
+
+      return Container(
+        child: Row(
+            crossAxisAlignment: CrossAxisAlignment.baseline,
+            textBaseline: TextBaseline.alphabetic,
+            children: [
+              Text(
+                unit.usePounds? weightToPound : weightKg,
+                style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                    fontSize: 70,
+                    fontWeight: FontWeight.w600,
+                    textBaseline: TextBaseline.alphabetic,
+                    height: 1),
+              ),
+              Text( unit.usePounds? 'lb' : 'kg', style: Theme.of(context).textTheme.bodyText1)
+            ]),
+      );
+    });
   }
 }
