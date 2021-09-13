@@ -1,6 +1,8 @@
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import 'package:new_app/models/weight_record.dart';
+import 'package:new_app/models/goal_model.dart';
+import 'package:new_app/utils/indexed_iterables.dart';
 import 'package:intl/intl.dart';
 
 class RecordsDatabase {
@@ -32,6 +34,15 @@ class RecordsDatabase {
         ${RecordFields.note} TEXT NULL
       )
     ''');
+
+    db.execute('''
+      CREATE TABLE $goalRecord (
+        ${GoalFields.id} INTEGER PRIMARY KEY NOT NULL,
+        ${GoalFields.weight} DOUBLE NOT NULL
+      )
+    ''');
+
+    print(db.query(goalRecord));
   }
 
   Future close() async {
@@ -45,7 +56,7 @@ class RecordsDatabase {
 
     final id = await db.insert(tableRecords, record.toJson());
 
-   // print('record id : $id');
+    // print('record id : $id');
     return id;
   }
 
@@ -60,7 +71,7 @@ class RecordsDatabase {
     List<WeightRecord> recordsConverted = toWeightRecordList(records);
 
     recordsConverted.forEach((record) {
-     // print('record: ${record.date} - ${record.weight} - ${record.note}');
+      // print('record: ${record.date} - ${record.weight} - ${record.note}');
     });
 
     return recordsConverted;
@@ -71,7 +82,7 @@ class RecordsDatabase {
 
     String date = DateFormat('yyyy-MM-dd').format(record.date).toString();
     //print("record.date:${record.date}");
-   // print("date: $date");
+    // print("date: $date");
 
     return db.update(
       tableRecords,
@@ -93,6 +104,58 @@ class RecordsDatabase {
     );
   }
 
-  /// Generate a modifiable result set
+  //goal
 
+  Future<int> addGoal(Goal goal) async {
+    final db = await instance.database;
+
+    final id = await db.insert(goalRecord, goal.toJson());
+
+    // print('record id : $id');
+    return id;
+  }
+
+  Future<Goal?> getGoal() async {
+    final db = await instance.database;
+
+    //print("db: $db");
+
+    List<Map<String, dynamic>> goal = await db.rawQuery(
+        'SELECT ${GoalFields.weight} FROM $goalRecord WHERE ${GoalFields.id}=1');
+
+    print("goal db $goal");
+    late Goal goalConverted;
+
+    if (goal.isNotEmpty) {
+      goal.forEachIndexed((goal, index) => {
+            if (index == 0)
+              {goalConverted = Goal(weight: goal[GoalFields.weight])}
+          });
+
+      return goalConverted;
+    } else {
+      return null;
+    }
+  }
+
+  Future<int> updateGoal(Goal goal) async {
+    final db = await instance.database;
+
+    return db.update(
+      goalRecord,
+      goal.toJson(),
+      where: '${GoalFields.id} = ?',
+      whereArgs: [1],
+    );
+  }
+
+  Future<int> deleteGoal(Goal goal) async {
+    final db = await instance.database;
+
+    return db.delete(
+      goalRecord,
+      where: '${GoalFields.id} = ?',
+      whereArgs: [1],
+    );
+  }
 }

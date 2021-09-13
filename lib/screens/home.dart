@@ -7,7 +7,11 @@ import 'package:new_app/utils/render_stats.dart';
 import 'package:new_app/widgets/buttons/edit_buttons.dart';
 import 'package:new_app/widgets/change_unit/unit_toggle.dart';
 import 'package:new_app/widgets/custom_graph/empty_graph_container.dart';
+import 'package:new_app/widgets/goal/goal_stats_container.dart';
+import 'package:new_app/widgets/goal/progress_circle/circle_container_test.dart';
+import 'package:new_app/widgets/goal/progress_circle/outer_wheel.dart';
 import 'package:new_app/widgets/graph_container.dart';
+import 'package:new_app/widgets/set_goal_form/edit_goal_form.dart';
 
 import 'package:new_app/widgets/stats/current_weight_stats.dart';
 
@@ -15,8 +19,6 @@ import 'package:provider/provider.dart';
 
 import 'package:new_app/widgets/add_record_form/add_record_form.dart';
 import 'package:new_app/widgets/edit_record_form/edit_record_form.dart';
-
-
 
 class Home extends StatefulWidget {
   final List<WeightRecord> list;
@@ -30,14 +32,18 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> with TickerProviderStateMixin {
   late AnimationController _addController;
   late AnimationController _editController;
+  late AnimationController _goalController;
+
   bool isLoading = false;
 
   void _setVisible(String form) {
     setState(() {
       if (form == 'add') {
         _addController.forward();
-      } else {
+      } else if (form == 'edit') {
         _editController.forward();
+      } else {
+        _goalController.forward();
       }
     });
   }
@@ -46,8 +52,11 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
     setState(() {
       if (form == 'add') {
         _addController.reverse();
-      } else {}
-      _editController.reverse();
+      } else if (form == 'edit') {
+        _editController.reverse();
+      } else {
+        _goalController.reverse();
+      }
     });
   }
 
@@ -57,6 +66,8 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
         AnimationController(vsync: this, duration: Duration(milliseconds: 300));
     _editController =
         AnimationController(vsync: this, duration: Duration(milliseconds: 300));
+    _goalController =
+        AnimationController(vsync: this, duration: Duration(milliseconds: 300));
 
     super.initState();
   }
@@ -65,11 +76,14 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
   void dispose() {
     _addController.dispose();
     _editController.dispose();
+    _goalController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    FocusScopeNode currentFocus = FocusScope.of(context);
+
     return Consumer2<RecordsListModel, ButtonMode>(
         builder: (context, recordsModel, buttonMode, child) {
       final bool mode = context.read<ButtonMode>().isEditing;
@@ -85,9 +99,6 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
 
       //print('editWeight: $editWeight');
 
-     
-
-    
       return Scaffold(
         resizeToAvoidBottomInset: true,
         body: SafeArea(
@@ -96,15 +107,25 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
               child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    /* RecordsListView(records: recordsModel.records), */
                     Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        CurrentWeightStats(
-                          currentWeight: renderCurrentWeight(records),
-                          weekTrend: renderWeekTrend(records),
-                          monthTrend: renderMonthTrend(records),
-                          allTimeTrend: renderTotal(records),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            CurrentWeightStats(
+                              currentWeight: renderCurrentWeight(records),
+                              weekTrend: renderWeekTrend(records),
+                              monthTrend: renderMonthTrend(records),
+                              allTimeTrend: renderTotal(records),
+                            ),
+                            GoalStatsContainer(
+                              setVisible: () {
+                                _setVisible('goal');
+                              },
+                            )
+                          ],
                         ),
                         records.isNotEmpty
                             ? GraphContainer(records: records, context: context)
@@ -114,12 +135,9 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                   ]),
             ),
             Positioned(
-              bottom:0,
-              left: 0,
-              child: Container(
-                width: 100,
-               
-                child: UnitToggle())),
+                bottom: 0,
+                left: 0,
+                child: Container(width: 100, child: UnitToggle())),
             Positioned(
               bottom: 0,
               right: 0,
@@ -138,6 +156,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                 _setVisible('edit');
               },
               setInvisible: () {
+                currentFocus.focusedChild?.unfocus();
                 _setinVisible('edit');
               },
               date: context.watch<ButtonMode>().date,
@@ -151,11 +170,22 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                 _setVisible('add');
               },
               setInvisible: () {
+                currentFocus.focusedChild?.unfocus();
                 _setinVisible('add');
               },
               setRefresh: () {},
               records: records,
             ),
+            EditGoal(
+              animationController: _goalController,
+              setVisible: () {
+                _setVisible('goal');
+              },
+              setInvisible: () {
+                currentFocus.focusedChild?.unfocus();
+                _setinVisible('goal');
+              },
+            )
           ]),
         ),
       );

@@ -30,20 +30,16 @@ class AddNoteTextField extends StatelessWidget {
             hintText: "Add Note",
             hintStyle: bodyText1?.copyWith(fontSize: 16),
             contentPadding: EdgeInsets.only(top:14.0, left:18, right: 14, bottom:18),
-            /*
             focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(25.0),
-                borderSide: BorderSide(width: 0.0, color: Colors.grey)),
-            enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(25.0),
-                borderSide: BorderSide(width: 0.0, color: Colors.grey)),
-            errorBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(25.0),
-                borderSide: BorderSide(width: 0.0, color: Colors.grey)),
-            disabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(25.0),
-                borderSide: BorderSide(width: 0.0, color: Colors.grey)),
-          ) */
+                        borderSide:
+                            BorderSide(width: 0.0, color: Colors.transparent)),
+                    enabledBorder: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(width: 0.0, color: Colors.transparent)),
+                    errorBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(25.0),
+                        borderSide: BorderSide(width: 0, color: Colors.transparent)),
+                    disabledBorder: null,
           ),
         ));
   }

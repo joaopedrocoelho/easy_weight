@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:new_app/models/button_mode.dart';
+import 'package:new_app/models/goal_model.dart';
 import 'package:new_app/models/records_model.dart';
 import 'package:new_app/models/weight_record.dart';
 import 'package:new_app/screens/home.dart';
@@ -10,13 +11,14 @@ class ProvideRecords extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<List<WeightRecord>?>(builder: (context, list, child) {
+    return Consumer2<List<WeightRecord>?, Goal?>(
+        builder: (context, list, goal, child) {
       if (list != null) {
         if (list.isNotEmpty && list[0].note.contains('hasError:')) {
           return returnError(list);
         } else {
-          return Consumer<RecordsListModel>(
-            builder: (context, recordsModel, child) {
+          return Consumer2<RecordsListModel, GoalModel>(
+            builder: (context, recordsModel, goalModel, child) {
               return Home(list: recordsModel.records);
             },
           );
