@@ -7,6 +7,7 @@ import 'package:new_app/utils/render_stats.dart';
 import 'package:new_app/widgets/buttons/edit_buttons.dart';
 import 'package:new_app/widgets/change_unit/unit_toggle.dart';
 import 'package:new_app/widgets/custom_graph/empty_graph_container.dart';
+import 'package:new_app/widgets/goal/disabled_goal.dart';
 import 'package:new_app/widgets/goal/goal_stats_container.dart';
 import 'package:new_app/widgets/goal/progress_circle/circle_container_test.dart';
 import 'package:new_app/widgets/goal/progress_circle/outer_wheel.dart';
@@ -120,11 +121,13 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                               monthTrend: renderMonthTrend(records),
                               allTimeTrend: renderTotal(records),
                             ),
-                            GoalStatsContainer(
-                              setVisible: () {
-                                _setVisible('goal');
-                              },
-                            )
+                            records.isNotEmpty
+                                ? GoalStatsContainer(
+                                    setVisible: () {
+                                      _setVisible('goal');
+                                    },
+                                  )
+                                : DisabledGoal()
                           ],
                         ),
                         records.isNotEmpty

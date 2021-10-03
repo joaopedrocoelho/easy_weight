@@ -1,66 +1,58 @@
 import 'package:flutter/material.dart';
-import 'package:new_app/models/button_mode.dart';
+import 'package:new_app/models/goal_model.dart';
 import 'package:new_app/models/records_model.dart';
+import 'package:new_app/models/weight_record.dart';
 import 'package:new_app/models/weight_unit.dart';
+import 'package:new_app/utils/render_stats.dart';
 
-import 'package:new_app/widgets/add_record_form/add_note.dart';
-import 'package:new_app/widgets/add_record_form/add_weight.dart';
 import 'package:new_app/widgets/add_record_form/neu_close_button.dart';
-import 'package:new_app/widgets/add_record_form/neu_date_picker.dart';
+
 import 'package:new_app/widgets/buttons/cancel_button.dart';
 import 'package:new_app/widgets/buttons/save_button.dart';
 
-import 'package:intl/intl.dart';
-import 'package:new_app/models/weight_record.dart';
 import 'package:new_app/utils/database.dart';
 import 'package:new_app/widgets/edit_record_form/edit_weight.dart';
-import 'package:new_app/widgets/edit_record_form/neu_edit_date.dart';
+
 import 'package:provider/provider.dart';
 
 import 'package:new_app/widgets/add_record_form/neu_form_container.dart';
 
-class EditRecord extends StatefulWidget {
+class EditGoal extends StatefulWidget {
   final AnimationController animationController;
   final VoidCallback setVisible;
   final VoidCallback setInvisible;
 
-  final List<WeightRecord> records;
-
-  final double weight;
-  final DateTime date;
-  final String note;
-
-  EditRecord({
+  EditGoal({
     required this.animationController,
     required this.setVisible,
     required this.setInvisible,
-    required this.records,
-    required this.weight,
-    required this.date,
-    required this.note,
   });
 
   @override
-  _EditRecordState createState() => _EditRecordState();
+  _EditGoalState createState() => _EditGoalState();
 }
 
-class _EditRecordState extends State<EditRecord>
+class _EditGoalState extends State<EditGoal>
     with SingleTickerProviderStateMixin {
   late FocusNode hintFocus;
   final _formKey = GlobalKey<FormState>();
   bool isLoading = false;
 
   //form fields state
-  double _weight = 0.0;
-  String _initialWeight = '';
-  String _initialNote = '';
+  double _goal = 0.0;
+  double _initialWeight = 0.0;
 
-  String _note = '';
+  Future addGoal() async {
+    Goal newGoal = Goal(weight: _goal, initialWeight: _initialWeight);
+    await RecordsDatabase.instance.addGoal(newGoal);
+    print("goal $_goal $_initialWeight");
+    widget.setInvisible();
+  }
 
-  Future updateRecord() async {
-    WeightRecord editedRecord =
-        new WeightRecord(date: widget.date, weight: _weight, note: _note);
-    final record = await RecordsDatabase.instance.updateRecord(editedRecord);
+  Future updateGoal() async {
+    Goal newGoal = Goal(weight: _goal, initialWeight: _initialWeight);
+    await RecordsDatabase.instance.updateGoal(newGoal);
+    print("goal $_goal $_initialWeight");
 
     widget.setInvisible();
   }
@@ -81,9 +73,8 @@ class _EditRecordState extends State<EditRecord>
 
   @override
   Widget build(BuildContext context) {
-    return Consumer2<ButtonMode, WeightUnit>(
-        builder: (context, buttonMode, unit, child) {
-      String _initialWeight = buttonMode.weight.toString();
+    return Consumer2<GoalModel, WeightUnit>(
+        builder: (context, goalModel, unit, child) {
       FocusScopeNode currentFocus = FocusScope.of(context);
 
       return SlideTransition(
@@ -95,6 +86,7 @@ class _EditRecordState extends State<EditRecord>
           child: Align(
             alignment: Alignment.bottomCenter,
             child: NeuFormContainer(
+              height: 200,
               child: Form(
                 key: _formKey,
                 child: Column(
@@ -105,7 +97,7 @@ class _EditRecordState extends State<EditRecord>
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'Edit Record',
+                          'Set a goal',
                           style: Theme.of(context).textTheme.headline5,
                           textAlign: TextAlign.start,
                         ),
@@ -117,31 +109,19 @@ class _EditRecordState extends State<EditRecord>
                     ),
                     EditWeightTextField(
                         hintFocus: hintFocus,
-                        initialValue: _weight.toString(),
+                        initialValue: goalModel.currentGoal != null
+                            ? goalModel.currentGoal!.weight.toString()
+                            : _goal.toString(),
                         onSaved: (value) {
                           unit.usePounds
                               ? setState(() {
                                   print('hey pound');
-                                  _weight = (double.parse(value!) / 2.20462)
+                                  _goal = (double.parse(value!) / 2.20462)
                                       .ceilToDouble();
                                 })
                               : setState(() {
-                                  _weight = double.parse(value!);
+                                  _goal = double.parse(value!);
                                 });
-                        }),
-                    SizedBox(
-                      height: 30.0,
-                    ),
-                    EditDateForm(date: buttonMode.date),
-                    SizedBox(
-                      height: 30.0,
-                    ),
-                    AddNoteTextField(
-                        initialValue: _note,
-                        onSaved: (value) {
-                          setState(() {
-                            _note = value!;
-                          });
                         }),
                     SizedBox(
                       height: 30.0,
@@ -151,8 +131,11 @@ class _EditRecordState extends State<EditRecord>
                       children: [
                         Expanded(child: CancelButton(onPressed: () {
                           setState(() {
-                            _weight = 0.0;
-                            _note = '';
+                            if (goalModel.currentGoal != null) {
+                              _goal = goalModel.currentGoal!.weight;
+                            } else {
+                              _goal = 0.0;
+                            }
                           });
                           widget.setInvisible();
                         })),
@@ -161,32 +144,32 @@ class _EditRecordState extends State<EditRecord>
                         ),
                         Expanded(child: SaveButton(onPressed: () async {
                           // Validate returns true if the form is valid, or false otherwise.
-                          print(
-                              "edit record: ${_formKey.currentState!.validate()}");
+
                           if (_formKey.currentState!.validate()) {
                             _formKey.currentState!.save();
 
-                            print(
-                                '_weight : $_weight widget.date: ${widget.date} note:$_note');
-                            WeightRecord editedRecord = new WeightRecord(
-                                date: widget.date,
-                                weight: _weight,
-                                note: _note);
-
-                            Provider.of<RecordsListModel>(context,
-                                    listen: false)
-                                .editRecord(editedRecord);
-
-                            updateRecord();
+                            List<WeightRecord> records =
+                                context.read<RecordsListModel>().records;
+                            //need to update initialWeight to currentWeight
                             setState(() {
-                              _weight = 0.0;
-                              _note = '';
+                              _initialWeight = renderCurrentWeight(records)!;
+                              print('_initialWeight $_initialWeight');
                             });
-                            buttonMode.isEditing = false;
-                            buttonMode.selectedIndex = null;
+
+                            Goal newGoal = Goal(
+                                weight: _goal, initialWeight: _initialWeight);
+
+                            if (goalModel.currentGoal != null) {
+                              Provider.of<GoalModel>(context, listen: false)
+                                  .updateGoalRecord(newGoal);
+                              updateGoal();
+                            } else {
+                              Provider.of<GoalModel>(context, listen: false)
+                                  .addGoalRecord(newGoal);
+                              addGoal();
+                            }
 
                             currentFocus.focusedChild?.unfocus();
-                            widget.setInvisible();
                           }
                         }))
                       ],

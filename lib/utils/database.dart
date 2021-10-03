@@ -38,7 +38,8 @@ class RecordsDatabase {
     db.execute('''
       CREATE TABLE $goalRecord (
         ${GoalFields.id} INTEGER PRIMARY KEY NOT NULL,
-        ${GoalFields.weight} DOUBLE NOT NULL
+        ${GoalFields.weight} DOUBLE NOT NULL,
+        ${GoalFields.initialWeight} DOUBLE NOT NULL
       )
     ''');
 
@@ -121,7 +122,7 @@ class RecordsDatabase {
     //print("db: $db");
 
     List<Map<String, dynamic>> goal = await db.rawQuery(
-        'SELECT ${GoalFields.weight} FROM $goalRecord WHERE ${GoalFields.id}=1');
+        'SELECT ${GoalFields.weight}, ${GoalFields.initialWeight} FROM $goalRecord WHERE ${GoalFields.id}=1');
 
     print("goal db $goal");
     late Goal goalConverted;
@@ -129,7 +130,11 @@ class RecordsDatabase {
     if (goal.isNotEmpty) {
       goal.forEachIndexed((goal, index) => {
             if (index == 0)
-              {goalConverted = Goal(weight: goal[GoalFields.weight])}
+              {
+                goalConverted = Goal(
+                    weight: goal[GoalFields.weight],
+                    initialWeight: goal[GoalFields.initialWeight])
+              }
           });
 
       return goalConverted;
