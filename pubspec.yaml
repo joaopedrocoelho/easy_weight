@@ -32,7 +32,7 @@ dependencies:
   fl_chart: ^0.36.1
   provider: ^5.0.0
   linked_scroll_controller: ^0.2.0
-  flutter_neumorphic: ^3.0.3
+  flutter_neumorphic: ^3.1.0
 
 dev_dependencies:
   flutter_test:
