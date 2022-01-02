@@ -21,6 +21,7 @@ class _UnitToggleState extends State<UnitToggle> {
   @override
   Widget build(BuildContext context) {
     final theme = NeumorphicTheme.currentTheme(context);
+    final bool isUsingDark = NeumorphicTheme.isUsingDark(context);
 
     return Padding(
       padding: const EdgeInsets.only(
@@ -32,7 +33,8 @@ class _UnitToggleState extends State<UnitToggle> {
         displayForegroundOnlyIfSelected: true,
         height: 30,
         style: NeumorphicToggleStyle(
-            depth: -5,
+            backgroundColor: theme.shadowDarkColor,
+            depth: isUsingDark ? -4 : -5,
             lightSource: LightSource.topLeft,
             borderRadius: BorderRadius.all(Radius.circular(60))),
         children: [
@@ -41,7 +43,8 @@ class _UnitToggleState extends State<UnitToggle> {
                   child: Center(
                 child: Text(
                   'kg',
-                  style: theme.textTheme.headline5?.copyWith(fontSize: 15),
+                  style: theme.textTheme.headline5
+                      ?.copyWith(fontSize: 15, color: theme.defaultTextColor),
                 ),
               )),
               foreground: Neumorphic(
@@ -67,7 +70,8 @@ class _UnitToggleState extends State<UnitToggle> {
               background: Center(
                 child: Text(
                   'lb',
-                  style: theme.textTheme.headline5?.copyWith(fontSize: 15),
+                  style: theme.textTheme.headline5
+                      ?.copyWith(fontSize: 15, color: theme.defaultTextColor),
                 ),
               ),
               foreground: Neumorphic(

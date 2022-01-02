@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:new_app/models/button_mode.dart';
 import 'package:new_app/models/records_model.dart';
 import 'package:new_app/models/weight_record.dart';
@@ -84,6 +85,8 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     FocusScopeNode currentFocus = FocusScope.of(context);
+    final theme = NeumorphicTheme.currentTheme(context);
+    bool isUsingDark = NeumorphicTheme.isUsingDark(context);
 
     return Consumer2<RecordsListModel, ButtonMode>(
         builder: (context, recordsModel, buttonMode, child) {
@@ -102,6 +105,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
 
       return Scaffold(
         resizeToAvoidBottomInset: true,
+        //backgroundColor: isUsingDark ? Color(0xff212733) : Color(0xffD5E1EB),
         body: SafeArea(
           child: Stack(children: [
             SingleChildScrollView(

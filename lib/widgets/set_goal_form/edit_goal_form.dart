@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:new_app/models/goal_model.dart';
 import 'package:new_app/models/records_model.dart';
 import 'package:new_app/models/weight_record.dart';
@@ -76,6 +77,7 @@ class _EditGoalState extends State<EditGoal>
     return Consumer2<GoalModel, WeightUnit>(
         builder: (context, goalModel, unit, child) {
       FocusScopeNode currentFocus = FocusScope.of(context);
+      final theme = NeumorphicTheme.of(context);
 
       return SlideTransition(
           position: Tween<Offset>(

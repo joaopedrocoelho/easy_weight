@@ -23,23 +23,22 @@ class AddNoteTextField extends StatelessWidget {
         ),
         child: TextFormField(
           keyboardType: TextInputType.text,
-          
+          style: theme.textTheme.bodyText1,
           onSaved: onSaved,
           cursorColor: theme.defaultTextColor,
           decoration: InputDecoration(
             hintText: "Add Note",
             hintStyle: bodyText1?.copyWith(fontSize: 16),
-            contentPadding: EdgeInsets.only(top:14.0, left:18, right: 14, bottom:18),
+            contentPadding:
+                EdgeInsets.only(top: 14.0, left: 18, right: 14, bottom: 18),
             focusedBorder: OutlineInputBorder(
-                        borderSide:
-                            BorderSide(width: 0.0, color: Colors.transparent)),
-                    enabledBorder: OutlineInputBorder(
-                        borderSide:
-                            BorderSide(width: 0.0, color: Colors.transparent)),
-                    errorBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(25.0),
-                        borderSide: BorderSide(width: 0, color: Colors.transparent)),
-                    disabledBorder: null,
+                borderSide: BorderSide(width: 0.0, color: Colors.transparent)),
+            enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(width: 0.0, color: Colors.transparent)),
+            errorBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(25.0),
+                borderSide: BorderSide(width: 0, color: Colors.transparent)),
+            disabledBorder: null,
           ),
         ));
   }

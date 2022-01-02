@@ -43,7 +43,9 @@ class MyApp extends StatelessWidget {
     return NeumorphicApp(
       debugShowCheckedModeBanner: false,
       title: 'Easy Weight',
-      themeMode: ThemeMode.light,
+      //materialTheme: ThemeData(backgroundColor: Color(0xffD5E1EB)),
+      //materialDarkTheme: ThemeData(backgroundColor: Color(0xff212733)),
+      themeMode: ThemeMode.system,
       theme: NeumorphicThemeData(
           textTheme: TextTheme(
             bodyText1: TextStyle(
@@ -101,10 +103,62 @@ class MyApp extends StatelessWidget {
           depth: 10,
           borderColor: Colors.transparent),
       darkTheme: NeumorphicThemeData(
-        baseColor: Color(0xFF3E3E3E),
-        lightSource: LightSource.topLeft,
-        depth: 6,
-      ),
+          textTheme: TextTheme(
+            bodyText1: TextStyle(
+                fontFamily: 'Noto Sans',
+                color: Color.fromRGBO(255, 255, 255, 0.85),
+                fontSize: 14,
+                fontWeight: FontWeight.normal),
+
+            headline3: TextStyle(
+                fontFamily: 'Noto Sans',
+                color: Colors.white,
+                fontSize: 35,
+                fontWeight: FontWeight.w800),
+            headline4: TextStyle(
+                fontFamily: 'Noto Sans',
+                color: Colors.white,
+                fontSize: 35,
+                fontWeight: FontWeight.w800), //goal button
+
+            headline5: TextStyle(
+                fontFamily: 'Noto Sans',
+                color: Color(0xffB6C5D5),
+                fontSize: 20,
+                fontWeight: FontWeight.w800),
+            button: TextStyle(
+                fontFamily: 'Noto Sans',
+                color: Color(0xff223761),
+                fontSize: 16,
+                fontWeight: FontWeight.w800),
+            subtitle1: TextStyle(
+                fontFamily: 'Noto Sans',
+                color: Color(0xff5d626e),
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+                letterSpacing: 0.5),
+            caption: TextStyle(
+                fontFamily: 'Noto Sans',
+                color: Color(0xffB6C5D5),
+                fontSize: 14,
+                fontWeight: FontWeight.w600,
+                letterSpacing: 0.5),
+            subtitle2: TextStyle(
+                fontFamily: 'Noto Sans',
+                color: Color.fromRGBO(255, 255, 255, 0.85),
+                fontSize: 16,
+                fontWeight: FontWeight.w700,
+                letterSpacing: 0.5),
+          ),
+          baseColor: Color(0xff212733),
+          defaultTextColor: Color(0xffB6C5D5),
+          shadowDarkColor: Color(0xFF161A22),
+          shadowLightColor: Color(0xff2D3648),
+          shadowLightColorEmboss: Color(0xff2F384E),
+          lightSource: LightSource.topLeft,
+          intensity: 1,
+          depth: 10,
+          borderColor: Colors.transparent),
       home: MultiProvider(
           providers: [
             ChangeNotifierProvider(create: (context) => RecordsListModel()),

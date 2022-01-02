@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:intl/intl.dart';
 
-
 class EditDateForm extends StatelessWidget {
   final DateTime date;
 
@@ -16,11 +15,13 @@ class EditDateForm extends StatelessWidget {
 
     return NeumorphicButton(
         style: NeumorphicStyle(
-          shape: NeumorphicShape.concave,
-          boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(25)),
-          depth: -3,
-          intensity: 0.9,
-        ),
+            shape: NeumorphicShape.concave,
+            boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(25)),
+            //color: theme.defaultTextColor,
+
+            depth: 5,
+            intensity: 1,
+            surfaceIntensity: 0.1),
         padding: EdgeInsets.only(top: 14.0, left: 18, right: 14, bottom: 18),
         onPressed: null,
         child: Row(

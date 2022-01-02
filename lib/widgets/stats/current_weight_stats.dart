@@ -19,7 +19,7 @@ class CurrentWeightStats extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = NeumorphicTheme.currentTheme(context);
+    var theme = NeumorphicTheme.currentTheme(context);
 
     return Padding(
       padding:
@@ -30,7 +30,7 @@ class CurrentWeightStats extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsets.only(bottom:3.0),
+                padding: const EdgeInsets.only(bottom: 3.0),
                 child: Text('Current', style: theme.textTheme.caption),
               ),
               BigWeightHeadline(weight: currentWeight),

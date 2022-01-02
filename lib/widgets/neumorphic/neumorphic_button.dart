@@ -28,7 +28,6 @@ class _NeuButtonState extends State<NeuButton> {
   }
 
   void _setVisible() {
-    
     Future.delayed(Duration(milliseconds: 150), () {
       setState(() {
         _opacity = 1;
@@ -38,12 +37,12 @@ class _NeuButtonState extends State<NeuButton> {
 
   void _setInvisible() {
     _opacity = 0;
-    
   }
 
   @override
   Widget build(BuildContext context) {
     widget.isVisible ? _setVisible() : _setInvisible();
+    final theme = NeumorphicTheme.currentTheme(context);
 
     return TweenAnimationBuilder<double>(
         tween: widget.isVisible ? _startAnimation : _reverseAnimation,
@@ -53,10 +52,7 @@ class _NeuButtonState extends State<NeuButton> {
           return NeumorphicButton(
               onPressed: widget.isVisible ? widget.addOnPressed : () {},
               style: NeumorphicStyle(
-                color: Color(0xffE5F1FB),
-                shadowDarkColor: Color(0xffA7BCCF),
-                shadowDarkColorEmboss: Color(0xffA7BCCF),
-                shadowLightColor: Color(0xffFAFDFF),
+                color: theme.baseColor,
                 depth: depth,
                 surfaceIntensity: 0.3,
                 intensity: 0.9,

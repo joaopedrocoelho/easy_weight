@@ -24,10 +24,8 @@ class SetGoalButton extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Icon(
-              MyFlutterApp.add_goal,
-              size: 50,
-            ),
+            Icon(MyFlutterApp.add_goal,
+                size: 50, color: theme.defaultTextColor),
           ],
         )),
       ),
