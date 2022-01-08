@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
-import 'package:new_app/models/button_mode.dart';
-import 'package:new_app/models/weight_record.dart';
+import 'package:easy_weight/models/button_mode.dart';
+import 'package:easy_weight/models/weight_record.dart';
 
-import 'package:new_app/utils/format_weight.dart';
-import 'package:new_app/utils/render_graph.dart';
+import 'package:easy_weight/utils/format_weight.dart';
+import 'package:easy_weight/utils/render_graph.dart';
 
-import 'package:new_app/widgets/custom_graph/bottom_titles_row.dart';
-import 'package:new_app/widgets/custom_graph/gradient_fill.dart';
-import 'package:new_app/widgets/custom_graph/horizontal_lines.dart';
-import 'package:new_app/widgets/custom_graph/lines.dart';
-import 'package:new_app/widgets/custom_graph/side_titles.dart';
-import 'package:new_app/widgets/custom_graph/spots.dart';
+import 'package:easy_weight/widgets/custom_graph/bottom_titles_row.dart';
+import 'package:easy_weight/widgets/custom_graph/gradient_fill.dart';
+import 'package:easy_weight/widgets/custom_graph/horizontal_lines.dart';
+import 'package:easy_weight/widgets/custom_graph/lines.dart';
+import 'package:easy_weight/widgets/custom_graph/side_titles.dart';
+import 'package:easy_weight/widgets/custom_graph/spots.dart';
 
 import 'package:provider/provider.dart';
 
@@ -30,7 +30,9 @@ class _GraphContainerState extends State<GraphContainer> {
   int? _selectedIndex;
   void onGraphSpotTap(int index, BuildContext context) {
     setState(() {
-      Provider.of<ButtonMode>(context).selectedIndex == index ? _selectedIndex = null : _selectedIndex = index;
+      Provider.of<ButtonMode>(context).selectedIndex == index
+          ? _selectedIndex = null
+          : _selectedIndex = index;
     });
   }
 
@@ -91,8 +93,8 @@ class _GraphContainerState extends State<GraphContainer> {
 
 //if graphWidth is bigger than scroll to the end
 
-        (graphWidth > MediaQuery.of(widget.context).size.width * 0.9 && 
-        Provider.of<ButtonMode>(context).isEditing == false)
+    (graphWidth > MediaQuery.of(widget.context).size.width * 0.9 &&
+            Provider.of<ButtonMode>(context).isEditing == false)
         ? scrollGraphToEnd()
         : scrollGraphToStart();
 

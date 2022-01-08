@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:easy_weight/models/db/records_table.dart';
 
-import 'package:new_app/models/weight_record.dart';
+import 'package:easy_weight/models/weight_record.dart';
 
-import 'package:new_app/utils/format_weight.dart';
-import 'package:new_app/utils/indexed_iterables.dart';
-import 'package:new_app/widgets/custom_graph/gradient_fill.dart';
-import 'package:new_app/widgets/custom_graph/horizontal_lines.dart';
-import 'package:new_app/widgets/custom_graph/lines.dart';
-import 'package:new_app/widgets/custom_graph/spots.dart';
+import 'package:easy_weight/utils/format_weight.dart';
+import 'package:easy_weight/utils/indexed_iterables.dart';
+import 'package:easy_weight/widgets/custom_graph/gradient_fill.dart';
+import 'package:easy_weight/widgets/custom_graph/horizontal_lines.dart';
+import 'package:easy_weight/widgets/custom_graph/lines.dart';
+import 'package:easy_weight/widgets/custom_graph/spots.dart';
 
 double setMinDisplayedWeight(double minWeight, double maxDisplayedWeight) {
   //according to https://chezvoila.com/blog/yaxis/
@@ -30,12 +31,11 @@ double setMaxDisplayedWeight(double range, double maxWeight) {
 
 double yPos(double weight, /*double yPxPerKg,*/ double graphHeight,
     double maxDisplayedWeight, double minDisplayedWeight) {
-  
-  double results =
-      ((weight - minDisplayedWeight) * (graphHeight - 30)) / (maxDisplayedWeight - minDisplayedWeight);
+  double results = ((weight - minDisplayedWeight) * (graphHeight - 30)) /
+      (maxDisplayedWeight - minDisplayedWeight);
 
   //print('weight: $weight , AlternateFormula: $results');
-  
+
   return limitDecimals(results, 2);
 }
 
@@ -114,7 +114,7 @@ List<GraphSpot> renderSpots(
     int? selectedIndex,
     void Function(int listIndex, BuildContext context) callback) {
   List<Map> spotsYPos =
-      addYPos(records, graphHeight,  maxDisplayedWeight, minDisplayedWeight);
+      addYPos(records, graphHeight, maxDisplayedWeight, minDisplayedWeight);
 
   List<Map> spotsXPos = spotsYPos; //add the X coordinates
   spotsXPos.forEachIndexed((record, index) {
@@ -130,7 +130,7 @@ List<GraphSpot> renderSpots(
   List<GraphSpot> spots = spotsXPos.mapIndexed<GraphSpot>((record, index) {
     return GraphSpot(
         x: record['xPos'],
-        y: record['yPos'] ,
+        y: record['yPos'],
         bottomTitlesHeight: bottomTitlesHeight,
         date: DateTime.parse(record['record_date']),
         weight: record['weight'],

@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 
 class NeuButton extends StatefulWidget {
-  final VoidCallback addOnPressed;
+  final VoidCallback onPressed;
   final Widget? child;
   final bool isVisible;
 
   const NeuButton(
       {Key? key,
-      required this.addOnPressed,
+      required this.onPressed,
       this.child,
       required this.isVisible})
       : super(key: key);
@@ -50,7 +50,7 @@ class _NeuButtonState extends State<NeuButton> {
         builder: (_, depth, __) {
           //print('depth: $depth');
           return NeumorphicButton(
-              onPressed: widget.isVisible ? widget.addOnPressed : () {},
+              onPressed: widget.isVisible ? widget.onPressed : () {},
               style: NeumorphicStyle(
                 color: theme.baseColor,
                 depth: depth,

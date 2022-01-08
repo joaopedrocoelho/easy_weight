@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
-import 'package:new_app/models/weight_unit.dart';
+import 'package:easy_weight/models/weight_unit.dart';
 import 'package:provider/provider.dart';
 
 double renderPadding(String period) {
@@ -46,11 +46,9 @@ class WeightTrend extends StatelessWidget {
     }
 
     return Consumer<WeightUnit>(builder: (context, unit, child) {
-      String variationToPound = 
-      variation != null ?
-      (variation! * 2.20462).toStringAsFixed(1) :
-      '0.0lb';
-
+      String variationToPound = variation != null
+          ? (variation! * 2.20462).toStringAsFixed(1)
+          : '0.0lb';
 
       Text variationTextKg = variation != null
           ? Text('${variation! > 0 ? '+' : ''}${variation.toString()}kg',
@@ -58,7 +56,7 @@ class WeightTrend extends StatelessWidget {
           : Text('0.0kg',
               style: theme.textTheme.subtitle2?.copyWith(height: 1));
 
-      Text variationTextPound = variation  != null
+      Text variationTextPound = variation != null
           ? Text('${variation! > 0 ? '+' : ''}${variationToPound}lb',
               style: theme.textTheme.subtitle2?.copyWith(height: 1))
           : Text('0.0lb',

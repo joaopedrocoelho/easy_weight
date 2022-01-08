@@ -1,8 +1,13 @@
+import 'package:easy_weight/models/db/profiles_table.dart';
+import 'package:easy_weight/models/db/records_table.dart';
+import 'package:easy_weight/models/db/goal_table.dart';
+import 'package:easy_weight/models/profiles_list_model.dart';
+import 'package:provider/provider.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
-import 'package:new_app/models/weight_record.dart';
-import 'package:new_app/models/goal_model.dart';
-import 'package:new_app/utils/indexed_iterables.dart';
+import 'package:easy_weight/models/weight_record.dart';
+import 'package:easy_weight/models/goal_model.dart';
+import 'package:easy_weight/utils/indexed_iterables.dart';
 import 'package:intl/intl.dart';
 
 class RecordsDatabase {
@@ -28,22 +33,38 @@ class RecordsDatabase {
 
   Future _createDB(Database db, int version) async {
     db.execute('''
-      CREATE TABLE $tableRecords (
+      CREATE TABLE $profilesTable (
+        ${ProfileFields.id} INTEGER PRIMARY KEY AUTOINCREMENT,
+        ${ProfileFields.name} TEXT NULL,
+        ${ProfileFields.height} REAL NULL,
+        ${ProfileFields.birthday} TEXT NULL,
+        ${ProfileFields.emoji} TEXT NULL,
+        ${ProfileFields.gender} TEXT NULL
+         )
+    ''');
+
+    db.execute('''
+      CREATE TABLE $recordsTable (
+        ${RecordFields.id} INTEGER PRIMARY KEY AUTOINCREMENT,
         ${RecordFields.date} TEXT NOT NULL,
         ${RecordFields.weight} DOUBLE NOT NULL,
-        ${RecordFields.note} TEXT NULL
+        ${RecordFields.note} TEXT NULL,
+        ${RecordFields.profileId} INTEGER NOT NULL,
+        FOREIGN KEY(${RecordFields.profileId}) REFERENCES $profilesTable(${ProfileFields.id})
       )
     ''');
 
     db.execute('''
-      CREATE TABLE $goalRecord (
+      CREATE TABLE $goalTable (
         ${GoalFields.id} INTEGER PRIMARY KEY NOT NULL,
         ${GoalFields.weight} DOUBLE NOT NULL,
-        ${GoalFields.initialWeight} DOUBLE NOT NULL
+        ${GoalFields.initialWeight} DOUBLE NOT NULL,
+        ${GoalFields.profileId} INTEGER NOT NULL,
+        FOREIGN KEY(${GoalFields.profileId}) REFERENCES $profilesTable(${ProfileFields.id})
       )
     ''');
 
-    print(db.query(goalRecord));
+    print(db.query(goalTable));
   }
 
   Future close() async {
@@ -54,8 +75,9 @@ class RecordsDatabase {
 
   Future<int> addRecord(WeightRecord record) async {
     final db = await instance.database;
+   
 
-    final id = await db.insert(tableRecords, record.toJson());
+    final id = await db.insert(recordsTable, record.toJson());
 
     // print('record id : $id');
     return id;
@@ -67,7 +89,7 @@ class RecordsDatabase {
     //print("db: $db");
 
     List<Map<String, dynamic>> records = await db.rawQuery(
-        'SELECT * FROM $tableRecords ORDER BY date(${RecordFields.date}) ASC');
+        'SELECT * FROM $recordsTable ORDER BY date(${RecordFields.date}) ASC');
 
     List<WeightRecord> recordsConverted = toWeightRecordList(records);
 
@@ -86,7 +108,7 @@ class RecordsDatabase {
     // print("date: $date");
 
     return db.update(
-      tableRecords,
+      recordsTable,
       record.toJson(),
       where: '${RecordFields.date} = ?',
       whereArgs: [date],
@@ -99,7 +121,7 @@ class RecordsDatabase {
     String date = DateFormat('yyyy-MM-dd').format(record.date).toString();
 
     return db.delete(
-      tableRecords,
+      recordsTable,
       where: '${RecordFields.date} = ?',
       whereArgs: [date],
     );
@@ -110,7 +132,7 @@ class RecordsDatabase {
   Future<int> addGoal(Goal goal) async {
     final db = await instance.database;
 
-    final id = await db.insert(goalRecord, goal.toJson());
+    final id = await db.insert(goalTable, goal.toJson());
 
     // print('record id : $id');
     return id;
@@ -122,7 +144,7 @@ class RecordsDatabase {
     //print("db: $db");
 
     List<Map<String, dynamic>> goal = await db.rawQuery(
-        'SELECT ${GoalFields.weight}, ${GoalFields.initialWeight} FROM $goalRecord WHERE ${GoalFields.id}=1');
+        'SELECT ${GoalFields.weight}, ${GoalFields.initialWeight} FROM $goalTable WHERE ${GoalFields.id}=1');
 
     print("goal db $goal");
     late Goal goalConverted;
@@ -147,7 +169,7 @@ class RecordsDatabase {
     final db = await instance.database;
 
     return db.update(
-      goalRecord,
+      goalTable,
       goal.toJson(),
       where: '${GoalFields.id} = ?',
       whereArgs: [1],
@@ -158,7 +180,7 @@ class RecordsDatabase {
     final db = await instance.database;
 
     return db.delete(
-      goalRecord,
+      goalTable,
       where: '${GoalFields.id} = ?',
       whereArgs: [1],
     );

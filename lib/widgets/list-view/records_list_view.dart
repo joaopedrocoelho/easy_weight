@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:new_app/models/weight_record.dart';
-import 'package:new_app/widgets/list-view/record_list_button.dart';
-import 'package:new_app/utils/indexed_iterables.dart';
+import 'package:easy_weight/models/weight_record.dart';
+import 'package:easy_weight/widgets/list-view/record_list_button.dart';
+import 'package:easy_weight/utils/indexed_iterables.dart';
 
 class RecordsListView extends StatefulWidget {
   const RecordsListView({required this.records});

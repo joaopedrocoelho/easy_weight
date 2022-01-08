@@ -1,4 +1,4 @@
-# new_app
+# easy_weight
 
 A new Flutter project.
 

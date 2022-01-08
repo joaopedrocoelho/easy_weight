@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
-import 'package:new_app/models/button_mode.dart';
-import 'package:new_app/models/weight_unit.dart';
+import 'package:easy_weight/models/button_mode.dart';
+import 'package:easy_weight/models/weight_unit.dart';
 import 'package:provider/provider.dart';
 
 class AddWeightTextField extends StatefulWidget {

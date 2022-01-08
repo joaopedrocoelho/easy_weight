@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
-import 'package:new_app/models/weight_unit.dart';
-import 'package:new_app/utils/render_graph.dart';
+import 'package:easy_weight/models/weight_unit.dart';
+import 'package:easy_weight/utils/render_graph.dart';
 
 import 'package:provider/provider.dart';
-import 'package:new_app/utils/indexed_iterables.dart';
+import 'package:easy_weight/utils/indexed_iterables.dart';
 
 class SideTitles extends StatelessWidget {
   final List<int> sideTitleWeights;
@@ -53,9 +53,7 @@ class SideTitles extends StatelessWidget {
                 bottomTitlesHeight // this makes the title centered ,
             ,
             child: Text(
-              unit.usePounds? 
-              weightToPound :
-              weight.toString(),
+              unit.usePounds ? weightToPound : weight.toString(),
               style: theme.textTheme.caption,
             ),
           );

@@ -1,5 +1,5 @@
 import 'dart:math';
-import 'package:new_app/models/weight_record.dart';
+import 'package:easy_weight/models/weight_record.dart';
 
 List<double> getWeights(List<WeightRecord> records) {
   List<double> weights = records.map<double>((record) {

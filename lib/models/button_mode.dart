@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:new_app/models/weight_record.dart';
+import 'package:easy_weight/models/weight_record.dart';
 
 class ButtonMode with ChangeNotifier {
   bool isEditing = false;
@@ -10,7 +10,6 @@ class ButtonMode with ChangeNotifier {
 
   double? addWeight;
   String? addNote;
-
 
   void setEditing(WeightRecord record) {
     isEditing = true;

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
-import 'package:new_app/models/weight_record.dart';
-import 'package:new_app/utils/render_graph.dart';
-import 'package:new_app/utils/indexed_iterables.dart';
+import 'package:easy_weight/models/weight_record.dart';
+import 'package:easy_weight/utils/render_graph.dart';
+import 'package:easy_weight/utils/indexed_iterables.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 
@@ -32,10 +32,7 @@ class _BottomTitlesState extends State<BottomTitles> {
       List<DateTime> recordDates =
           widget.records.map((record) => record.date).toList();
 
-
       List<DateTime> removedOddDates = removeOdds<DateTime>(recordDates);
-
-    
 
       List<Widget> bottomTitles = removedOddDates.mapIndexed((evenDate, index) {
         String date = DateFormat('MM/dd').format(evenDate);
@@ -53,7 +50,6 @@ class _BottomTitlesState extends State<BottomTitles> {
     }
 
     List<Widget> bottomTitles = renderBottomTitles();
-
 
     return Container(
       width: widget.graphWidth,

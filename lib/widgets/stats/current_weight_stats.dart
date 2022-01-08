@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
-import 'package:new_app/widgets/stats/big_weight_headline.dart';
-import 'package:new_app/widgets/stats/weight_trend.dart';
+import 'package:easy_weight/widgets/stats/big_weight_headline.dart';
+import 'package:easy_weight/widgets/stats/weight_trend.dart';
 
 class CurrentWeightStats extends StatelessWidget {
   final double? currentWeight;

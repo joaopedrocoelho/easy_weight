@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:new_app/models/button_mode.dart';
-import 'package:new_app/models/goal_model.dart';
-import 'package:new_app/models/records_model.dart';
-import 'package:new_app/models/weight_record.dart';
-import 'package:new_app/screens/home.dart';
+import 'package:easy_weight/models/button_mode.dart';
+import 'package:easy_weight/models/goal_model.dart';
+import 'package:easy_weight/models/records_model.dart';
+import 'package:easy_weight/models/weight_record.dart';
+import 'package:easy_weight/screens/home.dart';
 import 'package:provider/provider.dart';
 
 class ProvideRecords extends StatelessWidget {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:new_app/models/weight_unit.dart';
+import 'package:easy_weight/models/weight_unit.dart';
 import 'package:provider/provider.dart';
 
 class BigWeightHeadline extends StatelessWidget {
@@ -21,14 +21,15 @@ class BigWeightHeadline extends StatelessWidget {
             textBaseline: TextBaseline.alphabetic,
             children: [
               Text(
-                unit.usePounds? weightToPound : weightKg,
+                unit.usePounds ? weightToPound : weightKg,
                 style: Theme.of(context).textTheme.bodyText1?.copyWith(
                     fontSize: 70,
                     fontWeight: FontWeight.w600,
                     textBaseline: TextBaseline.alphabetic,
                     height: 1),
               ),
-              Text( unit.usePounds? 'lb' : 'kg', style: Theme.of(context).textTheme.bodyText1)
+              Text(unit.usePounds ? 'lb' : 'kg',
+                  style: Theme.of(context).textTheme.bodyText1)
             ]),
       );
     });

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:new_app/models/weight_record.dart';
-import 'package:new_app/models/button_mode.dart';
+import 'package:easy_weight/models/weight_record.dart';
+import 'package:easy_weight/models/button_mode.dart';
 import 'package:provider/provider.dart';
 
 class RecordListButton extends StatefulWidget {

@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
-import 'package:new_app/models/goal_model.dart';
-import 'package:new_app/models/records_model.dart';
-import 'package:new_app/models/weight_record.dart';
-import 'package:new_app/models/weight_unit.dart';
-import 'package:new_app/utils/render_stats.dart';
+import 'package:easy_weight/models/goal_model.dart';
+import 'package:easy_weight/models/records_model.dart';
+import 'package:easy_weight/models/weight_record.dart';
+import 'package:easy_weight/models/weight_unit.dart';
+import 'package:easy_weight/utils/render_stats.dart';
 
-import 'package:new_app/widgets/add_record_form/neu_close_button.dart';
+import 'package:easy_weight/widgets/add_record_form/neu_close_button.dart';
 
-import 'package:new_app/widgets/buttons/cancel_button.dart';
-import 'package:new_app/widgets/buttons/save_button.dart';
+import 'package:easy_weight/widgets/buttons/cancel_button.dart';
+import 'package:easy_weight/widgets/buttons/save_button.dart';
 
-import 'package:new_app/utils/database.dart';
-import 'package:new_app/widgets/edit_record_form/edit_weight.dart';
+import 'package:easy_weight/utils/database.dart';
+import 'package:easy_weight/widgets/edit_record_form/edit_weight.dart';
 
 import 'package:provider/provider.dart';
 
-import 'package:new_app/widgets/add_record_form/neu_form_container.dart';
+import 'package:easy_weight/widgets/add_record_form/neu_form_container.dart';
 
 class EditGoal extends StatefulWidget {
   final AnimationController animationController;

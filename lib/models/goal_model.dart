@@ -1,12 +1,5 @@
 import 'package:flutter/cupertino.dart';
-
-final String goalRecord = 'goal';
-
-class GoalFields {
-  static final String weight = 'weight';
-  static final String initialWeight = 'initial_weight';
-  static final String id = '_id';
-}
+import 'package:easy_weight/models/db/goal_table.dart';
 
 class Goal {
   double weight;
