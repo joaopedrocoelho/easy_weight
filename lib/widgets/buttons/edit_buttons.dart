@@ -20,7 +20,7 @@ class _EditButtonsState extends State<EditButtons> {
   bool _editVisibility = false;
 
   Future deleteRecordFromDB(WeightRecord deletedRecord) async {
-    await RecordsDatabase.instance.delete(deletedRecord);
+    await RecordsDatabase.instance.deleteRecord(deletedRecord);
   }
 
   void _setEditVisible() {
@@ -44,7 +44,7 @@ class _EditButtonsState extends State<EditButtons> {
     final theme = NeumorphicTheme.currentTheme(context);
 
     return Consumer<ButtonMode>(builder: (context, buttonMode, child) {
-      buttonMode.isEditing ? _setEditVisible() : _setEditInVisible();
+      //buttonMode.isEditing ? _setEditVisible() : _setEditInVisible();
 
       return Padding(
         padding: const EdgeInsets.all(20.0),
@@ -53,33 +53,37 @@ class _EditButtonsState extends State<EditButtons> {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               //delete button
-              if (_editVisibility)
-                NeuButton(
-                  child: Icon(
-                    Icons.delete_outline_rounded,
-                    color: theme.defaultTextColor,
-                    size: 30,
+                 AnimatedOpacity(
+                  duration: Duration(milliseconds: 200),
+                  opacity: buttonMode.isEditing ? 1.0 : 0.0,
+                  child: NeuButton(
+                    child: Icon(
+                      Icons.delete_outline_rounded,
+                      color: theme.defaultTextColor,
+                      size: 30,
+                    ),
+                    onPressed: () {
+                      WeightRecord deletedRecord = WeightRecord(
+                          date: buttonMode.date,
+                          weight: buttonMode.weight,
+                          note: buttonMode.note,
+                          profileId: buttonMode.profileId);
+                
+                      Provider.of<RecordsListModel>(context, listen: false)
+                          .deleteRecord(deletedRecord);
+                
+                      deleteRecordFromDB(deletedRecord);
+                      buttonMode.setAdd();
+                    },
+                    isVisible: buttonMode.isEditing,
                   ),
-                  onPressed: () {
-                    WeightRecord deletedRecord = WeightRecord(
-                        date: buttonMode.date,
-                        weight: buttonMode.weight,
-                        note: buttonMode.note);
-
-                    Provider.of<RecordsListModel>(context, listen: false)
-                        .deleteRecord(deletedRecord);
-
-                    deleteRecordFromDB(deletedRecord);
-                    buttonMode.setAdd();
-                  },
-                  isVisible: buttonMode.isEditing,
                 ),
               SizedBox(
                 width: 20.0,
               ),
               NeuButton(
                   onPressed: widget.onPressed,
-                  child: _editVisibility
+                  child: buttonMode.isEditing
                       ? Icon(Icons.mode_edit_outline_rounded,
                           color: theme.defaultTextColor, size: 30)
                       : Icon(Icons.add_circle_outline_rounded,
