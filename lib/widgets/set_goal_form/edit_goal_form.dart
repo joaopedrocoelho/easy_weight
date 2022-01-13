@@ -68,7 +68,7 @@ class _EditGoalState extends State<EditGoal>
   @override
   void dispose() {
     super.dispose();
-
+    widget.animationController.dispose();
     hintFocus.dispose();
   }
 

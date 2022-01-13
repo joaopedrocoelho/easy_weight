@@ -59,7 +59,7 @@ class _EditRecordState extends State<EditRecord>
 
   Future updateRecord() async {
     WeightRecord editedRecord =
-        new WeightRecord(date: widget.date, weight: _weight, note: _note);
+        new WeightRecord(date: widget.date, weight: _weight, note: _note, profileId: 0);
     final record = await RecordsDatabase.instance.updateRecord(editedRecord);
 
     widget.setInvisible();
@@ -75,6 +75,7 @@ class _EditRecordState extends State<EditRecord>
   @override
   void dispose() {
     super.dispose();
+    widget.animationController.dispose();
 
     hintFocus.dispose();
   }
@@ -171,7 +172,8 @@ class _EditRecordState extends State<EditRecord>
                             WeightRecord editedRecord = new WeightRecord(
                                 date: widget.date,
                                 weight: _weight,
-                                note: _note);
+                                note: _note,
+                                profileId:0 );
 
                             Provider.of<RecordsListModel>(context,
                                     listen: false)

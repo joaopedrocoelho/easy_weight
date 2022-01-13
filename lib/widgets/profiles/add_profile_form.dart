@@ -1,7 +1,10 @@
+import 'package:easy_weight/widgets/profiles/emoji_picker.dart';
+import 'package:easy_weight/widgets/profiles/neu_birthday_picker.dart';
+import 'package:easy_weight/widgets/profiles/text_field.dart';
+import 'package:easy_weight/widgets/profiles/text_field_small.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 
-import 'package:intl/intl.dart';
 import 'package:easy_weight/models/button_mode.dart';
 import 'package:easy_weight/models/records_model.dart';
 import 'package:easy_weight/models/weight_unit.dart';
@@ -18,26 +21,22 @@ import 'package:easy_weight/models/weight_record.dart';
 import 'package:easy_weight/utils/database.dart';
 import 'package:provider/provider.dart';
 
-class AddRecord extends StatefulWidget {
+class AddProfile extends StatefulWidget {
   final AnimationController animationController;
   final VoidCallback setVisible;
   final VoidCallback setInvisible;
-  
 
-  final List<WeightRecord> records; //not sure if neeeded
-
-  AddRecord(
-      {required this.animationController,
-      required this.records,
-      required this.setVisible,
-      required this.setInvisible,
-      });
+  AddProfile({
+    required this.animationController,
+    required this.setVisible,
+    required this.setInvisible,
+  });
 
   @override
-  _AddRecordState createState() => _AddRecordState();
+  _AddProfileState createState() => _AddProfileState();
 }
 
-class _AddRecordState extends State<AddRecord>
+class _AddProfileState extends State<AddProfile>
     with SingleTickerProviderStateMixin {
   late FocusNode hintFocus;
   final _formKey = GlobalKey<FormState>();
@@ -50,19 +49,7 @@ class _AddRecordState extends State<AddRecord>
 
 //datepicker selected date
 
-  Future addRecord() async {
-    WeightRecord newRecord =
-        new WeightRecord(date: _date, weight: _weight, note: _note, profileId: 0);
-    final record = await RecordsDatabase.instance.addRecord(newRecord);
-
-    // List<WeightRecord> recordsClone = graph.records;
-
-    //print('record: $record');
-
-    widget.setInvisible();
-    
-    return record;
-  }
+  Future addProfile() async {}
 
   @override
   void initState() {
@@ -80,6 +67,9 @@ class _AddRecordState extends State<AddRecord>
 
   @override
   Widget build(BuildContext context) {
+    final theme = NeumorphicTheme.currentTheme(context);
+    final bodyText1 = theme.textTheme.bodyText1;
+
     late final Animation<Offset> _offsetAnimation = Tween<Offset>(
       begin: Offset(0, 2),
       end: Offset.zero,
@@ -102,6 +92,7 @@ class _AddRecordState extends State<AddRecord>
         child: Align(
           alignment: Alignment.bottomCenter,
           child: NeuFormContainer(
+            height: 452,
             child: Form(
               key: _formKey,
               child: Column(
@@ -112,7 +103,7 @@ class _AddRecordState extends State<AddRecord>
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Add a record',
+                        'Add a profile',
                         style: Theme.of(context).textTheme.headline5,
                         textAlign: TextAlign.start,
                       ),
@@ -122,42 +113,81 @@ class _AddRecordState extends State<AddRecord>
                   SizedBox(
                     height: 30.0,
                   ),
-                  AddWeightTextField(
-                      hintFocus: hintFocus,
-                      initialValue: _weight.toString(),
-                      onSaved: (value) {
-                        unit.usePounds
-                            ? setState(() {
-                                _weight = (double.parse(value!) / 2.20462)
-                                    .ceilToDouble();
-                              })
-                            : setState(() {
-                                _weight = double.parse(value!);
-                              });
-                      }),
+                  NeuTextField(
+                      initialValue: "",
+                      errorText: "Please enter a name",
+                      hintText: "Name",
+                      onSaved: (value) {},
+                      hintFocus: hintFocus),
                   SizedBox(
                     height: 30.0,
                   ),
-                  NeuDatePicker(
-                    callback: _setDate,
-                    currentDate:
-                        context.watch<RecordsListModel>().lastAvailableDate,
-                    records: widget.records,
-                    usedDates: context.watch<RecordsListModel>().usedDates,
-                    selectedDate: records.formattedCurrentDate,
+                  Row(
+                    children: [
+                      NeuEmojiPicker(
+                          initialValue: "",
+                          errorText: "",
+                          hintText: "Emoji",
+                          onSaved: (value) {},
+                          hintFocus: hintFocus),
+                      SizedBox(
+                        width: 30,
+                      ),
+                      NeuTextFieldMedium(
+                          initialValue: "",
+                          errorText: "",
+                          hintText: "Gender",
+                          onSaved: (value) {},
+                          hintFocus: hintFocus)
+                    ],
                   ),
                   SizedBox(
                     height: 30.0,
                   ),
-                  AddNoteTextField(
-                      initialValue: _note,
-                      onSaved: (value) {
-                        setState(() {
-                          _note = value!;
-                        });
-                      }),
+                  NeuBirthdayPicker(),
                   SizedBox(
                     height: 30.0,
+                  ),
+                  Row(
+                    children: [
+                      NeuTextFieldMedium(
+                          initialValue: "",
+                          errorText: "",
+                          hintText: "Height",
+                          onSaved: (value) {},
+                          hintFocus: hintFocus),
+                      SizedBox(
+                        width: 30,
+                      ),
+                      Neumorphic(
+                        style: NeumorphicStyle(
+                          shape: NeumorphicShape.concave,
+                          boxShape: NeumorphicBoxShape.roundRect(
+                              BorderRadius.circular(25)),
+                          depth: -3,
+                          intensity: 0.9,
+                        ),
+                        padding: EdgeInsets.only(top: 14.0, left: 18, right: 14, bottom: 14),
+                        child: Row(
+                          children: [
+                            Text("Color", style: bodyText1?.copyWith(fontSize: 16),),
+                            SizedBox(width: 10,),
+                            Container(
+                              decoration: BoxDecoration(
+                                color: Colors.blue,
+                                shape: BoxShape.circle,
+                              ),
+                             
+                              height: 25,
+                              width: 25,
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                  SizedBox(
+                    height: 30,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -174,7 +204,10 @@ class _AddRecordState extends State<AddRecord>
                             _formKey.currentState!.save();
 
                             WeightRecord newRecord = new WeightRecord(
-                                date: _date, weight: _weight, note: _note, profileId: 0);
+                                date: _date,
+                                weight: _weight,
+                                note: _note,
+                                profileId: 0);
 
                             List<WeightRecord> recordsClone =
                                 Provider.of<RecordsListModel>(context,
@@ -185,7 +218,7 @@ class _AddRecordState extends State<AddRecord>
                                     listen: false)
                                 .updateRecordsList(recordsClone);
 
-                            addRecord();
+                            addProfile();
                             setState(() {
                               _note = '';
                               _weight = 0.0;

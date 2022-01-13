@@ -54,7 +54,8 @@ class _GraphSpotState extends State<GraphSpot> {
                   ? mode.setEditing(WeightRecord(
                       date: widget.date,
                       weight: widget.weight,
-                      note: widget.note))
+                      note: widget.note,
+                      profileId: 0))
                   : mode.setAdd();
             },
             child: Column(

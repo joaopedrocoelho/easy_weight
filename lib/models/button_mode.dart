@@ -6,6 +6,7 @@ class ButtonMode with ChangeNotifier {
   int? selectedIndex;
   double weight = 0.0;
   DateTime date = DateTime.now();
+  int profileId = -1;
   String note = '';
 
   double? addWeight;
@@ -16,6 +17,7 @@ class ButtonMode with ChangeNotifier {
     weight = record.weight;
     date = record.date;
     note = record.note;
+    profileId = record.profileId;
 
     //print("Editing: $weight, $date, $note, isEditing: $isEditing");
     notifyListeners();

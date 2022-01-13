@@ -28,20 +28,25 @@ class _NeuButtonState extends State<NeuButton> {
   }
 
   void _setVisible() {
-    Future.delayed(Duration(milliseconds: 150), () {
+    
       setState(() {
         _opacity = 1;
       });
-    });
+    
   }
 
   void _setInvisible() {
     _opacity = 0;
   }
 
+ 
+
   @override
   Widget build(BuildContext context) {
-    widget.isVisible ? _setVisible() : _setInvisible();
+    /* WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+      widget.isVisible ? _setVisible() : _setInvisible();
+    }); */
+    
     final theme = NeumorphicTheme.currentTheme(context);
 
     return TweenAnimationBuilder<double>(
@@ -63,7 +68,7 @@ class _NeuButtonState extends State<NeuButton> {
               child: Center(
                   child: AnimatedOpacity(
                       duration: Duration(milliseconds: 100),
-                      opacity: _opacity,
+                      opacity: widget.isVisible ? 1 : 0,
                       child: widget.child)));
         });
   }

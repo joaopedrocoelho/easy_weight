@@ -1,6 +1,7 @@
 import 'package:easy_weight/models/db/profiles_table.dart';
 import 'package:easy_weight/models/db/records_table.dart';
 import 'package:easy_weight/models/db/goal_table.dart';
+import 'package:easy_weight/models/profile_model.dart';
 import 'package:easy_weight/models/profiles_list_model.dart';
 import 'package:provider/provider.dart';
 import 'package:sqflite/sqflite.dart';
@@ -39,9 +40,16 @@ class RecordsDatabase {
         ${ProfileFields.height} REAL NULL,
         ${ProfileFields.birthday} TEXT NULL,
         ${ProfileFields.emoji} TEXT NULL,
-        ${ProfileFields.gender} TEXT NULL
+        ${ProfileFields.gender} TEXT NULL,
+        ${ProfileFields.color} TEXT NULL
          )
     ''');
+
+    ProfileModel _defaultProfile = ProfileModel(id: 0);
+
+    final int insert = await db.insert(profilesTable, _defaultProfile.toJson());
+
+    print("defaultProfile inserted with id: $insert");
 
     db.execute('''
       CREATE TABLE $recordsTable (
@@ -73,6 +81,41 @@ class RecordsDatabase {
     db.close();
   }
 
+  //profiles
+
+  Future<List<ProfileModel>> getProfiles() async {
+    final db = await instance.database;
+    
+
+    final profiles = await db.rawQuery(
+      'SELECT * FROM $profilesTable ORDER BY ${ProfileFields.id} ASC');
+
+    print("profiles: $profiles");
+    List<ProfileModel> profilesConverted =toProfileList(profiles);
+
+    return profilesConverted;
+  }
+
+  Future<int> addProfile(ProfileModel profile) async {
+    final db = await instance.database;
+
+    return await db.insert(profilesTable, profile.toJson());
+  }
+
+  Future<int> updateProfile(ProfileModel profile) async {
+    final db = await instance.database;
+
+    return await db.update(profilesTable, profile.toJson(), where: '${ProfileFields.id} = ?', whereArgs: [profile.id]);
+  }
+
+  Future<int> deleteProfile(int id) async {
+    final db = await instance.database;
+
+    return await db.delete(profilesTable, where: '${ProfileFields.id} = ?', whereArgs: [id]);
+  }
+
+  //records
+
   Future<int> addRecord(WeightRecord record) async {
     final db = await instance.database;
    
@@ -83,13 +126,14 @@ class RecordsDatabase {
     return id;
   }
 
-  Future<List<WeightRecord>> getRecords() async {
+  Future<List<WeightRecord>> getRecords(int profileId) async {
     final db = await instance.database;
-
+    
     //print("db: $db");
 
     List<Map<String, dynamic>> records = await db.rawQuery(
-        'SELECT * FROM $recordsTable ORDER BY date(${RecordFields.date}) ASC');
+      'SELECT * FROM $recordsTable WHERE ${RecordFields.profileId} = $profileId ORDER BY date(${RecordFields.date}) ASC'
+      );
 
     List<WeightRecord> recordsConverted = toWeightRecordList(records);
 
@@ -110,20 +154,20 @@ class RecordsDatabase {
     return db.update(
       recordsTable,
       record.toJson(),
-      where: '${RecordFields.date} = ?',
-      whereArgs: [date],
+      where: '${RecordFields.date} = ? AND ${RecordFields.profileId} = ?',
+      whereArgs: [date, record.profileId],
     );
   }
 
-  Future<int> delete(WeightRecord record) async {
+  Future<int> deleteRecord(WeightRecord record) async {
     final db = await instance.database;
 
     String date = DateFormat('yyyy-MM-dd').format(record.date).toString();
 
     return db.delete(
       recordsTable,
-      where: '${RecordFields.date} = ?',
-      whereArgs: [date],
+      where: '${RecordFields.date} = ? AND ${RecordFields.profileId} = ?',
+      whereArgs: [date, record.profileId],
     );
   }
 

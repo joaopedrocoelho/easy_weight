@@ -1,3 +1,4 @@
+import 'package:easy_weight/models/profiles_list_model.dart';
 import 'package:easy_weight/widgets/buttons/menu_button.dart';
 import 'package:easy_weight/widgets/drawer/drawer_widget.dart';
 import 'package:easy_weight/widgets/profiles/profile_bar.dart';
@@ -92,8 +93,8 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
     final theme = NeumorphicTheme.currentTheme(context);
     bool isUsingDark = NeumorphicTheme.isUsingDark(context);
 
-    return Consumer2<RecordsListModel, ButtonMode>(
-        builder: (context, recordsModel, buttonMode, child) {
+    return Consumer3<RecordsListModel, ButtonMode, ProfilesListModel>(
+        builder: (context, recordsModel, profilesList, buttonMode, child) {
       final bool mode = context.read<ButtonMode>().isEditing;
 
       final List<WeightRecord> records =
@@ -118,7 +119,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
               child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    ProfileBar(),
+                    
                     Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -194,7 +195,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                 currentFocus.focusedChild?.unfocus();
                 _setinVisible('add');
               },
-              setRefresh: () {},
+              
               records: records,
             ),
             EditGoal(

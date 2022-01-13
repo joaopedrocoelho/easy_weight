@@ -7,4 +7,6 @@ class ProfileFields {
   static final String gender = 'gender';
   static final String birthday = 'birthday';
   static final String height = 'height';
+  static final String age = 'age';
+  static final String color = 'color';
 }

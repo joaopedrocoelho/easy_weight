@@ -1,3 +1,7 @@
+import 'package:easy_weight/models/db/profiles_table.dart';
+import 'package:easy_weight/models/profile_model.dart';
+import 'package:easy_weight/models/profiles_list_model.dart';
+import 'package:easy_weight/models/user_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:easy_weight/models/goal_model.dart';
@@ -11,13 +15,24 @@ import 'package:provider/provider.dart';
 import 'package:easy_weight/utils/database.dart';
 import 'package:easy_weight/models/button_mode.dart';
 
-void main() {
+Future main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await UserSettings.init();
+
   runApp(MyApp());
+}
+
+Future<List<ProfileModel>> _getProfiles(BuildContext context) async {
+  final profiles = await RecordsDatabase.instance.getProfiles();
+  print("profiles db: $profiles");
+  Provider.of<ProfilesListModel>(context, listen: false).updateList(profiles);
+  return profiles;
 }
 
 Future<List<WeightRecord>> _getRecords(BuildContext context) async {
   Provider.of<RecordsListModel>(context, listen: false).isLoading = true;
-  List<WeightRecord> records = await RecordsDatabase.instance.getRecords();
+  List<WeightRecord> records =
+      await RecordsDatabase.instance.getRecords(UserSettings.getProfile() ?? 0);
   Provider.of<RecordsListModel>(context, listen: false)
       .updateRecordsList(records);
   Provider.of<RecordsListModel>(context, listen: false).isLoading = false;
@@ -163,8 +178,22 @@ class MyApp extends StatelessWidget {
           providers: [
             ChangeNotifierProvider(create: (context) => RecordsListModel()),
             ChangeNotifierProvider(create: (context) => GoalModel()),
+            ChangeNotifierProvider(create: (context) => ProfilesListModel()),
+            
             ChangeNotifierProvider(create: (context) => ButtonMode()),
             ChangeNotifierProvider(create: (context) => WeightUnit()),
+            FutureProvider<List<ProfileModel>?>(
+            create: (context) {
+               return _getProfiles(context);
+              },
+              initialData: [],
+              catchError: (_, error) => [
+                ProfileModel(
+                  id: -1,
+                  name: 'hasError: $error',
+                )
+              ],
+            ),
             FutureProvider<Goal?>(
                 create: (context) {
                   return _getGoal(context);
@@ -183,8 +212,9 @@ class MyApp extends StatelessWidget {
                       WeightRecord(
                           date: DateTime.now(),
                           weight: 00.0,
-                          note: 'hasError: $error')
-                    ])
+                          note: 'hasError: $error',
+                          profileId: -1)
+                    ]),
           ],
           builder: (context, child) {
             return ProvideRecords();

@@ -42,7 +42,8 @@ class _RecordListButtonState extends State<RecordListButton> {
                     ? mode.setEditing(WeightRecord(
                         date: widget.date,
                         weight: widget.weight,
-                        note: widget.note))
+                        note: widget.note,
+                        profileId: 0))
                     : mode.setAdd();
               },
               child: Container(
