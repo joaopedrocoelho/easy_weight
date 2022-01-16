@@ -4,6 +4,7 @@ import 'package:easy_weight/widgets/buttons/menu_button.dart';
 import 'package:easy_weight/widgets/neumorphic/neumorphic_button.dart';
 import 'package:easy_weight/widgets/profiles/add_profile_form.dart';
 import 'package:easy_weight/widgets/profiles/profile_bar.dart';
+import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:provider/provider.dart';
@@ -86,11 +87,15 @@ class _DrawerWidgetState extends State<DrawerWidget> with TickerProviderStateMix
                   ],
                 )),
 
+               
+
             AddProfile(
               animationController: _addProfileFormController,             
               setVisible: () { _addProfileFormController.forward();}, 
               setInvisible: () { _addProfileFormController.reverse();}, 
-              )
+              ),
+              
+              
           ],
         ),
       );

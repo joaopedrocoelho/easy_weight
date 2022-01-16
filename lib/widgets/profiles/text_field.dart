@@ -8,6 +8,7 @@ class NeuTextField extends StatefulWidget {
   final String errorText;
   final String hintText;
   final void Function(String?)? onSaved;
+  final void Function()? onTap;
   final FocusNode hintFocus;
 
   const NeuTextField(
@@ -16,6 +17,7 @@ class NeuTextField extends StatefulWidget {
       required this.errorText,
       required this.hintText,
       required this.onSaved,
+      this.onTap,
       required this.hintFocus})
       : super(key: key);
 
@@ -53,9 +55,10 @@ class _NeuTextFieldState extends State<NeuTextField> {
             }
             return null;
           },
+          onTap: widget.onTap,
           onSaved: widget.onSaved,
           focusNode: widget.hintFocus,
-          keyboardType: TextInputType.number,
+          keyboardType: TextInputType.name,
           cursorColor: theme.defaultTextColor,
           decoration: InputDecoration(
             hintText: widget.hintText,

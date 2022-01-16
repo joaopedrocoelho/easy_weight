@@ -19,7 +19,7 @@ class NeuFormContainer extends StatelessWidget {
         intensity: 0.8,
       ),
       child: Container(
-        height: height != null ? height : 420,
+        //height: height != null ? height : 420,
         child: child,
       ),
     );

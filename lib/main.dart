@@ -138,7 +138,7 @@ class MyApp extends StatelessWidget {
 
             headline5: TextStyle(
                 fontFamily: 'Noto Sans',
-                color: Color(0xffB6C5D5),
+                color: Color.fromRGBO(255, 255, 255, 0.85),
                 fontSize: 20,
                 fontWeight: FontWeight.w800),
             button: TextStyle(

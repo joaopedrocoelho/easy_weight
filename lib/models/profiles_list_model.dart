@@ -2,12 +2,12 @@ import 'package:easy_weight/models/profile_model.dart';
 import 'package:flutter/material.dart';
 
 class ProfilesListModel extends ChangeNotifier {
-  /* ProfileModel? _selectedProfile; */
+  ProfileModel? selectedProfile;
   List<ProfileModel> profiles = [];
 
   List<ProfileModel> get getProfiles => profiles;
   int get profilesCount => profiles.length;
-  /* int get selectedProfileID => _selectedProfile?.id ?? -1; */
+   get selectedProfileID => selectedProfile?.id ?? -1;
 
   ProfilesListModel({List<ProfileModel>? profiles}) {
     profiles = profiles ?? [];
@@ -28,8 +28,8 @@ class ProfilesListModel extends ChangeNotifier {
     notifyListeners();
   }
 
- /*  void selectProfile(int id) {
-    _selectedProfile = profiles.firstWhere((profile) => profile.id == id);
+   void selectProfile(int id) {
+    selectedProfile = profiles.firstWhere((profile) => profile.id == id);
     notifyListeners();
-  } */
+  } 
 }
