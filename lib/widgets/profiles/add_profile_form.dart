@@ -3,11 +3,12 @@ import 'package:easy_weight/models/profiles_list_model.dart';
 import 'package:easy_weight/widgets/profiles/emoji_picker.dart';
 import 'package:easy_weight/widgets/profiles/gender_picker.dart';
 import 'package:easy_weight/widgets/profiles/neu_birthday_picker.dart';
-import 'package:easy_weight/widgets/profiles/number_field_medium.dart';
+import 'package:easy_weight/widgets/profiles/height_field_medium.dart';
 import 'package:easy_weight/widgets/profiles/text_field.dart';
-import 'package:easy_weight/widgets/profiles/text_field_small.dart';
+
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 
 import 'package:easy_weight/models/records_model.dart';
@@ -20,6 +21,29 @@ import 'package:easy_weight/widgets/buttons/cancel_button.dart';
 import 'package:easy_weight/widgets/buttons/save_button.dart';
 
 import 'package:provider/provider.dart';
+
+const List<Color> colors = [
+  Colors.red,
+  Colors.pink,
+  Colors.purple,
+  Colors.deepPurple,
+  Colors.indigo,
+  Colors.blue,
+  Colors.cyan,
+  Colors.teal,
+  Colors.green,
+  Colors.lightGreen,
+  Colors.lime,
+  Colors.yellow,
+  Colors.amber,
+  Colors.orange,
+  Colors.deepOrange,
+  Colors.brown,
+  Colors.grey,
+  Colors.blueGrey,
+  Colors.black,
+  Colors.white
+];
 
 class AddProfile extends StatefulWidget {
   final AnimationController animationController;
@@ -38,17 +62,80 @@ class AddProfile extends StatefulWidget {
 
 class _AddProfileState extends State<AddProfile>
     with SingleTickerProviderStateMixin {
+  int _portraitCrossAxisCount = 4;
+  int _landscapeCrossAxisCount = 5;
+  double _borderRadius = 30;
+  double _blurRadius = 5;
+  double _iconSize = 14;
   late FocusNode hintFocus;
   final _formKey = GlobalKey<FormState>();
   bool isLoading = false;
   bool _hideEmojiPicker = true;
   bool _hideGenderPicker = true;
+  bool _hideColorPicker = true;
   late AnimationController _emojiPickerController;
 
   //form fields state
-   String _selectedEmoji = "😃";
-   String _name = "";
-   String _gender = "";
+  String _selectedEmoji = "😃";
+  String _name = "";
+  String _gender = "";
+  Color _selectedColor = Colors.transparent;
+
+  //color picker builder
+  Widget pickerLayoutBuilder(
+      BuildContext context, List<Color> colors, PickerItem child) {
+    final theme = NeumorphicTheme.currentTheme(context);
+
+    Orientation orientation = MediaQuery.of(context).orientation;
+
+    return Container(
+      width: MediaQuery.of(context).size.width * 0.8,
+      height: 400,
+      child: GridView.count(
+        crossAxisCount: orientation == Orientation.portrait
+            ? _portraitCrossAxisCount
+            : _landscapeCrossAxisCount,
+        crossAxisSpacing: 3,
+        mainAxisSpacing: 3,
+        children: [for (Color color in colors) child(color)],
+      ),
+    );
+  }
+
+  //color item picker
+
+  Widget pickerItemBuilder(
+      Color color, bool isCurrentColor, void Function() changeColor) {
+    return Container(
+      margin: const EdgeInsets.all(8),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(_borderRadius),
+        color: color,
+        boxShadow: [
+          BoxShadow(
+              color: color.withOpacity(0.8),
+              offset: const Offset(1, 2),
+              blurRadius: _blurRadius)
+        ],
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: changeColor,
+          borderRadius: BorderRadius.circular(_borderRadius),
+          child: AnimatedOpacity(
+            duration: const Duration(milliseconds: 250),
+            opacity: isCurrentColor ? 1 : 0,
+            child: Icon(
+              Icons.done,
+              size: _iconSize,
+              color: useWhiteForeground(color) ? Colors.white : Colors.black,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
 
 //datepicker selected date
 
@@ -84,7 +171,6 @@ class _AddProfileState extends State<AddProfile>
   Widget build(BuildContext context) {
     final theme = NeumorphicTheme.currentTheme(context);
     final bodyText1 = theme.textTheme.bodyText1;
-
 
     late final Animation<Offset> _offsetAnimation = Tween<Offset>(
       begin: Offset(0, 2),
@@ -136,56 +222,54 @@ class _AddProfileState extends State<AddProfile>
                           onSaved: (value) {
                             setState(() {
                               _name = value ?? "";
-                           
                             });
                             print("name: $_name");
                           },
                           onTap: () {
                             setState(() {
                               _hideEmojiPicker = true;
-                            
                             });
                           },
                           hintFocus: hintFocus),
                       SizedBox(
                         height: 30.0,
                       ),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    _hideEmojiPicker = !_hideEmojiPicker;
-                                  });
-                                },
-                                child: NeuEmojiPicker(
-                                    emoji: profiles.selectedProfile?.emoji ??
-                                        _selectedEmoji) ),
-                          ),
-                          SizedBox(
-                            width: 30,
-                          ),
-                          Expanded(
-                            child: GestureDetector(
+                      Row(children: [
+                        Expanded(
+                          child: GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  _hideEmojiPicker = !_hideEmojiPicker;
+                                });
+                              },
+                              child: NeuEmojiPicker(
+                                  emoji: profiles.selectedProfile?.emoji ??
+                                      _selectedEmoji)),
+                        ),
+                        SizedBox(
+                          width: 30,
+                        ),
+                        Expanded(
+                          child: GestureDetector(
                               onTap: () {
                                 setState(() {
                                   _hideGenderPicker = !_hideGenderPicker;
                                 });
                               },
                               child: NeuGenderPicker(gender: _gender)),
-                          )
-                        ]),
+                        )
+                      ]),
                       SizedBox(
                         height: 30.0,
                       ),
-                      NeuBirthdayPicker(birthday: DateTime.now(), onSaved: () {}),
+                      NeuBirthdayPicker(
+                          birthday: DateTime.now(), onSaved: () {}),
                       SizedBox(
                         height: 30.0,
                       ),
                       Row(
                         children: [
-                          NeuNumberFieldMedium(
+                          NeuHeightField(
                               initialValue: "",
                               errorText: "",
                               hintText: "Height",
@@ -195,38 +279,48 @@ class _AddProfileState extends State<AddProfile>
                             width: 30,
                           ),
                           Expanded(
-                            child: Neumorphic(
-                              style: NeumorphicStyle(
-                                shape: NeumorphicShape.concave,
-                                boxShape: NeumorphicBoxShape.roundRect(
-                                    BorderRadius.circular(25)),
-                                depth: -3,
-                                intensity: 0.9,
-                              ),
-                              padding: EdgeInsets.only(
-                                  top: 14.0, left: 18, right: 14, bottom: 14),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    "Color",
-                                    style: bodyText1?.copyWith(fontSize: 16),
-                                  ),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                  Expanded(
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                          color: Colors.blue,
-                                          borderRadius:
-                                              BorderRadius.circular(25)),
-                                      height: 25,
-                                      width: 25,
+                            child: GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  _hideColorPicker = false;
+                                });
+                              },
+                              child: Neumorphic(
+                                style: NeumorphicStyle(
+                                  shape: NeumorphicShape.concave,
+                                  boxShape: NeumorphicBoxShape.roundRect(
+                                      BorderRadius.circular(25)),
+                                  depth: -3,
+                                  intensity: 0.9,
+                                ),
+                                padding: EdgeInsets.only(
+                                    top: 14.0, left: 18, right: 14, bottom: 14),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      "Color",
+                                      style: bodyText1?.copyWith(fontSize: 16),
                                     ),
-                                  ),
-                                ],
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Expanded(
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                            color: _selectedColor,
+                                            border: Border.all(
+                                              color: theme.defaultTextColor,width: 4
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(25)),
+                                        height: 25,
+                                        width: 25,
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           )
@@ -274,10 +368,9 @@ class _AddProfileState extends State<AddProfile>
                       _hideEmojiPicker = true;
                     })
                             ); */
-                     setState(() {
+                    setState(() {
                       _hideEmojiPicker = true;
                     });
-                   
                   },
                   onEmojiSelected: (category, emoji) {
                     setState(() {
@@ -291,25 +384,73 @@ class _AddProfileState extends State<AddProfile>
             ),
           ),
         ),
-
         Align(
           child: Offstage(
             offstage: _hideGenderPicker,
-            child: Neumorphic(child: 
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Wrap(
-                children: [
-                 _buildGender("Male", Gender.male),
-                 _buildGender("Female", Gender.female),
-                 _buildGender("Non binary", Gender.non_binary),
-                 _buildGender("Transgender", Gender.transgender),
-                 _buildGender("Intersex", Gender.intersex),
-                 _buildGender("Other", Gender.other),
-                  //NeumorphicRadio(child: Text("male"),)
-                ],
+            child: Neumorphic(
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Wrap(
+                  children: [
+                    _buildGender("Male", Gender.male),
+                    _buildGender("Female", Gender.female),
+                    _buildGender("Non binary", Gender.non_binary),
+                    _buildGender("Transgender", Gender.transgender),
+                    _buildGender("Intersex", Gender.intersex),
+                    _buildGender("Other", Gender.other),
+                    //NeumorphicRadio(child: Text("male"),)
+                  ],
+                ),
               ),
-            ),),
+            ),
+          ),
+        ),
+        Align(
+          child: Offstage(
+            offstage: _hideColorPicker,
+            child: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Neumorphic(
+                child: Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Container(
+                    width: MediaQuery.of(context).size.width * 0.8,
+                          height: 460,
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 16.0, left: 12),
+                          child:
+                              Text("Pick a color", style: theme.textTheme.headline3),
+                        ),
+                        NeuCloseButton(onPressed: () {
+                          print("close");
+                          setState(() {
+                            _hideColorPicker = true;
+                          });
+                        })
+                      ],
+                    ),
+                        BlockPicker(
+                            pickerColor: _selectedColor,
+                            availableColors: colors,
+                            layoutBuilder: pickerLayoutBuilder,
+                            onColorChanged: (Color color) {
+                              setState(() {
+                                _selectedColor = color;
+                              });
+                            }),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
           ),
         )
       ]);
@@ -317,7 +458,6 @@ class _AddProfileState extends State<AddProfile>
   }
 
   Widget _buildGender(String caption, Gender value) {
-
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: NeumorphicRadio(
@@ -330,18 +470,12 @@ class _AddProfileState extends State<AddProfile>
             _hideGenderPicker = true;
           });
           print("value: $value");
-        } ,
+        },
         style: NeumorphicRadioStyle(
           selectedDepth: -3,
         ),
-        child: Text(caption),),
+        child: Text(caption),
+      ),
     );
   }
 }
-/* male,
-  female,
-  non_binary,
-  transgender,
-  intersex,
-  other,
-  undefined, */

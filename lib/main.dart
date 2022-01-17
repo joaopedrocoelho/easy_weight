@@ -72,7 +72,7 @@ class MyApp extends StatelessWidget {
             headline3: TextStyle(
                 fontFamily: 'Noto Sans',
                 color: Color(0xff223761),
-                fontSize: 35,
+                fontSize: 25,
                 fontWeight: FontWeight.w800),
             headline4: TextStyle(
                 fontFamily: 'Noto Sans',
@@ -128,7 +128,7 @@ class MyApp extends StatelessWidget {
             headline3: TextStyle(
                 fontFamily: 'Noto Sans',
                 color: Colors.white,
-                fontSize: 35,
+                fontSize: 25,
                 fontWeight: FontWeight.w800),
             headline4: TextStyle(
                 fontFamily: 'Noto Sans',
