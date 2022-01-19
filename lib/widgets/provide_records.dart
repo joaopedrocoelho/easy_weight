@@ -12,7 +12,7 @@ class ProvideRecords extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer3<List<WeightRecord>?, Goal?, List<ProfileModel>?>(
+    return Consumer3<List<WeightRecord>?, Goal?, List<Profile>?>(
         builder: (context, list, goal, profilesList, child) {
       if (list != null) {
         if (list.isNotEmpty && list[0].note.contains('hasError:')) {

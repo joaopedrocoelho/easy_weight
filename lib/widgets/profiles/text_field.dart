@@ -56,7 +56,8 @@ class _NeuTextFieldState extends State<NeuTextField> {
             return null;
           },
           onTap: widget.onTap,
-          onSaved: widget.onSaved,
+          
+          onChanged: widget.onSaved,
           focusNode: widget.hintFocus,
           keyboardType: TextInputType.name,
           cursorColor: theme.defaultTextColor,

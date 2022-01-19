@@ -45,7 +45,7 @@ class RecordsDatabase {
          )
     ''');
 
-    ProfileModel _defaultProfile = ProfileModel(id: 0);
+    Profile _defaultProfile = Profile(id: 0);
 
     final int insert = await db.insert(profilesTable, _defaultProfile.toJson());
 
@@ -83,7 +83,7 @@ class RecordsDatabase {
 
   //profiles
 
-  Future<List<ProfileModel>> getProfiles() async {
+  Future<List<Profile>> getProfiles() async {
     final db = await instance.database;
     
 
@@ -91,18 +91,18 @@ class RecordsDatabase {
       'SELECT * FROM $profilesTable ORDER BY ${ProfileFields.id} ASC');
 
     print("profiles: $profiles");
-    List<ProfileModel> profilesConverted =toProfileList(profiles);
+    List<Profile> profilesConverted =toProfileList(profiles);
 
     return profilesConverted;
   }
 
-  Future<int> addProfile(ProfileModel profile) async {
+  Future<int> addProfile(Profile profile) async {
     final db = await instance.database;
 
     return await db.insert(profilesTable, profile.toJson());
   }
 
-  Future<int> updateProfile(ProfileModel profile) async {
+  Future<int> updateProfile(Profile profile) async {
     final db = await instance.database;
 
     return await db.update(profilesTable, profile.toJson(), where: '${ProfileFields.id} = ?', whereArgs: [profile.id]);

@@ -1,5 +1,7 @@
 import 'package:easy_weight/models/profile_model.dart';
 import 'package:easy_weight/models/profiles_list_model.dart';
+import 'package:easy_weight/models/user_settings.dart';
+import 'package:easy_weight/utils/database.dart';
 import 'package:easy_weight/widgets/profiles/emoji_picker.dart';
 import 'package:easy_weight/widgets/profiles/gender_picker.dart';
 import 'package:easy_weight/widgets/profiles/neu_birthday_picker.dart';
@@ -7,12 +9,10 @@ import 'package:easy_weight/widgets/profiles/height_field_medium.dart';
 import 'package:easy_weight/widgets/profiles/text_field.dart';
 
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
-import 'package:flutter/material.dart';
+
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 
-import 'package:easy_weight/models/records_model.dart';
-import 'package:easy_weight/models/weight_unit.dart';
 
 import 'package:easy_weight/widgets/add_record_form/neu_close_button.dart';
 
@@ -21,6 +21,13 @@ import 'package:easy_weight/widgets/buttons/cancel_button.dart';
 import 'package:easy_weight/widgets/buttons/save_button.dart';
 
 import 'package:provider/provider.dart';
+
+import 'package:logger/logger.dart';
+
+var logger = Logger(
+  printer: PrettyPrinter(),
+);
+
 
 const List<Color> colors = [
   Colors.red,
@@ -75,11 +82,42 @@ class _AddProfileState extends State<AddProfile>
   bool _hideColorPicker = true;
   late AnimationController _emojiPickerController;
 
+  //save profile function
+  Future<int> addProfile(Profile newProfile) async {
+      final  int profile = await RecordsDatabase.instance.addProfile(newProfile);
+      if (profile != -1) {
+        Profile newProfileWithId = Profile(
+          id: profile,
+          name: newProfile.name,
+          emoji: newProfile.emoji,
+          gender: newProfile.gender,
+          color: newProfile.color,
+          birthday: newProfile.birthday,
+          height: newProfile.height,
+          );
+        Provider.of<ProfilesListModel>(context, listen: false).addProfile(newProfileWithId);
+      }
+
+    return profile;
+  } 
+
+  double convertHeight(double height) {
+    double convertedHeight =
+    UserSettings.getUnit() == 'metric' ?
+     height : height * 0.3048;
+
+
+   return convertedHeight;
+  }
+ 
   //form fields state
   String _selectedEmoji = "😃";
   String _name = "";
-  String _gender = "";
+  Gender _gender = Gender.undefined;
+  DateTime _birthday = DateTime.now();
+  double _height = 0.0;
   Color _selectedColor = Colors.transparent;
+
 
   //color picker builder
   Widget pickerLayoutBuilder(
@@ -139,7 +177,7 @@ class _AddProfileState extends State<AddProfile>
 
 //datepicker selected date
 
-  Future addProfile() async {}
+
 
   @override
   void initState() {
@@ -159,13 +197,7 @@ class _AddProfileState extends State<AddProfile>
     hintFocus.dispose();
   }
 
-  /* @override
-  void didChangeDependencies() {
-    // TODO: implement didChangeDependencies
-    _hideEmojiPicker == false ? 
-    _emojiPickerController.forward() : _emojiPickerController.reverse();
-    super.didChangeDependencies();
-  } */
+  
 
   @override
   Widget build(BuildContext context) {
@@ -220,6 +252,7 @@ class _AddProfileState extends State<AddProfile>
                           errorText: "Please enter a name",
                           hintText: "Name",
                           onSaved: (value) {
+
                             setState(() {
                               _name = value ?? "";
                             });
@@ -272,8 +305,15 @@ class _AddProfileState extends State<AddProfile>
                           NeuHeightField(
                               initialValue: "",
                               errorText: "",
-                              hintText: "Height",
-                              onSaved: (value) {},
+                              hintText: "",
+                              onSaved: (value) {
+                                double height =  value != null ? double.parse(value) : 0.0;
+                                setState(() {
+                                  _height = height;
+                                });
+                                print("height: $_height");
+                              
+                              },
                               hintFocus: hintFocus),
                           SizedBox(
                             width: 30,
@@ -341,6 +381,37 @@ class _AddProfileState extends State<AddProfile>
                           Expanded(child: SaveButton(
                             onPressed: () async {
                               currentFocus.focusedChild?.unfocus();
+                              double convertedHeight = convertHeight(_height);
+                               Profile newProfile = Profile(
+                                    name: _name,
+                                    emoji: _selectedEmoji,
+                                    height: convertedHeight,
+                                    gender: _gender,
+                                    birthday: _birthday,
+                                    color: _selectedColor,
+                                );
+
+                                addProfile(newProfile).then((value) => {
+                                  if (value != -1) {
+
+
+                                  } else{
+                                    //error handling
+                                  }
+                                }
+                                );
+
+                              
+
+                              logger.d({
+                                  "name": _name,
+                                  "emoji": _selectedEmoji,
+                                  "height": _height,
+                                  "gender": _gender,
+                                  "color": _selectedColor,
+                                  "birthday": _birthday,
+                              }
+                              );
                             },
                           ))
                         ],
@@ -466,7 +537,7 @@ class _AddProfileState extends State<AddProfile>
         padding: EdgeInsets.all(10),
         onChanged: (value) {
           setState(() {
-            _gender = caption[0].toUpperCase();
+            _gender = value as Gender;
             _hideGenderPicker = true;
           });
           print("value: $value");

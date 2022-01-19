@@ -22,7 +22,7 @@ Future main() async {
   runApp(MyApp());
 }
 
-Future<List<ProfileModel>> _getProfiles(BuildContext context) async {
+Future<List<Profile>> _getProfiles(BuildContext context) async {
   final profiles = await RecordsDatabase.instance.getProfiles();
   print("profiles db: $profiles");
   Provider.of<ProfilesListModel>(context, listen: false).updateList(profiles);
@@ -182,13 +182,13 @@ class MyApp extends StatelessWidget {
             
             ChangeNotifierProvider(create: (context) => ButtonMode()),
             ChangeNotifierProvider(create: (context) => WeightUnit()),
-            FutureProvider<List<ProfileModel>?>(
+            FutureProvider<List<Profile>?>(
             create: (context) {
                return _getProfiles(context);
               },
               initialData: [],
               catchError: (_, error) => [
-                ProfileModel(
+                Profile(
                   id: -1,
                   name: 'hasError: $error',
                 )

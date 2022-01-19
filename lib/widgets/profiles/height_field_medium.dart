@@ -58,8 +58,8 @@
                   ),
                 ),
                 Expanded(
-                  child: TextFormField(
-                    onSaved: widget.onSaved,
+                  child: TextField(
+                    onChanged: widget.onSaved,
                     keyboardType: TextInputType.number,
                     style: bodyText1?.copyWith(fontSize: 16, ),
                     textAlign: TextAlign.end,

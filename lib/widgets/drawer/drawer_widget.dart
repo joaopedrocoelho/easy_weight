@@ -75,7 +75,7 @@ class _DrawerWidgetState extends State<DrawerWidget> with TickerProviderStateMix
                         scrollDirection: Axis.vertical,
                         itemBuilder: (context, index) {
                           return ProfileBar(
-                              id: profilesList.profiles[index].id,
+                              id: profilesList.profiles[index].id!,
                               name: profilesList.profiles[index].name);
                         },
                       ),

@@ -1,9 +1,10 @@
 
+import 'package:easy_weight/models/profile_model.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 
 
 class NeuGenderPicker extends StatefulWidget {
-  final String gender;
+  final Gender gender;
 
   const NeuGenderPicker({
     Key? key,
@@ -47,7 +48,7 @@ class _NeuGenderPickerState extends State<NeuGenderPicker> {
             SizedBox(
              
             ),
-            Text(widget.gender, style: theme.textTheme.headline5),
+            Text(widget.gender.toString()[0].toUpperCase(), style: theme.textTheme.headline5),
           ],
         ));
   }
