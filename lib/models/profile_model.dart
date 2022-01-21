@@ -1,4 +1,5 @@
 import 'package:easy_weight/models/db/profiles_table.dart';
+import 'package:easy_weight/models/records_model.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -43,6 +44,13 @@ Gender getGender(String? gender) {
   }
 }
 
+Color getColor(String colorFromDB) {
+  RegExp getColorvalue = RegExp(r'(?<=MaterialColor\(primary value: Color\()[\w\d]*');
+  String color = getColorvalue.stringMatch(colorFromDB).toString();
+
+  return Color(int.parse(color));
+}
+
 class Profile {
   final int? id;
   final String? name;
@@ -51,6 +59,7 @@ class Profile {
   final double? height;
   final DateTime? birthday;
   final Color? color;
+  //final RecordsListModel records;
 
   //Profile constructor 
    const Profile({
@@ -86,7 +95,7 @@ List<Profile> toProfileList(List<Map<String, dynamic>> profiles) {
       gender: getGender(profile[ProfileFields.gender]),
       height: profile[ProfileFields.height],
       birthday: profile[ProfileFields.birthday] != '' ? DateTime.fromMillisecondsSinceEpoch(int.parse(profile[ProfileFields.birthday])) : null,
-      color: profile[ProfileFields.color] != 'null' ? profile['color'] : null
+      color: profile[ProfileFields.color] != 'null' ? getColor(profile['color']) : null
       );
           
   }).toList();

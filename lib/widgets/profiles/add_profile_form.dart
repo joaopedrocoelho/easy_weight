@@ -2,6 +2,7 @@ import 'package:easy_weight/models/profile_model.dart';
 import 'package:easy_weight/models/profiles_list_model.dart';
 import 'package:easy_weight/models/user_settings.dart';
 import 'package:easy_weight/utils/database.dart';
+import 'package:easy_weight/utils/logger_instace.dart';
 import 'package:easy_weight/widgets/profiles/emoji_picker.dart';
 import 'package:easy_weight/widgets/profiles/gender_picker.dart';
 import 'package:easy_weight/widgets/profiles/neu_birthday_picker.dart';
@@ -24,9 +25,7 @@ import 'package:provider/provider.dart';
 
 import 'package:logger/logger.dart';
 
-var logger = Logger(
-  printer: PrettyPrinter(),
-);
+
 
 
 const List<Color> colors = [
@@ -204,6 +203,8 @@ class _AddProfileState extends State<AddProfile>
     final theme = NeumorphicTheme.currentTheme(context);
     final bodyText1 = theme.textTheme.bodyText1;
 
+    
+
     late final Animation<Offset> _offsetAnimation = Tween<Offset>(
       begin: Offset(0, 2),
       end: Offset.zero,
@@ -228,195 +229,197 @@ class _AddProfileState extends State<AddProfile>
               child: Container(
                 child: Form(
                   key: _formKey,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Add a profile',
-                            style: Theme.of(context).textTheme.headline5,
-                            textAlign: TextAlign.start,
-                          ),
-                          NeuCloseButton(onPressed: widget.setInvisible),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 30.0,
-                      ),
-                      NeuTextField(
-                          initialValue: profiles.selectedProfile?.name ?? _name,
-                          errorText: "Please enter a name",
-                          hintText: "Name",
-                          onSaved: (value) {
-
-                            setState(() {
-                              _name = value ?? "";
-                            });
-                            print("name: $_name");
-                          },
-                          onTap: () {
-                            setState(() {
-                              _hideEmojiPicker = true;
-                            });
-                          },
-                          hintFocus: hintFocus),
-                      SizedBox(
-                        height: 30.0,
-                      ),
-                      Row(children: [
-                        Expanded(
-                          child: GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  _hideEmojiPicker = !_hideEmojiPicker;
-                                });
-                              },
-                              child: NeuEmojiPicker(
-                                  emoji: profiles.selectedProfile?.emoji ??
-                                      _selectedEmoji)),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Add a profile',
+                              style: Theme.of(context).textTheme.headline5,
+                              textAlign: TextAlign.start,
+                            ),
+                            NeuCloseButton(onPressed: widget.setInvisible),
+                          ],
                         ),
                         SizedBox(
-                          width: 30,
+                          height: 30.0,
                         ),
-                        Expanded(
-                          child: GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  _hideGenderPicker = !_hideGenderPicker;
-                                });
-                              },
-                              child: NeuGenderPicker(gender: _gender)),
-                        )
-                      ]),
-                      SizedBox(
-                        height: 30.0,
-                      ),
-                      NeuBirthdayPicker(
-                          birthday: DateTime.now(), onSaved: () {}),
-                      SizedBox(
-                        height: 30.0,
-                      ),
-                      Row(
-                        children: [
-                          NeuHeightField(
-                              initialValue: "",
-                              errorText: "",
-                              hintText: "",
-                              onSaved: (value) {
-                                double height =  value != null ? double.parse(value) : 0.0;
-                                setState(() {
-                                  _height = height;
-                                });
-                                print("height: $_height");
-                              
-                              },
-                              hintFocus: hintFocus),
+                        NeuTextField(
+                            initialValue: profiles.selectedProfile?.name ?? _name,
+                            errorText: "Please enter a name",
+                            hintText: "Name",
+                            onSaved: (value) {
+                  
+                              setState(() {
+                                _name = value ?? "";
+                              });
+                              print("name: $_name");
+                            },
+                            onTap: () {
+                              setState(() {
+                                _hideEmojiPicker = true;
+                              });
+                            },
+                            hintFocus: hintFocus),
+                        SizedBox(
+                          height: 30.0,
+                        ),
+                        Row(children: [
+                          Expanded(
+                            child: GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    _hideEmojiPicker = !_hideEmojiPicker;
+                                  });
+                                },
+                                child: NeuEmojiPicker(
+                                    emoji: profiles.selectedProfile?.emoji ??
+                                        _selectedEmoji)),
+                          ),
                           SizedBox(
                             width: 30,
                           ),
                           Expanded(
                             child: GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  _hideColorPicker = false;
-                                });
-                              },
-                              child: Neumorphic(
-                                style: NeumorphicStyle(
-                                  shape: NeumorphicShape.concave,
-                                  boxShape: NeumorphicBoxShape.roundRect(
-                                      BorderRadius.circular(25)),
-                                  depth: -3,
-                                  intensity: 0.9,
-                                ),
-                                padding: EdgeInsets.only(
-                                    top: 14.0, left: 18, right: 14, bottom: 14),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      "Color",
-                                      style: bodyText1?.copyWith(fontSize: 16),
-                                    ),
-                                    SizedBox(
-                                      width: 10,
-                                    ),
-                                    Expanded(
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                            color: _selectedColor,
-                                            border: Border.all(
-                                              color: theme.defaultTextColor,width: 4
-                                            ),
-                                            borderRadius:
-                                                BorderRadius.circular(25)),
-                                        height: 25,
-                                        width: 25,
+                                onTap: () {
+                                  setState(() {
+                                    _hideGenderPicker = !_hideGenderPicker;
+                                  });
+                                },
+                                child: NeuGenderPicker(gender: _gender)),
+                          )
+                        ]),
+                        SizedBox(
+                          height: 30.0,
+                        ),
+                        NeuBirthdayPicker(
+                            birthday: DateTime.now(), onSaved: () {}),
+                        SizedBox(
+                          height: 30.0,
+                        ),
+                        Row(
+                          children: [
+                            NeuHeightField(
+                                initialValue: "",
+                                errorText: "",
+                                hintText: "",
+                                onSaved: (value) {
+                                  double height =  value != null ? double.parse(value) : 0.0;
+                                  setState(() {
+                                    _height = height;
+                                  });
+                                  print("height: $_height");
+                                
+                                },
+                                hintFocus: hintFocus),
+                            SizedBox(
+                              width: 30,
+                            ),
+                            Expanded(
+                              child: GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    _hideColorPicker = false;
+                                  });
+                                },
+                                child: Neumorphic(
+                                  style: NeumorphicStyle(
+                                    shape: NeumorphicShape.concave,
+                                    boxShape: NeumorphicBoxShape.roundRect(
+                                        BorderRadius.circular(25)),
+                                    depth: -3,
+                                    intensity: 0.9,
+                                  ),
+                                  padding: EdgeInsets.only(
+                                      top: 14.0, left: 18, right: 14, bottom: 14),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        "Color",
+                                        style: bodyText1?.copyWith(fontSize: 16),
                                       ),
-                                    ),
-                                  ],
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Expanded(
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                              color: _selectedColor,
+                                              border: Border.all(
+                                                color: theme.defaultTextColor,width: 4
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(25)),
+                                          height: 25,
+                                          width: 25,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
+                            )
+                          ],
+                        ),
+                        SizedBox(
+                          height: 40,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                                child:
+                                    CancelButton(onPressed: widget.setInvisible)),
+                            SizedBox(
+                              width: 20.0,
                             ),
-                          )
-                        ],
-                      ),
-                      SizedBox(
-                        height: 40,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Expanded(
-                              child:
-                                  CancelButton(onPressed: widget.setInvisible)),
-                          SizedBox(
-                            width: 20.0,
-                          ),
-                          Expanded(child: SaveButton(
-                            onPressed: () async {
-                              currentFocus.focusedChild?.unfocus();
-                              double convertedHeight = convertHeight(_height);
-                               Profile newProfile = Profile(
-                                    name: _name,
-                                    emoji: _selectedEmoji,
-                                    height: convertedHeight,
-                                    gender: _gender,
-                                    birthday: _birthday,
-                                    color: _selectedColor,
-                                );
-
-                                addProfile(newProfile).then((value) => {
-                                  if (value != -1) {
-
-
-                                  } else{
-                                    //error handling
+                            Expanded(child: SaveButton(
+                              onPressed: () async {
+                                currentFocus.focusedChild?.unfocus();
+                                double convertedHeight = convertHeight(_height);
+                                 Profile newProfile = Profile(
+                                      name: _name,
+                                      emoji: _selectedEmoji,
+                                      height: convertedHeight,
+                                      gender: _gender,
+                                      birthday: _birthday,
+                                      color: _selectedColor,
+                                  );
+                  
+                                  addProfile(newProfile).then((value) => {
+                                    if (value != -1) {
+                  
+                  
+                                    } else{
+                                      //error handling
+                                    }
                                   }
+                                  );
+                  
+                              
+                  
+                                logger.d({
+                                    "name": _name,
+                                    "emoji": _selectedEmoji,
+                                    "height": _height,
+                                    "gender": _gender,
+                                    "color": _selectedColor,
+                                    "birthday": _birthday,
                                 }
                                 );
-
-                              
-
-                              logger.d({
-                                  "name": _name,
-                                  "emoji": _selectedEmoji,
-                                  "height": _height,
-                                  "gender": _gender,
-                                  "color": _selectedColor,
-                                  "birthday": _birthday,
-                              }
-                              );
-                            },
-                          ))
-                        ],
-                      )
-                    ],
+                              },
+                            ))
+                          ],
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ),

@@ -1,5 +1,6 @@
 import 'package:easy_weight/models/profiles_list_model.dart';
 import 'package:easy_weight/widgets/buttons/menu_button.dart';
+import 'package:easy_weight/widgets/drawer/drawer_scaffold_widget.dart';
 import 'package:easy_weight/widgets/drawer/drawer_widget.dart';
 import 'package:easy_weight/widgets/profiles/profile_bar.dart';
 import 'package:flutter/material.dart';
@@ -111,7 +112,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
       return Scaffold(
         key: _scaffoldKey,
         resizeToAvoidBottomInset: true,
-        drawer: DrawerWidget(),
+        drawer: DrawerScaffoldWidget(),
         
         body: SafeArea(
           child: Stack(children: [

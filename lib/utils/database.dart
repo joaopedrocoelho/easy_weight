@@ -3,6 +3,7 @@ import 'package:easy_weight/models/db/records_table.dart';
 import 'package:easy_weight/models/db/goal_table.dart';
 import 'package:easy_weight/models/profile_model.dart';
 import 'package:easy_weight/models/profiles_list_model.dart';
+import 'package:easy_weight/utils/logger_instace.dart';
 import 'package:provider/provider.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
@@ -118,6 +119,8 @@ class RecordsDatabase {
 
   Future<int> addRecord(WeightRecord record) async {
     final db = await instance.database;
+
+    logger.d("Added record to profile: ${record.profileId}", record.toJson());
    
 
     final id = await db.insert(recordsTable, record.toJson());

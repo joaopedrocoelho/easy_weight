@@ -1,4 +1,5 @@
 import 'package:easy_weight/models/profile_model.dart';
+import 'package:easy_weight/utils/logger_instace.dart';
 import 'package:easy_weight/widgets/buttons/edit_buttons.dart';
 import 'package:easy_weight/widgets/neumorphic/neumorphic_button.dart';
 import 'package:flutter/material.dart';
@@ -10,9 +11,11 @@ class ProfileBar extends StatefulWidget {
   final String? name;
   final String? emoji;
   final Gender? gender;
-  final int? height;
+  final double? height;
   final DateTime? birthday;
   final Color? color;
+  final bool isSelected;
+  final void Function(dynamic) onSelect;
 
   ProfileBar(
       {required this.id,
@@ -22,6 +25,8 @@ class ProfileBar extends StatefulWidget {
       this.height,
       this.birthday,
       this.color,
+      required this.isSelected,
+      required this.onSelect,
       Key? key})
       : super(key: key);
 
@@ -33,8 +38,9 @@ class _ProfileBarState extends State<ProfileBar> {
   late String genderString;
   late String birthdayString;
   bool _isOpen = false;
+  bool _isSelected = false;
 
-  String getGenderString(Gender gender) {
+  String getGenderString(Gender? gender) {
     switch (gender) {
       case Gender.male:
         return 'M';
@@ -57,8 +63,8 @@ class _ProfileBarState extends State<ProfileBar> {
 
   @override
   void initState() {
-    genderString =
-        widget.gender != null ? getGenderString(widget.gender!) : "-";
+    logger.d(widget.gender, widget.birthday);
+    genderString = getGenderString(widget.gender!);
     birthdayString = widget.birthday != null
         ? DateFormat.yMd().format(widget.birthday!)
         : "-";
@@ -94,7 +100,9 @@ class _ProfileBarState extends State<ProfileBar> {
             Text(
               title.toUpperCase(),
               style: TextStyle(
-                  fontSize: 14, fontWeight: FontWeight.w700, letterSpacing: 1.5),
+                  fontSize: 14,
+                  fontWeight: FontWeight.w700,
+                  letterSpacing: 1.5),
             ),
             SizedBox(
               height: 5,
@@ -120,14 +128,14 @@ class _ProfileBarState extends State<ProfileBar> {
             depth: -2,
             intensity: 20,
             surfaceIntensity: 1,
-            color: widget.color ?? Colors.transparent,
+            color: widget.color?.withOpacity(0.4) ?? Colors.transparent,
           ),
           child: Padding(
             padding: const EdgeInsets.only(
               top: 12.0,
               bottom: 12,
               left: 8,
-              right: 8,
+              right: 12,
             ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -147,9 +155,31 @@ class _ProfileBarState extends State<ProfileBar> {
                     Text(widget.name ?? 'No name',
                         style: TextStyle(
                             fontSize: 20, fontWeight: FontWeight.w700)),
-                    SizedBox(
-                      width: 10,
-                    ),
+                    Spacer(),
+                    NeumorphicCheckbox(
+                      style: NeumorphicCheckboxStyle(
+                        selectedDepth: -2,
+                        selectedIntensity: 0.7,
+                        selectedColor: theme.accentColor,
+                        boxShape: NeumorphicBoxShape.circle(),
+                        
+                      
+                      ),
+                      value: widget.isSelected, 
+                      onChanged: widget.onSelect,
+                      )
+                    /* Container(
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.blue,
+                      ),
+                      child: Checkbox(
+                        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        activeColor: Colors.transparent,
+                        value: true,
+                        onChanged: (value) {},
+                      ),
+                    ), */
                   ],
                 ),
                 if (_isOpen)
@@ -158,7 +188,8 @@ class _ProfileBarState extends State<ProfileBar> {
                     shrinkWrap: true,
                     children: [
                       _profileField("gender", genderString),
-                      _profileField("height", widget.height?.toString()),
+                      _profileField(
+                          "height", widget.height?.toStringAsFixed(2)),
                       _profileField("birthday", birthdayString),
                       Container(
                         //color field
