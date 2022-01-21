@@ -5,6 +5,7 @@ import 'package:easy_weight/models/user_settings.dart';
 import 'package:easy_weight/models/weight_record.dart';
 import 'package:easy_weight/utils/database.dart';
 import 'package:easy_weight/widgets/buttons/menu_button.dart';
+import 'package:easy_weight/widgets/change_unit/unit_toggle.dart';
 import 'package:easy_weight/widgets/neumorphic/neumorphic_button.dart';
 import 'package:easy_weight/widgets/profiles/add_profile_form.dart';
 import 'package:easy_weight/widgets/profiles/profile_bar.dart';
@@ -33,18 +34,16 @@ class _DrawerScaffoldWidgetState extends State<DrawerScaffoldWidget>
         AnimationController(vsync: this, duration: Duration(milliseconds: 300));
     super.initState();
   }
-  
-  
-  Future<List<WeightRecord>> _getRecords(BuildContext context) async {
-  Provider.of<RecordsListModel>(context, listen: false).isLoading = true;
-  List<WeightRecord> records =
-      await RecordsDatabase.instance.getRecords(UserSettings.getProfile()!);
-  Provider.of<RecordsListModel>(context, listen: false)
-      .updateRecordsList(records);
-  Provider.of<RecordsListModel>(context, listen: false).isLoading = false;
-  return records;
-}
 
+  Future<List<WeightRecord>> _getRecords(BuildContext context) async {
+    Provider.of<RecordsListModel>(context, listen: false).isLoading = true;
+    List<WeightRecord> records =
+        await RecordsDatabase.instance.getRecords(UserSettings.getProfile()!);
+    Provider.of<RecordsListModel>(context, listen: false)
+        .updateRecordsList(records);
+    Provider.of<RecordsListModel>(context, listen: false).isLoading = false;
+    return records;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,6 +58,7 @@ class _DrawerScaffoldWidgetState extends State<DrawerScaffoldWidget>
             children: [
               SingleChildScrollView(
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
                       padding: const EdgeInsets.all(8.0),
@@ -68,6 +68,15 @@ class _DrawerScaffoldWidgetState extends State<DrawerScaffoldWidget>
                           Text("Profiles", style: theme.textTheme.headline4),
                           NeumorphicButton(
                               onPressed: () {
+                                showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return Scaffold(
+                                        backgroundColor:  Colors.transparent,
+                                        body: AddProfile(),
+                                      );
+                                    });
+
                                 _addProfileFormController.forward();
                               },
                               style: NeumorphicStyle(
@@ -103,23 +112,38 @@ class _DrawerScaffoldWidgetState extends State<DrawerScaffoldWidget>
                               birthday: profilesList.profiles[index].birthday,
                               isSelected: profilesList.selectedProfileID ==
                                   profilesList.profiles[index].id,
-                              onSelect:  (_) async {
+                              onSelect: (_) async {
                                 profilesList.selectProfile(
                                     profilesList.profiles[index].id!);
-                                    await UserSettings.setProfile(profilesList.profiles[index].id!); 
-                                    _getRecords(context);
+                                await UserSettings.setProfile(
+                                    profilesList.profiles[index].id!);
+                                _getRecords(context);
                               });
                         },
                       ),
-                    MenuButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                    ),
                   ],
                 ),
               ),
-              AddProfile(
+              Align(
+                alignment: Alignment.bottomLeft,
+                child: Container(
+                  height: 100,
+                  child: Row(
+                    children: [
+                      MenuButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: UnitToggle(),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              /* AddProfile(
                 animationController: _addProfileFormController,
                 setVisible: () {
                   _addProfileFormController.forward();
@@ -127,7 +151,7 @@ class _DrawerScaffoldWidgetState extends State<DrawerScaffoldWidget>
                 setInvisible: () {
                   _addProfileFormController.reverse();
                 },
-              ),
+              ) */
             ],
           ),
         ),

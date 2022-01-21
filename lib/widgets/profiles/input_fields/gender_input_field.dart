@@ -1,23 +1,21 @@
-import 'package:easy_weight/models/profiles_list_model.dart';
-import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
-import 'package:flutter/material.dart';
+
+import 'package:easy_weight/models/profile_model.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
-import 'package:easy_weight/models/weight_unit.dart';
-import 'package:provider/provider.dart';
 
-class NeuEmojiPicker extends StatefulWidget {
-  final String emoji;
 
-  const NeuEmojiPicker({
+class GenderInputField extends StatefulWidget {
+  final Gender gender;
+
+  const GenderInputField({
     Key? key,
-    required this.emoji,
+    required this.gender,
   }) : super(key: key);
 
   @override
-  _NeuEmojiPickerState createState() => _NeuEmojiPickerState();
+  _GenderInputFieldState createState() => _GenderInputFieldState();
 }
 
-class _NeuEmojiPickerState extends State<NeuEmojiPicker> {
+class _GenderInputFieldState extends State<GenderInputField> {
   TextEditingController _textController = TextEditingController();
 
   @override
@@ -44,10 +42,16 @@ class _NeuEmojiPickerState extends State<NeuEmojiPicker> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "Emoji",
+              "Gender",
               style: bodyText1?.copyWith(fontSize: 16),
             ),
-            Text(widget.emoji, style: bodyText1?.copyWith(fontSize: 28)),
+            SizedBox(
+             
+            ),
+            Text(
+              widget.gender != Gender.undefined ?
+              widget.gender.toString().split('.').last[0].toUpperCase() :
+              '', style: theme.textTheme.headline5),
           ],
         ));
   }

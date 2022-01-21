@@ -62,14 +62,14 @@
                     onChanged: widget.onSaved,
                     keyboardType: TextInputType.number,
                     style: bodyText1?.copyWith(fontSize: 16, ),
-                    textAlign: TextAlign.end,
+                    textAlign: TextAlign.center,
                     decoration: InputDecoration(
                         hintText: widget.hintText,
                         hintStyle: bodyText1?.copyWith(fontSize: 16),
                         suffixText: UserSettings.getUnit() == Unit.metric ? "cm" : "ft" ,
                         suffixStyle: bodyText1?.copyWith(fontSize: 16),
                         contentPadding:
-                            EdgeInsets.only(top: 14.0, right: 14, bottom: 18,left: 0),
+                            EdgeInsets.only(top: 14.0, right: 8, bottom: 18,left: 0),
                         labelStyle: TextStyle(color: Colors.white, fontSize: 20.0),
                       )),
                 ),

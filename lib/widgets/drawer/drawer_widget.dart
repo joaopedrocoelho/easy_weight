@@ -121,13 +121,7 @@ class _DrawerWidgetState extends State<DrawerWidget>
                   ),
                 )),
             AddProfile(
-              animationController: _addProfileFormController,
-              setVisible: () {
-                _addProfileFormController.forward();
-              },
-              setInvisible: () {
-                _addProfileFormController.reverse();
-              },
+            
             ),
           ],
         ),
