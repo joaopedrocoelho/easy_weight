@@ -117,7 +117,7 @@ class _ProfileBarState extends State<ProfileBar> {
     }
 
     return Padding(
-      padding: const EdgeInsets.all(12.0),
+      padding: const EdgeInsets.only(left:12.0, right: 12, top: 15),
       child: AnimatedSize(
         duration: Duration(milliseconds: 200),
         curve: Curves.easeOutCubic,

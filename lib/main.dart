@@ -26,6 +26,7 @@ Future<List<Profile>> _getProfiles(BuildContext context) async {
   final profiles = await RecordsDatabase.instance.getProfiles();
   print("profiles db: $profiles");
   Provider.of<ProfilesListModel>(context, listen: false).updateList(profiles);
+  Provider.of<ProfilesListModel>(context, listen: false).selectProfile(UserSettings.getProfile() ?? 0);
   return profiles;
 }
 
