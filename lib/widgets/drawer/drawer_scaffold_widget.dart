@@ -50,60 +50,72 @@ class _DrawerScaffoldWidgetState extends State<DrawerScaffoldWidget>
     var theme = NeumorphicTheme.currentTheme(context);
 
     return Consumer<ProfilesListModel>(builder: (context, profilesList, child) {
-      print("profiles length : ${profilesList.profiles.length}");
+    
 
       return Scaffold(
         body: SafeArea(
-          child: Stack(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text("Profiles", style: theme.textTheme.headline4),
-                          NeumorphicButton(
-                              onPressed: () {
-                                showDialog(
-                                    context: context,
-                                    builder: (context) {
-                                      return Scaffold(
-                                        backgroundColor:  Colors.transparent,
-                                        body: AddProfile(),
-                                      );
-                                    });
+                    Text("Profiles", style: theme.textTheme.headline4),
+                    NeumorphicButton(
+                        onPressed: () {
+                          showDialog(
+                              context: context,
+                              builder: (context) {
+                                return Scaffold(
+                                  backgroundColor:  Colors.transparent,
+                                  body: AddProfile(),
+                                );
+                              });
 
-                                _addProfileFormController.forward();
-                              },
-                              style: NeumorphicStyle(
-                                color: theme.baseColor,
-                                depth: 5,
-                                surfaceIntensity: 0.3,
-                                intensity: 0.9,
-                                shape: NeumorphicShape.convex,
-                                boxShape: NeumorphicBoxShape.roundRect(
-                                    BorderRadius.circular(15)),
-                              ),
-                              child: Center(
-                                  child: Icon(
-                                      Icons.add_circle_outline_rounded,
-                                      color: theme.defaultTextColor,
-                                      size: 30)))
-                        ],
+                          _addProfileFormController.forward();
+                        },
+                        style: NeumorphicStyle(
+                          color: theme.baseColor,
+                          depth: 5,
+                          surfaceIntensity: 0.3,
+                          intensity: 0.9,
+                          shape: NeumorphicShape.convex,
+                          boxShape: NeumorphicBoxShape.roundRect(
+                              BorderRadius.circular(15)),
+                        ),
+                        child: Center(
+                            child: Icon(
+                                Icons.add_circle_outline_rounded,
+                                color: theme.defaultTextColor,
+                                size: 30)))
+                  ],
+                ),
+              ),
+              if (profilesList.profiles.length > 0)
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    height: MediaQuery.of(context).size.height * 0.7,
+                    child: Neumorphic(
+                      style: NeumorphicStyle(
+                        color: theme.baseColor,
+                        depth: -5,
+                        surfaceIntensity: 0.3,
+                        intensity: 0.9,
+                        shape: NeumorphicShape.concave,
+                        boxShape: NeumorphicBoxShape.roundRect(
+                            BorderRadius.circular(15)),
                       ),
-                    ),
-                    if (profilesList.profiles.length > 0)
-                      ListView.builder(
+                      child: ListView.builder(
                         itemCount: profilesList.profilesCount,
                         shrinkWrap: true,
                         scrollDirection: Axis.vertical,
                         itemBuilder: (context, index) {
                           return ProfileBar(
                               id: profilesList.profiles[index].id!,
+                              index: index,
                               name: profilesList.profiles[index].name,
                               emoji: profilesList.profiles[index].emoji,
                               gender: profilesList.profiles[index].gender,
@@ -121,37 +133,26 @@ class _DrawerScaffoldWidgetState extends State<DrawerScaffoldWidget>
                               });
                         },
                       ),
-                  ],
-                ),
-              ),
-              Align(
-                alignment: Alignment.bottomLeft,
-                child: Container(
-                  height: 100,
-                  child: Row(
-                    children: [
-                      MenuButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: UnitToggle(),
-                      ),
-                    ],
+                    ),
                   ),
                 ),
-              ),
-              /* AddProfile(
-                animationController: _addProfileFormController,
-                setVisible: () {
-                  _addProfileFormController.forward();
-                },
-                setInvisible: () {
-                  _addProfileFormController.reverse();
-                },
-              ) */
+
+                Align(
+            alignment: Alignment.bottomLeft,
+            child: Row(
+              children: [
+                MenuButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: UnitToggle(),
+                ),
+              ],
+            ),
+          ),
             ],
           ),
         ),

@@ -4,13 +4,14 @@ import 'package:easy_weight/models/db/goal_table.dart';
 class Goal {
   double weight;
   double initialWeight;
+  int profileId;
 
-  Goal({required this.weight, required this.initialWeight});
+  Goal({required this.weight, required this.initialWeight, required this.profileId});
 
   Map<String, Object> toJson() => {
         GoalFields.weight: weight,
         GoalFields.initialWeight: initialWeight,
-        GoalFields.id: 1
+        GoalFields.profileId: profileId,
       };
 }
 

@@ -96,6 +96,7 @@ class _DrawerWidgetState extends State<DrawerWidget>
                           itemBuilder: (context, index) {
                             return ProfileBar(
                                 id: profilesList.profiles[index].id!,
+                                index: index,
                                 name: profilesList.profiles[index].name,
                                 emoji: profilesList.profiles[index].emoji,
                                 gender: profilesList.profiles[index].gender,

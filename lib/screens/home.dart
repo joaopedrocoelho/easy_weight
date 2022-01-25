@@ -95,7 +95,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
     bool isUsingDark = NeumorphicTheme.isUsingDark(context);
 
     return Consumer3<RecordsListModel, ButtonMode, ProfilesListModel>(
-        builder: (context, recordsModel, profilesList, buttonMode, child) {
+        builder: (context, recordsModel,  buttonMode, profilesList, child) {
       final bool mode = context.read<ButtonMode>().isEditing;
 
       final List<WeightRecord> records =
@@ -113,14 +113,12 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
         key: _scaffoldKey,
         resizeToAvoidBottomInset: true,
         drawer: DrawerScaffoldWidget(),
-        
         body: SafeArea(
           child: Stack(children: [
             SingleChildScrollView(
               child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    
                     Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -137,7 +135,16 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                             records.isNotEmpty
                                 ? GoalStatsContainer(
                                     setVisible: () {
-                                      _setVisible('goal');
+                                      showDialog(
+                                          context: context,
+                                          builder: (context) {
+                                            return Scaffold(
+                                              backgroundColor: Colors.transparent,
+                                              body: EditGoal(
+                                                profileId: profilesList.selectedProfileID,
+                                              ),
+                                            );
+                                          });
                                     },
                                   )
                                 : DisabledGoal()
@@ -151,11 +158,13 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                   ]),
             ),
             Positioned(
-              bottom: 0,
-              left: 0,
-              child: MenuButton(onPressed: () {
-                  _scaffoldKey.currentState?.openDrawer();
-              },)),
+                bottom: 0,
+                left: 0,
+                child: MenuButton(
+                  onPressed: () {
+                    _scaffoldKey.currentState?.openDrawer();
+                  },
+                )),
 
             /* Positioned(
                 bottom: 0,
@@ -196,19 +205,8 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                 currentFocus.focusedChild?.unfocus();
                 _setinVisible('add');
               },
-              
               records: records,
             ),
-            EditGoal(
-              animationController: _goalController,
-              setVisible: () {
-                _setVisible('goal');
-              },
-              setInvisible: () {
-                currentFocus.focusedChild?.unfocus();
-                _setinVisible('goal');
-              },
-            )
           ]),
         ),
       );

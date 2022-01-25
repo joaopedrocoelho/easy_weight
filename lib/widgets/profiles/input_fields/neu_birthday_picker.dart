@@ -10,7 +10,7 @@ typedef void SetDate(DateTime date);
 
 class NeuBirthdayPicker extends StatefulWidget {
   final DateTime? birthday;
-  final VoidCallback  onSaved;
+  final SetDate  onSaved;
 
   NeuBirthdayPicker({
      this.birthday,
@@ -38,7 +38,7 @@ class _NeuBirthdayPickerState extends State<NeuBirthdayPicker> {
       setState(() {
         _dateFormatted = DateFormat.yMd().format(_datePicker);
       });  
-      widget.onSaved();
+      widget.onSaved(_datePicker);
       return _datePicker;
     }
    

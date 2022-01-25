@@ -1,3 +1,4 @@
+import 'package:easy_weight/utils/logger_instace.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:easy_weight/models/goal_model.dart';
@@ -19,14 +20,12 @@ import 'package:provider/provider.dart';
 import 'package:easy_weight/widgets/add_record_form/neu_form_container.dart';
 
 class EditGoal extends StatefulWidget {
-  final AnimationController animationController;
-  final VoidCallback setVisible;
-  final VoidCallback setInvisible;
+  final int profileId;
+  
+
 
   EditGoal({
-    required this.animationController,
-    required this.setVisible,
-    required this.setInvisible,
+   required this.profileId
   });
 
   @override
@@ -38,38 +37,43 @@ class _EditGoalState extends State<EditGoal>
   late FocusNode hintFocus;
   final _formKey = GlobalKey<FormState>();
   bool isLoading = false;
+  late AnimationController _controller;
 
   //form fields state
   double _goal = 0.0;
   double _initialWeight = 0.0;
 
   Future addGoal() async {
-    Goal newGoal = Goal(weight: _goal, initialWeight: _initialWeight);
+    Goal newGoal = Goal(weight: _goal, initialWeight: _initialWeight, profileId: widget.profileId);
     await RecordsDatabase.instance.addGoal(newGoal);
-    print("goal $_goal $_initialWeight");
-    widget.setInvisible();
+    
+   
   }
 
   Future updateGoal() async {
-    Goal newGoal = Goal(weight: _goal, initialWeight: _initialWeight);
+    Goal newGoal = Goal(weight: _goal, initialWeight: _initialWeight, profileId: widget.profileId);
     await RecordsDatabase.instance.updateGoal(newGoal);
-    print("goal $_goal $_initialWeight");
-
-    widget.setInvisible();
-  }
+    logger.i("goal $_goal $_initialWeight");
+    }
 
   @override
   void initState() {
-    super.initState();
-
+    _controller = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 300),
+    );
+    _controller.forward();
     hintFocus = FocusNode();
+    super.initState();
   }
 
   @override
   void dispose() {
-    super.dispose();
-    widget.animationController.dispose();
+    
+ 
+    _controller.dispose();
     hintFocus.dispose();
+    super.dispose();
   }
 
   @override
@@ -84,7 +88,7 @@ class _EditGoalState extends State<EditGoal>
             begin: Offset(0, 1),
             end: Offset.zero,
           ).animate(CurvedAnimation(
-              parent: widget.animationController, curve: Curves.ease)),
+              parent: _controller, curve: Curves.ease)),
           child: Align(
             alignment: Alignment.bottomCenter,
             child: NeuFormContainer(
@@ -103,7 +107,11 @@ class _EditGoalState extends State<EditGoal>
                           style: Theme.of(context).textTheme.headline5,
                           textAlign: TextAlign.start,
                         ),
-                        NeuCloseButton(onPressed: widget.setInvisible)
+                        NeuCloseButton(onPressed: 
+                        () {
+                             _controller.reverse();
+                          Navigator.pop(context);
+                        })
                       ],
                     ),
                     SizedBox(
@@ -117,9 +125,9 @@ class _EditGoalState extends State<EditGoal>
                         onSaved: (value) {
                           unit.usePounds
                               ? setState(() {
-                                  print('hey pound');
+                                  
                                   _goal = (double.parse(value!) / 2.20462)
-                                      .ceilToDouble();
+                                      .floorToDouble();
                                 })
                               : setState(() {
                                   _goal = double.parse(value!);
@@ -139,7 +147,7 @@ class _EditGoalState extends State<EditGoal>
                               _goal = 0.0;
                             }
                           });
-                          widget.setInvisible();
+                      
                         })),
                         SizedBox(
                           width: 20.0,
@@ -159,7 +167,7 @@ class _EditGoalState extends State<EditGoal>
                             });
 
                             Goal newGoal = Goal(
-                                weight: _goal, initialWeight: _initialWeight);
+                                weight: _goal, initialWeight: _initialWeight, profileId: widget.profileId);
 
                             if (goalModel.currentGoal != null) {
                               Provider.of<GoalModel>(context, listen: false)
@@ -172,6 +180,8 @@ class _EditGoalState extends State<EditGoal>
                             }
 
                             currentFocus.focusedChild?.unfocus();
+                            _controller.reverse();
+                            Navigator.pop(context);
                           }
                         }))
                       ],

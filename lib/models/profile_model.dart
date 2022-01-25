@@ -1,5 +1,6 @@
 import 'package:easy_weight/models/db/profiles_table.dart';
 import 'package:easy_weight/models/records_model.dart';
+import 'package:easy_weight/utils/logger_instace.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -45,11 +46,13 @@ Gender getGender(String? gender) {
 }
 
 Color getColor(String colorFromDB) {
+  
   RegExp getColorvalue = RegExp(r'(?<=MaterialColor\(primary value: Color\()[\w\d]*');
   String color = getColorvalue.stringMatch(colorFromDB).toString();
+  //logger.i("parsing profile color from DB:$colorFromDB", color);
 
-  return Color(int.parse(color));
-}
+  return  color != 'null' ? Color(int.parse(color)) : Colors.transparent;
+  }
 
 class Profile {
   final int? id;
@@ -85,7 +88,10 @@ class Profile {
 }
 
 List<Profile> toProfileList(List<Map<String, dynamic>> profiles) {
+
+  
   return profiles.map((profile) {
+    
    
     return Profile
       (

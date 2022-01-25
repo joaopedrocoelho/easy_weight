@@ -91,8 +91,11 @@ class RecordsDatabase {
     final profiles = await db.rawQuery(
       'SELECT * FROM $profilesTable ORDER BY ${ProfileFields.id} ASC');
 
-    print("profiles: $profiles");
-    List<Profile> profilesConverted =toProfileList(profiles);
+    profiles.forEach((profile) {
+        logger.i("PROFILE: ${profile[ProfileFields.name]}", profile);
+    });
+    
+    List<Profile> profilesConverted = toProfileList(profiles);
 
     return profilesConverted;
   }
@@ -111,8 +114,9 @@ class RecordsDatabase {
 
   Future<int> deleteProfile(int id) async {
     final db = await instance.database;
-
+    await db.delete(recordsTable,where: '${RecordFields.profileId} = ?', whereArgs: [id]);
     return await db.delete(profilesTable, where: '${ProfileFields.id} = ?', whereArgs: [id]);
+
   }
 
   //records
@@ -181,17 +185,19 @@ class RecordsDatabase {
 
     final id = await db.insert(goalTable, goal.toJson());
 
-    // print('record id : $id');
+    if (id != -1) {
+      logger.i("Goal added with id: $id", goal.toJson());
+    }
     return id;
   }
 
-  Future<Goal?> getGoal() async {
+  Future<Goal?> getGoal(int profileId) async {
     final db = await instance.database;
 
     //print("db: $db");
 
     List<Map<String, dynamic>> goal = await db.rawQuery(
-        'SELECT ${GoalFields.weight}, ${GoalFields.initialWeight} FROM $goalTable WHERE ${GoalFields.id}=1');
+        'SELECT ${GoalFields.weight}, ${GoalFields.initialWeight} FROM $goalTable WHERE ${GoalFields.profileId}= $profileId');
 
     print("goal db $goal");
     late Goal goalConverted;
@@ -202,7 +208,8 @@ class RecordsDatabase {
               {
                 goalConverted = Goal(
                     weight: goal[GoalFields.weight],
-                    initialWeight: goal[GoalFields.initialWeight])
+                    initialWeight: goal[GoalFields.initialWeight],
+                    profileId:goal[GoalFields.profileId] )
               }
           });
 
@@ -214,12 +221,15 @@ class RecordsDatabase {
 
   Future<int> updateGoal(Goal goal) async {
     final db = await instance.database;
+    
+      logger.i("Updating Goal with id: ${goal.profileId}", goal.toJson());
+    
 
     return db.update(
       goalTable,
       goal.toJson(),
-      where: '${GoalFields.id} = ?',
-      whereArgs: [1],
+      where: '${GoalFields.profileId} = ?',
+      whereArgs: [goal.profileId],
     );
   }
 

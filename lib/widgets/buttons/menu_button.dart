@@ -13,7 +13,7 @@ class MenuButton extends StatelessWidget {
     var theme = NeumorphicTheme.currentTheme(context);
 
     return Padding(
-      padding: const EdgeInsets.all(20.0),
+      padding: const EdgeInsets.all(18.0),
       child: NeuButton(
                     child: Icon(
                       Icons.menu_rounded,

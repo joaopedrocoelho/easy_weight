@@ -2,6 +2,7 @@ import 'package:easy_weight/models/db/profiles_table.dart';
 import 'package:easy_weight/models/profile_model.dart';
 import 'package:easy_weight/models/profiles_list_model.dart';
 import 'package:easy_weight/models/user_settings.dart';
+import 'package:easy_weight/utils/logger_instace.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:easy_weight/models/goal_model.dart';
@@ -41,10 +42,11 @@ Future<List<WeightRecord>> _getRecords(BuildContext context) async {
 }
 
 Future<Goal?> _getGoal(BuildContext context) async {
-  Goal? goal = await RecordsDatabase.instance.getGoal();
+  Goal? goal = await RecordsDatabase.instance.getGoal(UserSettings.getProfile() ?? 0);
   if (goal != null) {
     Provider.of<GoalModel>(context, listen: false).updateGoalRecord(goal);
-    print('_getGoal $goal');
+    
+    logger.i('_getGoal $goal');
     return goal;
   } else {
     print('_getGoal $goal');

@@ -1,3 +1,4 @@
+import 'package:easy_weight/models/db/profiles_table.dart';
 import 'package:easy_weight/models/profile_model.dart';
 import 'package:easy_weight/models/profiles_list_model.dart';
 import 'package:easy_weight/models/user_settings.dart';
@@ -15,8 +16,6 @@ import 'package:easy_weight/widgets/profiles/input_fields/height_field_medium.da
 import 'package:easy_weight/widgets/profiles/pickers/color_picker.dart';
 import 'package:easy_weight/widgets/profiles/pickers/emoji_picker.dart';
 import 'package:easy_weight/widgets/profiles/pickers/gender_picker.dart';
-
-import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
@@ -52,16 +51,32 @@ const List<Color> colors = [
   Colors.white
 ];
 
-class AddProfile extends StatefulWidget {
-  AddProfile({
+class EditProfile extends StatefulWidget {
+  final int id;
+  final String? name;
+  final String? emoji;
+  final Gender? gender;
+  final double? height;
+  final DateTime? birthday;
+  final Color? color;
+
+  EditProfile({
+    required this.id,
+    this.name,
+    this.emoji,
+    this.gender,
+    this.height,
+    this.color,
+    this.birthday,
     Key? key,
   }) : super(key: key);
 
   @override
-  _AddProfileState createState() => _AddProfileState();
+  _EditProfileState createState() => _EditProfileState();
 }
 
-class _AddProfileState extends State<AddProfile> with TickerProviderStateMixin {
+class _EditProfileState extends State<EditProfile>
+    with TickerProviderStateMixin {
   int _portraitCrossAxisCount = 4;
   int _landscapeCrossAxisCount = 5;
   double _borderRadius = 30;
@@ -73,38 +88,26 @@ class _AddProfileState extends State<AddProfile> with TickerProviderStateMixin {
   bool _hideEmojiPicker = true;
   bool _hideGenderPicker = true;
   bool _hideColorPicker = true;
+
   late AnimationController _emojiPickerController;
   late AnimationController _slideAnimationController;
 
-  //save profile function
-  Future<int> addProfile(Profile newProfile) async {
-    final int profile = await RecordsDatabase.instance.addProfile(newProfile);
-    if (profile != -1) {
-      Profile newProfileWithId = Profile(
-        id: profile,
-        name: newProfile.name,
-        emoji: newProfile.emoji,
-        gender: newProfile.gender,
-        color: newProfile.color,
-        birthday: newProfile.birthday,
-        height: newProfile.height,
-      );
-      Provider.of<ProfilesListModel>(context, listen: false)
-          .addProfile(newProfileWithId);
-    }
+  //edit profile function
 
-    return profile;
+  double convertHeight(double height) {
+    double convertedHeight =
+        UserSettings.getUnit() == 'metric' ? height : height * 0.3048;
+
+    return convertedHeight;
   }
 
-
-
   //form fields state
-  String _selectedEmoji = "😃";
-  String _name = "";
-  Gender _gender = Gender.undefined;
-  DateTime _birthday = DateTime.now();
-  double _height = 0.0;
-  Color _selectedColor = Colors.transparent;
+  late String _selectedEmoji;
+  late String _name;
+  late Gender _gender;
+  late DateTime _birthday;
+  late double _height;
+  late Color _selectedColor;
 
   //color picker builder
   Widget pickerLayoutBuilder(
@@ -167,7 +170,13 @@ class _AddProfileState extends State<AddProfile> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    logger.i(Unit.metric.toString());
+    _selectedEmoji = widget.emoji ?? '😃'; //gha
+    _name = widget.name ?? '';
+    _gender = widget.gender ?? Gender.undefined;
+    _birthday = widget.birthday ?? DateTime.now();
+    _height = widget.height ?? 0.0;
+    _selectedColor = widget.color ?? Colors.transparent;
+
     _emojiPickerController = AnimationController(
       vsync: this,
       duration: Duration(milliseconds: 300),
@@ -229,7 +238,7 @@ class _AddProfileState extends State<AddProfile> with TickerProviderStateMixin {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'Add a profile',
+                              'Edit profile',
                               style: Theme.of(context).textTheme.headline5,
                               textAlign: TextAlign.start,
                             ),
@@ -298,7 +307,7 @@ class _AddProfileState extends State<AddProfile> with TickerProviderStateMixin {
                                               setState(() {
                                                 _gender = value as Gender;
                                               });
-                                              logger.d("value: $value");
+                                              logger.d("_gender: $_gender");
                                             });
                                       });
                                 },
@@ -309,7 +318,7 @@ class _AddProfileState extends State<AddProfile> with TickerProviderStateMixin {
                           height: 30.0,
                         ),
                         NeuBirthdayPicker(
-                            birthday: _birthday,
+                            birthday: DateTime.now(),
                             onSaved: (date) {
                               setState(() {
                                 _birthday = date;
@@ -329,7 +338,7 @@ class _AddProfileState extends State<AddProfile> with TickerProviderStateMixin {
                                       ? double.parse(value)
                                       : 0.0;
                                   setState(() {
-                                    UserSettings.getUnit() ==  Unit.metric
+                                    UserSettings.getUnit() == Unit.metric
                                         ? _height = height
                                         : _height = ftToMeters(height);
                                     logger.d("Height: $_height");
@@ -372,41 +381,40 @@ class _AddProfileState extends State<AddProfile> with TickerProviderStateMixin {
                             SizedBox(
                               width: 20.0,
                             ),
-                            Expanded(child: SaveButton(
-                              onPressed: () async {
-                                currentFocus.focusedChild?.unfocus();
-                               
-                                Profile newProfile = Profile(
-                                  name: _name,
-                                  emoji: _selectedEmoji,
-                                  height: _height,
-                                  gender: _gender,
-                                  birthday: _birthday,
-                                  color: _selectedColor,
-                                );
+                            Expanded(child: SaveButton(onPressed: () async {
+                              currentFocus.focusedChild?.unfocus();
 
-                                addProfile(newProfile).then((value) => {
-                                      if (value != -1)
-                                        {
-                                          _slideAnimationController.reverse(),
-                                          Navigator.pop(context),
-                                        }
-                                      else
-                                        {
-                                          //error handling
-                                        }
-                                    });
+                              Profile editedProfile = Profile(
+                                id: widget.id,
+                                name: _name,
+                                emoji: _selectedEmoji,
+                                height: _height,
+                                gender: _gender,
+                                birthday: _birthday,
+                                color: _selectedColor,
+                              );
 
-                                logger.d({
-                                  "name": _name,
-                                  "emoji": _selectedEmoji,
-                                  "height": _height,
-                                  "gender": _gender,
-                                  "color": _selectedColor,
-                                  "birthday": _birthday,
-                                });
-                              },
-                            ))
+                              logger.d("Edited profile: $_name:", {
+                                "name": _name,
+                                "emoji": _selectedEmoji,
+                                "height": _height,
+                                "gender": _gender,
+                                "color": _selectedColor,
+                                "birthday": _birthday,
+                              });
+
+                              await RecordsDatabase.instance
+                                  .updateProfile(editedProfile)
+                                  .then(
+                                (value) {
+                                  logger.d("Profile updated: $value");
+                                  if (value != -1) {
+                                    profiles.updateProfile(
+                                        widget.id, editedProfile);
+                                  }
+                                },
+                              );
+                            })),
                           ],
                         )
                       ],
