@@ -1,6 +1,6 @@
-import 'package:new_app/models/weight_record.dart';
+import 'package:easy_weight/models/weight_record.dart';
 
-import 'package:new_app/utils/format_weight.dart';
+import 'package:easy_weight/utils/format_weight.dart';
 
 double? renderCurrentWeight(List<WeightRecord> records) {
   if (records.isNotEmpty) {

@@ -1,22 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:new_app/models/weight_record.dart';
+import 'package:easy_weight/models/weight_record.dart';
 
 class ButtonMode with ChangeNotifier {
   bool isEditing = false;
   int? selectedIndex;
   double weight = 0.0;
   DateTime date = DateTime.now();
+  int profileId = -1;
   String note = '';
 
   double? addWeight;
   String? addNote;
-
 
   void setEditing(WeightRecord record) {
     isEditing = true;
     weight = record.weight;
     date = record.date;
     note = record.note;
+    profileId = record.profileId;
 
     //print("Editing: $weight, $date, $note, isEditing: $isEditing");
     notifyListeners();

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:intl/intl.dart';
-import 'package:new_app/models/button_mode.dart';
-import 'package:new_app/models/records_model.dart';
-import 'package:new_app/models/weight_record.dart';
-import 'package:new_app/utils/format_date.dart';
+import 'package:easy_weight/models/button_mode.dart';
+import 'package:easy_weight/models/records_model.dart';
+import 'package:easy_weight/models/weight_record.dart';
+import 'package:easy_weight/utils/format_date.dart';
 
 import 'package:provider/provider.dart';
 
@@ -29,10 +29,8 @@ class NeuDatePicker extends StatefulWidget {
 }
 
 class _NeuDatePickerState extends State<NeuDatePicker> {
-
-
-  Future<Null> _selectDate(
-      BuildContext context, List<DateTime> usedDates, DateTime initialDate) async {
+  Future<Null> _selectDate(BuildContext context, List<DateTime> usedDates,
+      DateTime initialDate) async {
     dynamic _datePicker = await showDatePicker(
         context: context,
         initialDate: initialDate,
@@ -45,7 +43,6 @@ class _NeuDatePickerState extends State<NeuDatePicker> {
 
     if (_datePicker != null) {
       setState(() {
-             
         widget.callback(
           _datePicker,
         );
@@ -78,7 +75,8 @@ class _NeuDatePickerState extends State<NeuDatePicker> {
                 padding:
                     EdgeInsets.only(top: 14.0, left: 18, right: 14, bottom: 18),
                 onPressed: () {
-                  _selectDate(context, widget.usedDates, records.lastAvailableDate); 
+                  _selectDate(
+                      context, widget.usedDates, records.lastAvailableDate);
                 },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -92,36 +90,7 @@ class _NeuDatePickerState extends State<NeuDatePicker> {
                       color: theme.defaultTextColor,
                     ),
                   ],
-                ))
-
-            /* TextButton(
-            style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all(Colors.grey),
-              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                  RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30.0),
-                      side: BorderSide(color: Colors.grey, width: 0.0))),
-              padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-                  EdgeInsets.all(16.0)),
-            ),
-            onPressed: mode.isEditing
-                ? null
-                : () {
-                    _selectDate(context, []);
-                  },
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  '$_selectedDate',
-                  style: TextStyle(color: Colors.black, fontSize: 15.0),
-                ),
-                Icon(
-                  Icons.calendar_today,
-                  color: Colors.black,
-                ),
-              ],
-            )) */
+                ))       
             ;
       },
     );

@@ -1,8 +1,9 @@
+import 'package:easy_weight/utils/convert_unit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
-import 'package:new_app/models/button_mode.dart';
-import 'package:new_app/models/weight_record.dart';
-import 'package:new_app/models/weight_unit.dart';
+import 'package:easy_weight/models/button_mode.dart';
+import 'package:easy_weight/models/weight_record.dart';
+import 'package:easy_weight/models/weight_unit.dart';
 import 'package:provider/provider.dart';
 
 class GraphSpot extends StatefulWidget {
@@ -34,7 +35,7 @@ class GraphSpot extends StatefulWidget {
 class _GraphSpotState extends State<GraphSpot> {
   @override
   Widget build(BuildContext context) {
-    String weightToPound = (widget.weight * 2.20462).toStringAsFixed(1);
+    String weightToPound = kgToLbs(widget.weight).toStringAsFixed(1);
 
     return Consumer2<ButtonMode, WeightUnit>(
       builder: (context, mode, unit, child) {
@@ -54,7 +55,8 @@ class _GraphSpotState extends State<GraphSpot> {
                   ? mode.setEditing(WeightRecord(
                       date: widget.date,
                       weight: widget.weight,
-                      note: widget.note))
+                      note: widget.note,
+                      profileId: 0))
                   : mode.setAdd();
             },
             child: Column(
@@ -71,9 +73,10 @@ class _GraphSpotState extends State<GraphSpot> {
                     width: 40,
                     child: Padding(
                       padding: const EdgeInsets.all(1.0),
-                      child: Text(unit.usePounds? 
-                      weightToPound :
-                      widget.weight.toStringAsFixed(1),
+                      child: Text(
+                          unit.usePounds
+                              ? weightToPound
+                              : widget.weight.toStringAsFixed(1),
                           textAlign: TextAlign.center,
                           style: TextStyle(
                               color: Colors.white,

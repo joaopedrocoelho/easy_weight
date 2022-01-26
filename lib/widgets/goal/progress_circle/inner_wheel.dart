@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
-import 'package:new_app/models/records_model.dart';
-import 'package:new_app/models/weight_record.dart';
-import 'package:new_app/utils/render_stats.dart';
-import 'package:new_app/widgets/goal/progress_circle/goal_percentage.dart';
-import 'package:new_app/models/goal_model.dart';
-import 'package:new_app/widgets/goal/set_goal_button.dart';
+import 'package:easy_weight/models/records_model.dart';
+import 'package:easy_weight/models/weight_record.dart';
+import 'package:easy_weight/utils/render_stats.dart';
+import 'package:easy_weight/widgets/goal/progress_circle/goal_percentage.dart';
+import 'package:easy_weight/models/goal_model.dart';
+import 'package:easy_weight/widgets/goal/set_goal_button.dart';
 import 'package:provider/provider.dart';
 
 class InnerWheel extends StatelessWidget {

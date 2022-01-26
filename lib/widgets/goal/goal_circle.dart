@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:new_app/widgets/goal/progress_circle/outer_wheel.dart';
+import 'package:easy_weight/widgets/goal/progress_circle/outer_wheel.dart';
 
 class GoalCircle extends StatefulWidget {
   GoalCircle({Key? key}) : super(key: key);

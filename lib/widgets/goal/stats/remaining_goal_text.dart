@@ -1,10 +1,11 @@
+import 'package:easy_weight/utils/convert_unit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
-import 'package:new_app/models/records_model.dart';
-import 'package:new_app/models/weight_unit.dart';
-import 'package:new_app/models/goal_model.dart';
-import 'package:new_app/utils/format_weight.dart';
-import 'package:new_app/utils/render_stats.dart';
+import 'package:easy_weight/models/records_model.dart';
+import 'package:easy_weight/models/weight_unit.dart';
+import 'package:easy_weight/models/goal_model.dart';
+import 'package:easy_weight/utils/format_weight.dart';
+import 'package:easy_weight/utils/render_stats.dart';
 import 'package:provider/provider.dart';
 
 class RemainingGoalText extends StatelessWidget {
@@ -29,7 +30,7 @@ class RemainingGoalText extends StatelessWidget {
             ? limitDecimals((currentWeight - goal.weight), 1)
             : limitDecimals(-(currentWeight - goal.weight), 1);
 
-        String remainingToPound = (_remaining * 2.20462).toStringAsFixed(1);
+        String remainingToPound = kgToLbs(_remaining).toStringAsFixed(1);
 
         Text _showRemaining() {
           return unit.usePounds

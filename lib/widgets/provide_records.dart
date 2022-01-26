@@ -1,9 +1,10 @@
+import 'package:easy_weight/models/profile_model.dart';
 import 'package:flutter/material.dart';
-import 'package:new_app/models/button_mode.dart';
-import 'package:new_app/models/goal_model.dart';
-import 'package:new_app/models/records_model.dart';
-import 'package:new_app/models/weight_record.dart';
-import 'package:new_app/screens/home.dart';
+import 'package:easy_weight/models/button_mode.dart';
+import 'package:easy_weight/models/goal_model.dart';
+import 'package:easy_weight/models/records_model.dart';
+import 'package:easy_weight/models/weight_record.dart';
+import 'package:easy_weight/screens/home.dart';
 import 'package:provider/provider.dart';
 
 class ProvideRecords extends StatelessWidget {
@@ -11,8 +12,8 @@ class ProvideRecords extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer2<List<WeightRecord>?, Goal?>(
-        builder: (context, list, goal, child) {
+    return Consumer3<List<WeightRecord>?, Goal?, List<Profile>?>(
+        builder: (context, list, goal, profilesList, child) {
       if (list != null) {
         if (list.isNotEmpty && list[0].note.contains('hasError:')) {
           return returnError(list);

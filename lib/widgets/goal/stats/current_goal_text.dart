@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
-import 'package:new_app/models/records_model.dart';
-import 'package:new_app/models/weight_record.dart';
-import 'package:new_app/models/weight_unit.dart';
-import 'package:new_app/models/goal_model.dart';
+import 'package:easy_weight/models/records_model.dart';
+import 'package:easy_weight/models/weight_record.dart';
+import 'package:easy_weight/models/weight_unit.dart';
+import 'package:easy_weight/models/goal_model.dart';
 import 'package:provider/provider.dart';
 
 class CurrentGoalText extends StatelessWidget {

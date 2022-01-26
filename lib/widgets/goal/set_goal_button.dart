@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 
-import 'package:new_app/widgets/my_flutter_app_icons.dart';
+import 'package:easy_weight/widgets/my_flutter_app_icons.dart';
 
 class SetGoalButton extends StatelessWidget {
   const SetGoalButton({Key? key}) : super(key: key);
@@ -24,10 +24,8 @@ class SetGoalButton extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Icon(
-              MyFlutterApp.add_goal,
-              size: 50,
-            ),
+            Icon(MyFlutterApp.add_goal,
+                size: 50, color: theme.defaultTextColor),
           ],
         )),
       ),

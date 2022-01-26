@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
-import 'package:new_app/models/records_model.dart';
-import 'package:new_app/models/weight_unit.dart';
-import 'package:new_app/utils/database.dart';
-import 'package:new_app/utils/render_stats.dart';
-import 'package:new_app/widgets/goal/goal_circle.dart';
+import 'package:easy_weight/models/records_model.dart';
+import 'package:easy_weight/models/weight_unit.dart';
+import 'package:easy_weight/utils/database.dart';
+import 'package:easy_weight/utils/render_stats.dart';
+import 'package:easy_weight/widgets/goal/goal_circle.dart';
 
-import 'package:new_app/widgets/goal/stats/current_goal_text.dart';
-import 'package:new_app/widgets/goal/stats/remaining_goal_text.dart';
-import 'package:new_app/models/goal_model.dart';
+import 'package:easy_weight/widgets/goal/stats/current_goal_text.dart';
+import 'package:easy_weight/widgets/goal/stats/remaining_goal_text.dart';
+import 'package:easy_weight/models/goal_model.dart';
 import 'package:provider/provider.dart';
 
 class GoalStatsContainer extends StatelessWidget {

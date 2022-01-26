@@ -1,4 +1,4 @@
-import 'package:new_app/models/weight_record.dart';
+import 'package:easy_weight/models/weight_record.dart';
 
 extension ExtendedIterable<E> on Iterable<E> {
   /// Like Iterable<T>.map but callback have index as second argument

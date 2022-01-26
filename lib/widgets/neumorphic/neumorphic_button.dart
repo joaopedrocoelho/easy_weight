@@ -2,15 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 
 class NeuButton extends StatefulWidget {
-  final VoidCallback addOnPressed;
+  final VoidCallback onPressed;
   final Widget? child;
   final bool isVisible;
+  final double? intensity;
 
   const NeuButton(
       {Key? key,
-      required this.addOnPressed,
+      required this.onPressed,
       this.child,
-      required this.isVisible})
+      required this.isVisible,
+      this.intensity})
       : super(key: key);
 
   @override
@@ -29,21 +31,25 @@ class _NeuButtonState extends State<NeuButton> {
 
   void _setVisible() {
     
-    Future.delayed(Duration(milliseconds: 150), () {
       setState(() {
         _opacity = 1;
       });
-    });
+    
   }
 
   void _setInvisible() {
     _opacity = 0;
-    
   }
+
+ 
 
   @override
   Widget build(BuildContext context) {
-    widget.isVisible ? _setVisible() : _setInvisible();
+    /* WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+      widget.isVisible ? _setVisible() : _setInvisible();
+    }); */
+    
+    final theme = NeumorphicTheme.currentTheme(context);
 
     return TweenAnimationBuilder<double>(
         tween: widget.isVisible ? _startAnimation : _reverseAnimation,
@@ -51,15 +57,12 @@ class _NeuButtonState extends State<NeuButton> {
         builder: (_, depth, __) {
           //print('depth: $depth');
           return NeumorphicButton(
-              onPressed: widget.isVisible ? widget.addOnPressed : () {},
+              onPressed: widget.isVisible ? widget.onPressed : () {},
               style: NeumorphicStyle(
-                color: Color(0xffE5F1FB),
-                shadowDarkColor: Color(0xffA7BCCF),
-                shadowDarkColorEmboss: Color(0xffA7BCCF),
-                shadowLightColor: Color(0xffFAFDFF),
+                color: theme.baseColor,
                 depth: depth,
                 surfaceIntensity: 0.3,
-                intensity: 0.9,
+                intensity: widget.intensity ?? 0.9,
                 shape: NeumorphicShape.convex,
                 boxShape:
                     NeumorphicBoxShape.roundRect(BorderRadius.circular(15)),
@@ -67,7 +70,7 @@ class _NeuButtonState extends State<NeuButton> {
               child: Center(
                   child: AnimatedOpacity(
                       duration: Duration(milliseconds: 100),
-                      opacity: _opacity,
+                      opacity: widget.isVisible ? 1 : 0,
                       child: widget.child)));
         });
   }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:new_app/utils/indexed_iterables.dart';
+import 'package:easy_weight/utils/indexed_iterables.dart';
 import 'dart:ui' as ui;
 
 class PaintFill extends StatefulWidget {
@@ -54,18 +54,13 @@ class FillPainter extends CustomPainter {
     final paint = Paint()
       ..strokeWidth = 2
       ..color = Colors.red
-      ..shader = ui.Gradient.linear(
-        Offset(0, 0),
-        Offset(0, graphHeight),
-        [
-          Color(0xff94E2FF),
-          Color(0xFF94E2FF).withOpacity(0),
-        ],
-        [
-          0.3,
-          0.7
-        ]
-      )
+      ..shader = ui.Gradient.linear(Offset(0, 0), Offset(0, graphHeight), [
+        Color(0xff94E2FF),
+        Color(0xFF94E2FF).withOpacity(0),
+      ], [
+        0.3,
+        0.7
+      ])
       ..style = PaintingStyle.fill;
 
     Path path = Path();
@@ -74,9 +69,10 @@ class FillPainter extends CustomPainter {
     path.lineTo(0, graphHeight - fillCoordinates[0].startCoords.y);
     path.lineTo(fillCoordinates[0].startCoords.x + 15,
         graphHeight - fillCoordinates[0].startCoords.y); */
-  path.moveTo(20, graphHeight);
+    path.moveTo(20, graphHeight);
     fillCoordinates.forEachIndexed((element, index) {
-      path.lineTo(element.startCoords.x + 15, graphHeight  - element.startCoords.y);
+      path.lineTo(
+          element.startCoords.x + 15, graphHeight - element.startCoords.y);
 
       path.lineTo(element.endCoords.x + 15, graphHeight - element.endCoords.y);
     });

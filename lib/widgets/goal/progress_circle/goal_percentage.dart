@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 
-import 'package:new_app/utils/format_weight.dart';
+import 'package:easy_weight/utils/format_weight.dart';
 
 int getPercentage(double initialWeight, double currentWeight, double goal) {
   double percentage =

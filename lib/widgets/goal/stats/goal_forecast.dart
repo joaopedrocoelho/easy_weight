@@ -2,7 +2,7 @@
 // not sure if I'll do this
 /* import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
-import 'package:new_app/models/weight_unit.dart';
+import 'package:easy_weight/models/weight_unit.dart';
 import 'package:provider/provider.dart';
 
 

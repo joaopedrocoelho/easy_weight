@@ -1,25 +1,31 @@
+import 'package:easy_weight/models/profiles_list_model.dart';
+import 'package:easy_weight/widgets/buttons/menu_button.dart';
+import 'package:easy_weight/widgets/drawer/drawer_scaffold_widget.dart';
+import 'package:easy_weight/widgets/drawer/drawer_widget.dart';
+import 'package:easy_weight/widgets/profiles/profile_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:new_app/models/button_mode.dart';
-import 'package:new_app/models/records_model.dart';
-import 'package:new_app/models/weight_record.dart';
-import 'package:new_app/utils/format_date.dart';
-import 'package:new_app/utils/render_stats.dart';
-import 'package:new_app/widgets/buttons/edit_buttons.dart';
-import 'package:new_app/widgets/change_unit/unit_toggle.dart';
-import 'package:new_app/widgets/custom_graph/empty_graph_container.dart';
-import 'package:new_app/widgets/goal/disabled_goal.dart';
-import 'package:new_app/widgets/goal/goal_stats_container.dart';
-import 'package:new_app/widgets/goal/progress_circle/circle_container_test.dart';
-import 'package:new_app/widgets/goal/progress_circle/outer_wheel.dart';
-import 'package:new_app/widgets/graph_container.dart';
-import 'package:new_app/widgets/set_goal_form/edit_goal_form.dart';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:easy_weight/models/button_mode.dart';
+import 'package:easy_weight/models/records_model.dart';
+import 'package:easy_weight/models/weight_record.dart';
+import 'package:easy_weight/utils/format_date.dart';
+import 'package:easy_weight/utils/render_stats.dart';
+import 'package:easy_weight/widgets/buttons/edit_buttons.dart';
+import 'package:easy_weight/widgets/change_unit/unit_toggle.dart';
+import 'package:easy_weight/widgets/custom_graph/empty_graph_container.dart';
+import 'package:easy_weight/widgets/goal/disabled_goal.dart';
+import 'package:easy_weight/widgets/goal/goal_stats_container.dart';
+import 'package:easy_weight/widgets/goal/progress_circle/circle_container_test.dart';
+import 'package:easy_weight/widgets/goal/progress_circle/outer_wheel.dart';
+import 'package:easy_weight/widgets/graph_container.dart';
+import 'package:easy_weight/widgets/set_goal_form/edit_goal_form.dart';
 
-import 'package:new_app/widgets/stats/current_weight_stats.dart';
+import 'package:easy_weight/widgets/stats/current_weight_stats.dart';
 
 import 'package:provider/provider.dart';
 
-import 'package:new_app/widgets/add_record_form/add_record_form.dart';
-import 'package:new_app/widgets/edit_record_form/edit_record_form.dart';
+import 'package:easy_weight/widgets/add_record_form/add_record_form.dart';
+import 'package:easy_weight/widgets/edit_record_form/edit_record_form.dart';
 
 class Home extends StatefulWidget {
   final List<WeightRecord> list;
@@ -31,6 +37,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> with TickerProviderStateMixin {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   late AnimationController _addController;
   late AnimationController _editController;
   late AnimationController _goalController;
@@ -84,9 +91,11 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     FocusScopeNode currentFocus = FocusScope.of(context);
+    final theme = NeumorphicTheme.currentTheme(context);
+    bool isUsingDark = NeumorphicTheme.isUsingDark(context);
 
-    return Consumer2<RecordsListModel, ButtonMode>(
-        builder: (context, recordsModel, buttonMode, child) {
+    return Consumer3<RecordsListModel, ButtonMode, ProfilesListModel>(
+        builder: (context, recordsModel,  buttonMode, profilesList, child) {
       final bool mode = context.read<ButtonMode>().isEditing;
 
       final List<WeightRecord> records =
@@ -101,7 +110,9 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
       //print('editWeight: $editWeight');
 
       return Scaffold(
+        key: _scaffoldKey,
         resizeToAvoidBottomInset: true,
+        drawer: DrawerScaffoldWidget(),
         body: SafeArea(
           child: Stack(children: [
             SingleChildScrollView(
@@ -124,7 +135,16 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                             records.isNotEmpty
                                 ? GoalStatsContainer(
                                     setVisible: () {
-                                      _setVisible('goal');
+                                      showDialog(
+                                          context: context,
+                                          builder: (context) {
+                                            return Scaffold(
+                                              backgroundColor: Colors.transparent,
+                                              body: EditGoal(
+                                                profileId: profilesList.selectedProfileID,
+                                              ),
+                                            );
+                                          });
                                     },
                                   )
                                 : DisabledGoal()
@@ -140,14 +160,23 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
             Positioned(
                 bottom: 0,
                 left: 0,
-                child: Container(width: 100, child: UnitToggle())),
+                child: MenuButton(
+                  onPressed: () {
+                    _scaffoldKey.currentState?.openDrawer();
+                  },
+                )),
+
+            /* Positioned(
+                bottom: 0,
+                left: 0,
+                child: Container(width: 100, child: UnitToggle())) */
             Positioned(
               bottom: 0,
               right: 0,
               child: Container(
                 height: 100,
                 child: EditButtons(
-                  addOnPressed: () {
+                  onPressed: () {
                     _setVisible(mode ? 'edit' : 'add');
                   },
                 ),
@@ -176,19 +205,8 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                 currentFocus.focusedChild?.unfocus();
                 _setinVisible('add');
               },
-              setRefresh: () {},
               records: records,
             ),
-            EditGoal(
-              animationController: _goalController,
-              setVisible: () {
-                _setVisible('goal');
-              },
-              setInvisible: () {
-                currentFocus.focusedChild?.unfocus();
-                _setinVisible('goal');
-              },
-            )
           ]),
         ),
       );

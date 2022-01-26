@@ -1,5 +1,6 @@
+import 'package:easy_weight/utils/convert_unit.dart';
 import 'package:flutter/material.dart';
-import 'package:new_app/models/weight_unit.dart';
+import 'package:easy_weight/models/weight_unit.dart';
 import 'package:provider/provider.dart';
 
 class BigWeightHeadline extends StatelessWidget {
@@ -13,7 +14,8 @@ class BigWeightHeadline extends StatelessWidget {
       String weightKg = weight == null ? '0.0' : weight.toString();
 
       String weightToPound =
-          weight != null ? ((weight! * 2.20462).toStringAsFixed(0)) : '0.0';
+          weight != null ? (kgToLbs(weight!).toStringAsFixed(0)) : '0.0';
+          
 
       return Container(
         child: Row(
@@ -21,14 +23,15 @@ class BigWeightHeadline extends StatelessWidget {
             textBaseline: TextBaseline.alphabetic,
             children: [
               Text(
-                unit.usePounds? weightToPound : weightKg,
+                unit.usePounds ? weightToPound : weightKg,
                 style: Theme.of(context).textTheme.bodyText1?.copyWith(
                     fontSize: 70,
                     fontWeight: FontWeight.w600,
                     textBaseline: TextBaseline.alphabetic,
                     height: 1),
               ),
-              Text( unit.usePounds? 'lb' : 'kg', style: Theme.of(context).textTheme.bodyText1)
+              Text(unit.usePounds ? 'lb' : 'kg',
+                  style: Theme.of(context).textTheme.bodyText1)
             ]),
       );
     });

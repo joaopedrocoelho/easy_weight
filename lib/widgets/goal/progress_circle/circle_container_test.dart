@@ -1,5 +1,5 @@
 /* import 'package:flutter/material.dart';
-import 'package:new_app/widgets/goal/progress_circle/progress_painter.dart';
+import 'package:easy_weight/widgets/goal/progress_circle/progress_painter.dart';
 
 class CircleContainer extends StatelessWidget {
   const CircleContainer({Key? key}) : super(key: key);

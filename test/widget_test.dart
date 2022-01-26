@@ -8,23 +8,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:new_app/main.dart';
+import 'package:easy_weight/main.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(MyApp());
+  testWidgets('check color', (WidgetTester tester) async {
+      String dbColor = 'MaterialColor(primary value: Color(0xfff44336))';
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+      Color getColor(String colorFromDB) {
+  RegExp getColorvalue = RegExp(r'(?<=MaterialColor\(primary value: Color\()[\w\d]*');
+  String color = getColorvalue.stringMatch(colorFromDB).toString();
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+  return Color(int.parse(color));
+}
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+      Color color = getColor(dbColor);
+      expect(color, Color(0xfff44336));
+  
   });
 }
