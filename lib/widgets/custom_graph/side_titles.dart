@@ -1,3 +1,4 @@
+import 'package:easy_weight/utils/convert_unit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:easy_weight/models/weight_unit.dart';
@@ -44,7 +45,7 @@ class SideTitles extends StatelessWidget {
           Size whatsTheSize =
               _textSize(weight.toString(), theme.textTheme.caption!);
 
-          String weightToPound = (weight * 2.20462).toStringAsFixed(0);
+          String weightToPound = kgToLbs(weight.toDouble()).toStringAsFixed(0);
 
           return Positioned(
             bottom: (yPos(weight.toDouble(), graphHeight, maxDisplayedWeight,

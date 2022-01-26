@@ -1,3 +1,4 @@
+import 'package:easy_weight/models/goal_model.dart';
 import 'package:easy_weight/models/profile_model.dart';
 import 'package:easy_weight/models/profiles_list_model.dart';
 import 'package:easy_weight/models/records_model.dart';
@@ -11,6 +12,7 @@ import 'package:easy_weight/widgets/profiles/add_profile_form.dart';
 import 'package:easy_weight/widgets/profiles/profile_bar.dart';
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:provider/provider.dart';
 
@@ -108,30 +110,37 @@ class _DrawerScaffoldWidgetState extends State<DrawerScaffoldWidget>
                         boxShape: NeumorphicBoxShape.roundRect(
                             BorderRadius.circular(15)),
                       ),
-                      child: ListView.builder(
-                        itemCount: profilesList.profilesCount,
-                        shrinkWrap: true,
-                        scrollDirection: Axis.vertical,
-                        itemBuilder: (context, index) {
-                          return ProfileBar(
-                              id: profilesList.profiles[index].id!,
-                              index: index,
-                              name: profilesList.profiles[index].name,
-                              emoji: profilesList.profiles[index].emoji,
-                              gender: profilesList.profiles[index].gender,
-                              color: profilesList.profiles[index].color,
-                              height: profilesList.profiles[index].height,
-                              birthday: profilesList.profiles[index].birthday,
-                              isSelected: profilesList.selectedProfileID ==
-                                  profilesList.profiles[index].id,
-                              onSelect: (_) async {
-                                profilesList.selectProfile(
-                                    profilesList.profiles[index].id!);
-                                await UserSettings.setProfile(
-                                    profilesList.profiles[index].id!);
-                                _getRecords(context);
-                              });
-                        },
+                      child: ConstrainedBox(
+                          constraints: BoxConstraints.expand(),
+                child: ListView.builder(
+                    physics: AlwaysScrollableScrollPhysics(),
+                     
+                          
+                          itemCount: profilesList.profilesCount,
+                          shrinkWrap: true,
+                          scrollDirection: Axis.vertical,
+                          itemBuilder: (context, index) {
+                            return ProfileBar(
+                                id: profilesList.profiles[index].id!,
+                                index: index,
+                                name: profilesList.profiles[index].name,
+                                emoji: profilesList.profiles[index].emoji,
+                                gender: profilesList.profiles[index].gender,
+                                color: profilesList.profiles[index].color,
+                                height: profilesList.profiles[index].height,
+                                birthday: profilesList.profiles[index].birthday,
+                                isSelected: profilesList.selectedProfileID ==
+                                    profilesList.profiles[index].id,
+                                onSelect: (_) async {
+                                  profilesList.selectProfile(
+                                      profilesList.profiles[index].id!);
+                                      Provider.of<GoalModel>(context, listen: false).getGoal(profilesList.profiles[index].id!);
+                                  await UserSettings.setProfile(
+                                      profilesList.profiles[index].id!);
+                                  _getRecords(context);
+                                });
+                          },
+                        ),
                       ),
                     ),
                   ),

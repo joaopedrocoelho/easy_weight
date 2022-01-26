@@ -1,3 +1,4 @@
+import 'package:easy_weight/utils/database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:easy_weight/models/db/goal_table.dart';
 
@@ -37,4 +38,13 @@ class GoalModel extends ChangeNotifier {
     currentGoal = goal;
     notifyListeners();
   }
+
+  void getGoal(int profileId) async {
+    await RecordsDatabase.instance.getGoal(profileId).then((goal) {
+      currentGoal = goal;
+      notifyListeners();
+    });
+  }
+
+  
 }

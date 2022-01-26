@@ -103,8 +103,7 @@ class MyApp extends StatelessWidget {
         return NeumorphicApp(
           debugShowCheckedModeBanner: false,
           title: 'Easy Weight',
-          //materialTheme: ThemeData(backgroundColor: Color(0xffD5E1EB)),
-          //materialDarkTheme: ThemeData(backgroundColor: Color(0xff212733)),
+
           themeMode: ThemeMode.system,
           theme: NeumorphicThemeData(
               textTheme: TextTheme(
@@ -193,7 +192,7 @@ class MyApp extends StatelessWidget {
                     fontWeight: FontWeight.w800),
                 subtitle1: TextStyle(
                     fontFamily: 'Noto Sans',
-                    color: Color(0xff5d626e),
+                    color: Color(0xff212733),
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
                     letterSpacing: 0.5),

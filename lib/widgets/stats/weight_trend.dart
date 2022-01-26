@@ -1,3 +1,4 @@
+import 'package:easy_weight/utils/convert_unit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:easy_weight/models/weight_unit.dart';
@@ -47,7 +48,7 @@ class WeightTrend extends StatelessWidget {
 
     return Consumer<WeightUnit>(builder: (context, unit, child) {
       String variationToPound = variation != null
-          ? (variation! * 2.20462).toStringAsFixed(1)
+          ? kgToLbs(variation!).toStringAsFixed(1)
           : '0.0lb';
 
       Text variationTextKg = variation != null

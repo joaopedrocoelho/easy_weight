@@ -1,3 +1,4 @@
+import 'package:easy_weight/utils/convert_unit.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_weight/models/button_mode.dart';
 import 'package:easy_weight/models/records_model.dart';
@@ -58,8 +59,8 @@ class _EditRecordState extends State<EditRecord>
   String _note = '';
 
   Future updateRecord() async {
-    WeightRecord editedRecord =
-        new WeightRecord(date: widget.date, weight: _weight, note: _note, profileId: 0);
+    WeightRecord editedRecord = new WeightRecord(
+        date: widget.date, weight: _weight, note: _note, profileId: 0);
     final record = await RecordsDatabase.instance.updateRecord(editedRecord);
 
     widget.setInvisible();
@@ -120,15 +121,11 @@ class _EditRecordState extends State<EditRecord>
                         hintFocus: hintFocus,
                         initialValue: _weight.toString(),
                         onSaved: (value) {
-                          unit.usePounds
-                              ? setState(() {
-                                  print('hey pound');
-                                  _weight = (double.parse(value!) / 2.20462)
-                                      .ceilToDouble();
-                                })
-                              : setState(() {
-                                  _weight = double.parse(value!);
-                                });
+                          setState(() {
+                            unit.usePounds
+                                ? _weight = lbsToKg(double.parse(value!))
+                                : _weight = double.parse(value!);
+                          });
                         }),
                     SizedBox(
                       height: 30.0,
@@ -173,7 +170,7 @@ class _EditRecordState extends State<EditRecord>
                                 date: widget.date,
                                 weight: _weight,
                                 note: _note,
-                                profileId:0 );
+                                profileId: 0);
 
                             Provider.of<RecordsListModel>(context,
                                     listen: false)

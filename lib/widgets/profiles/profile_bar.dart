@@ -7,6 +7,7 @@ import 'package:easy_weight/utils/convert_unit.dart';
 import 'package:easy_weight/utils/database.dart';
 import 'package:easy_weight/utils/logger_instace.dart';
 import 'package:easy_weight/widgets/buttons/edit_buttons.dart';
+import 'package:easy_weight/widgets/dialog/neu_alert_dialog.dart';
 import 'package:easy_weight/widgets/neumorphic/neumorphic_button.dart';
 import 'package:easy_weight/widgets/profiles/edit_profile_form.dart';
 import 'package:flutter/material.dart';
@@ -165,6 +166,7 @@ class _ProfileBarState extends State<ProfileBar> {
         setState(() {
           _isOpen = false;
         });
+        Navigator.pop(context);
       }
 
 
@@ -222,6 +224,7 @@ class _ProfileBarState extends State<ProfileBar> {
                   ),
                   if (_isOpen)
                     GridView.count(
+                      physics: NeverScrollableScrollPhysics(),
                       crossAxisCount: 2,
                       shrinkWrap: true,
                       children: [
@@ -298,7 +301,20 @@ class _ProfileBarState extends State<ProfileBar> {
                                 Icons.delete,
                                 color: theme.defaultTextColor,
                               ),
-                              onPressed: deleteProfile,
+                              onPressed: () {
+                                showDialog(context: context, 
+                                builder: (context) {
+                                    return Scaffold(
+                                      backgroundColor: Colors.transparent,
+                                      body: Center(
+                                        child: NeuDialogBox(
+                                          message: "Are you sure you want to delete this profile?",
+                                          onPressed: deleteProfile,
+                                        ),
+                                      ),
+                                    );
+                                });
+                              },
                               intensity: widget.color != null ? 0.4 : 0.9,
                             ),
                           ),

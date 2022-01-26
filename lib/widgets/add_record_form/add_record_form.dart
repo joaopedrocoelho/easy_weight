@@ -1,4 +1,5 @@
 import 'package:easy_weight/models/user_settings.dart';
+import 'package:easy_weight/utils/convert_unit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 
@@ -23,16 +24,15 @@ class AddRecord extends StatefulWidget {
   final AnimationController animationController;
   final VoidCallback setVisible;
   final VoidCallback setInvisible;
-  
 
   final List<WeightRecord> records; //not sure if neeeded
 
-  AddRecord(
-      {required this.animationController,
-      required this.records,
-      required this.setVisible,
-      required this.setInvisible,
-      });
+  AddRecord({
+    required this.animationController,
+    required this.records,
+    required this.setVisible,
+    required this.setInvisible,
+  });
 
   @override
   _AddRecordState createState() => _AddRecordState();
@@ -52,8 +52,8 @@ class _AddRecordState extends State<AddRecord>
 //datepicker selected date
 
   Future addRecord(int profileId) async {
-    WeightRecord newRecord =
-        new WeightRecord(date: _date, weight: _weight, note: _note, profileId: profileId);
+    WeightRecord newRecord = new WeightRecord(
+        date: _date, weight: _weight, note: _note, profileId: profileId);
     final record = await RecordsDatabase.instance.addRecord(newRecord);
 
     // List<WeightRecord> recordsClone = graph.records;
@@ -61,7 +61,7 @@ class _AddRecordState extends State<AddRecord>
     //print('record: $record');
 
     widget.setInvisible();
-    
+
     return record;
   }
 
@@ -129,14 +129,11 @@ class _AddRecordState extends State<AddRecord>
                         hintFocus: hintFocus,
                         initialValue: _weight.toString(),
                         onSaved: (value) {
-                          unit.usePounds
-                              ? setState(() {
-                                  _weight = (double.parse(value!) / 2.20462)
-                                      .ceilToDouble();
-                                })
-                              : setState(() {
-                                  _weight = double.parse(value!);
-                                });
+                          setState(() {
+                            unit.usePounds
+                                ? _weight = lbsToKg(double.parse(value!))
+                                : _weight = double.parse(value!);
+                          });
                         }),
                     SizedBox(
                       height: 30.0,
@@ -166,7 +163,8 @@ class _AddRecordState extends State<AddRecord>
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Expanded(
-                            child: CancelButton(onPressed: widget.setInvisible)),
+                            child:
+                                CancelButton(onPressed: widget.setInvisible)),
                         SizedBox(
                           width: 20.0,
                         ),
@@ -175,10 +173,13 @@ class _AddRecordState extends State<AddRecord>
                             // Validate returns true if the form is valid, or false otherwise.
                             if (_formKey.currentState!.validate()) {
                               _formKey.currentState!.save();
-                
+
                               WeightRecord newRecord = new WeightRecord(
-                                  date: _date, weight: _weight, note: _note, profileId: 0);
-                
+                                  date: _date,
+                                  weight: _weight,
+                                  note: _note,
+                                  profileId: 0);
+
                               List<WeightRecord> recordsClone =
                                   Provider.of<RecordsListModel>(context,
                                           listen: false)
@@ -187,15 +188,15 @@ class _AddRecordState extends State<AddRecord>
                               Provider.of<RecordsListModel>(context,
                                       listen: false)
                                   .updateRecordsList(recordsClone);
-                
+
                               addRecord(UserSettings.getProfile() ?? 0);
                               setState(() {
                                 _note = '';
                                 _weight = 0.0;
                               });
-                
+
                               mode.clearData();
-                
+
                               currentFocus.focusedChild?.unfocus();
                             }
                           },

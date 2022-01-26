@@ -1,3 +1,4 @@
+import 'package:easy_weight/utils/convert_unit.dart';
 import 'package:easy_weight/utils/logger_instace.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
@@ -21,12 +22,8 @@ import 'package:easy_weight/widgets/add_record_form/neu_form_container.dart';
 
 class EditGoal extends StatefulWidget {
   final int profileId;
-  
 
-
-  EditGoal({
-   required this.profileId
-  });
+  EditGoal({required this.profileId});
 
   @override
   _EditGoalState createState() => _EditGoalState();
@@ -44,17 +41,21 @@ class _EditGoalState extends State<EditGoal>
   double _initialWeight = 0.0;
 
   Future addGoal() async {
-    Goal newGoal = Goal(weight: _goal, initialWeight: _initialWeight, profileId: widget.profileId);
+    Goal newGoal = Goal(
+        weight: _goal,
+        initialWeight: _initialWeight,
+        profileId: widget.profileId);
     await RecordsDatabase.instance.addGoal(newGoal);
-    
-   
   }
 
   Future updateGoal() async {
-    Goal newGoal = Goal(weight: _goal, initialWeight: _initialWeight, profileId: widget.profileId);
+    Goal newGoal = Goal(
+        weight: _goal,
+        initialWeight: _initialWeight,
+        profileId: widget.profileId);
     await RecordsDatabase.instance.updateGoal(newGoal);
     logger.i("goal $_goal $_initialWeight");
-    }
+  }
 
   @override
   void initState() {
@@ -64,13 +65,13 @@ class _EditGoalState extends State<EditGoal>
     );
     _controller.forward();
     hintFocus = FocusNode();
+
+    logger.i("Profile id at goal form is: ${widget.profileId}");
     super.initState();
   }
 
   @override
   void dispose() {
-    
- 
     _controller.dispose();
     hintFocus.dispose();
     super.dispose();
@@ -87,8 +88,7 @@ class _EditGoalState extends State<EditGoal>
           position: Tween<Offset>(
             begin: Offset(0, 1),
             end: Offset.zero,
-          ).animate(CurvedAnimation(
-              parent: _controller, curve: Curves.ease)),
+          ).animate(CurvedAnimation(parent: _controller, curve: Curves.ease)),
           child: Align(
             alignment: Alignment.bottomCenter,
             child: NeuFormContainer(
@@ -107,9 +107,8 @@ class _EditGoalState extends State<EditGoal>
                           style: Theme.of(context).textTheme.headline5,
                           textAlign: TextAlign.start,
                         ),
-                        NeuCloseButton(onPressed: 
-                        () {
-                             _controller.reverse();
+                        NeuCloseButton(onPressed: () {
+                          _controller.reverse();
                           Navigator.pop(context);
                         })
                       ],
@@ -123,15 +122,11 @@ class _EditGoalState extends State<EditGoal>
                             ? goalModel.currentGoal!.weight.toString()
                             : _goal.toString(),
                         onSaved: (value) {
-                          unit.usePounds
-                              ? setState(() {
-                                  
-                                  _goal = (double.parse(value!) / 2.20462)
-                                      .floorToDouble();
-                                })
-                              : setState(() {
-                                  _goal = double.parse(value!);
-                                });
+                          setState(() {
+                            unit.usePounds
+                                ? _goal = lbsToKg(double.parse(value!))
+                                : _goal = double.parse(value!);
+                          });
                         }),
                     SizedBox(
                       height: 30.0,
@@ -147,7 +142,6 @@ class _EditGoalState extends State<EditGoal>
                               _goal = 0.0;
                             }
                           });
-                      
                         })),
                         SizedBox(
                           width: 20.0,
@@ -167,7 +161,9 @@ class _EditGoalState extends State<EditGoal>
                             });
 
                             Goal newGoal = Goal(
-                                weight: _goal, initialWeight: _initialWeight, profileId: widget.profileId);
+                                weight: _goal,
+                                initialWeight: _initialWeight,
+                                profileId: widget.profileId);
 
                             if (goalModel.currentGoal != null) {
                               Provider.of<GoalModel>(context, listen: false)

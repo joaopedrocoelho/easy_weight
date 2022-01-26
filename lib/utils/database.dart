@@ -197,15 +197,16 @@ class RecordsDatabase {
     //print("db: $db");
 
     List<Map<String, dynamic>> goal = await db.rawQuery(
-        'SELECT ${GoalFields.weight}, ${GoalFields.initialWeight} FROM $goalTable WHERE ${GoalFields.profileId}= $profileId');
+        'SELECT ${GoalFields.weight}, ${GoalFields.initialWeight}, ${GoalFields.profileId} FROM $goalTable WHERE ${GoalFields.profileId}= $profileId');
 
-    print("goal db $goal");
+    logger.i("Getting goal for profile $profileId");
     late Goal goalConverted;
 
     if (goal.isNotEmpty) {
       goal.forEachIndexed((goal, index) => {
             if (index == 0)
               {
+                logger.i("Goal found: ${goal[GoalFields.weight]}", goal),
                 goalConverted = Goal(
                     weight: goal[GoalFields.weight],
                     initialWeight: goal[GoalFields.initialWeight],
