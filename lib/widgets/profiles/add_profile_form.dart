@@ -15,8 +15,7 @@ import 'package:easy_weight/widgets/profiles/input_fields/height_field_medium.da
 import 'package:easy_weight/widgets/profiles/pickers/color_picker.dart';
 import 'package:easy_weight/widgets/profiles/pickers/emoji_picker.dart';
 import 'package:easy_weight/widgets/profiles/pickers/gender_picker.dart';
-
-import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
@@ -70,9 +69,7 @@ class _AddProfileState extends State<AddProfile> with TickerProviderStateMixin {
   late FocusNode hintFocus;
   final _formKey = GlobalKey<FormState>();
   bool isLoading = false;
-  bool _hideEmojiPicker = true;
-  bool _hideGenderPicker = true;
-  bool _hideColorPicker = true;
+  
   late AnimationController _emojiPickerController;
   late AnimationController _slideAnimationController;
 
@@ -109,7 +106,7 @@ class _AddProfileState extends State<AddProfile> with TickerProviderStateMixin {
   //color picker builder
   Widget pickerLayoutBuilder(
       BuildContext context, List<Color> colors, PickerItem child) {
-    final theme = NeumorphicTheme.currentTheme(context);
+  
 
     Orientation orientation = MediaQuery.of(context).orientation;
 
@@ -191,20 +188,15 @@ class _AddProfileState extends State<AddProfile> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    final theme = NeumorphicTheme.currentTheme(context);
-    final bodyText1 = theme.textTheme.bodyText1;
-
+   
+   
     late final Animation<Offset> _offsetAnimation = Tween<Offset>(
       begin: Offset(0, 2),
       end: Offset.zero,
     ).animate(
         CurvedAnimation(parent: _slideAnimationController, curve: Curves.ease));
 
-    late final Animation<Offset> _emojiPickerAnimation = Tween<Offset>(
-      begin: Offset(0, 100),
-      end: Offset.zero,
-    ).animate(
-        CurvedAnimation(parent: _emojiPickerController, curve: Curves.ease));
+   
 
     FocusScopeNode currentFocus = FocusScope.of(context);
 
@@ -229,7 +221,7 @@ class _AddProfileState extends State<AddProfile> with TickerProviderStateMixin {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'Add a profile',
+                              AppLocalizations.of(context)!.addProfile,
                               style: Theme.of(context).textTheme.headline5,
                               textAlign: TextAlign.start,
                             ),
@@ -244,19 +236,15 @@ class _AddProfileState extends State<AddProfile> with TickerProviderStateMixin {
                         ),
                         NeuTextField(
                             initialValue: _name,
-                            errorText: "Please enter a name",
-                            hintText: "Name",
+                            errorText:  AppLocalizations.of(context)!.nameError,
+                            hintText:  AppLocalizations.of(context)!.nameHint,
                             onSaved: (value) {
                               setState(() {
                                 _name = value ?? "";
                               });
-                              print("name: $_name");
+                              
                             },
-                            onTap: () {
-                              setState(() {
-                                _hideEmojiPicker = true;
-                              });
-                            },
+                            
                             hintFocus: hintFocus),
                         SizedBox(
                           height: 30.0,
@@ -274,9 +262,8 @@ class _AddProfileState extends State<AddProfile> with TickerProviderStateMixin {
                                             _selectedEmoji =
                                                 emoji.toJson()['emoji'];
                                           });
-                                          print(
-                                              "emoji: ${emoji.toJson()['emoji']}");
-                                          print(
+                                         
+                                         logger.i(
                                               "_selectedEmoji: $_selectedEmoji");
                                         });
                                       });

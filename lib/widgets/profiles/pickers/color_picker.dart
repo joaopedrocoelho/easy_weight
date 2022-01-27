@@ -1,4 +1,4 @@
-import 'package:easy_weight/models/profile_model.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:easy_weight/widgets/add_record_form/neu_close_button.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
@@ -45,7 +45,7 @@ class _NeuColorPickerState extends State<NeuColorPicker>
       int _portraitCrossAxisCount = 4;
   int _landscapeCrossAxisCount = 5;
     double _borderRadius = 30;
-  double _blurRadius = 5;
+
   double _iconSize = 14;
   late Color _selectedColor;
   late AnimationController _controller;
@@ -157,7 +157,7 @@ class _NeuColorPickerState extends State<NeuColorPicker>
                             Padding(
                               padding:
                                   const EdgeInsets.only(bottom: 16.0, left: 12),
-                              child: Text("Pick a color",
+                              child: Text(AppLocalizations.of(context)!.pickColor,
                                   style: theme.textTheme.headline3),
                             ),
                             NeuCloseButton(onPressed: () {

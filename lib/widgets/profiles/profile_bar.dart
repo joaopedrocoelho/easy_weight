@@ -1,4 +1,4 @@
-import 'package:easy_weight/models/db/records_table.dart';
+
 import 'package:easy_weight/models/profile_model.dart';
 import 'package:easy_weight/models/profiles_list_model.dart';
 import 'package:easy_weight/models/user_settings.dart';
@@ -6,11 +6,12 @@ import 'package:easy_weight/models/weight_unit.dart';
 import 'package:easy_weight/utils/convert_unit.dart';
 import 'package:easy_weight/utils/database.dart';
 import 'package:easy_weight/utils/logger_instace.dart';
-import 'package:easy_weight/widgets/buttons/edit_buttons.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 import 'package:easy_weight/widgets/dialog/neu_alert_dialog.dart';
 import 'package:easy_weight/widgets/neumorphic/neumorphic_button.dart';
 import 'package:easy_weight/widgets/profiles/edit_profile_form.dart';
-import 'package:flutter/material.dart';
+
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -134,6 +135,7 @@ class _ProfileBarState extends State<ProfileBar> {
           children: [
             Text(
               title.toUpperCase(),
+              textAlign: TextAlign.center,
               style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w700,
@@ -206,7 +208,7 @@ class _ProfileBarState extends State<ProfileBar> {
                       SizedBox(
                         width: 10,
                       ),
-                      Text(widget.name ?? 'No name',
+                      Text(widget.name ?? AppLocalizations.of(context)!.noName,
                           style: TextStyle(
                               fontSize: 20, fontWeight: FontWeight.w700)),
                       Spacer(),
@@ -228,10 +230,10 @@ class _ProfileBarState extends State<ProfileBar> {
                       crossAxisCount: 2,
                       shrinkWrap: true,
                       children: [
-                        _profileField("gender", getGenderString(widget.gender)),
+                        _profileField(AppLocalizations.of(context)!.gender, getGenderString(widget.gender)),
                         _profileField(
-                            "height", getHeightString(widget.height) ),
-                        _profileField("birthday", birthdayString),
+                            AppLocalizations.of(context)!.height, getHeightString(widget.height) ),
+                        _profileField(AppLocalizations.of(context)!.birthday, birthdayString),
                         Container(
                           //color field
                           child: Column(
@@ -239,7 +241,7 @@ class _ProfileBarState extends State<ProfileBar> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Text(
-                                "COLOR",
+                                AppLocalizations.of(context)!.color.toUpperCase(),
                                 style: TextStyle(
                                     fontSize: 14,
                                     fontWeight: FontWeight.w700,
@@ -308,7 +310,7 @@ class _ProfileBarState extends State<ProfileBar> {
                                       backgroundColor: Colors.transparent,
                                       body: Center(
                                         child: NeuDialogBox(
-                                          message: "Are you sure you want to delete this profile?",
+                                          message: AppLocalizations.of(context)!.deleteProfileDialog,
                                           onPressed: deleteProfile,
                                         ),
                                       ),

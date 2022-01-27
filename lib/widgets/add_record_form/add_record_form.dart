@@ -2,8 +2,8 @@ import 'package:easy_weight/models/user_settings.dart';
 import 'package:easy_weight/utils/convert_unit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import 'package:intl/intl.dart';
 import 'package:easy_weight/models/button_mode.dart';
 import 'package:easy_weight/models/records_model.dart';
 import 'package:easy_weight/models/weight_unit.dart';
@@ -21,17 +21,10 @@ import 'package:easy_weight/utils/database.dart';
 import 'package:provider/provider.dart';
 
 class AddRecord extends StatefulWidget {
-  final AnimationController animationController;
-  final VoidCallback setVisible;
-  final VoidCallback setInvisible;
-
   final List<WeightRecord> records; //not sure if neeeded
 
   AddRecord({
-    required this.animationController,
     required this.records,
-    required this.setVisible,
-    required this.setInvisible,
   });
 
   @override
@@ -40,6 +33,7 @@ class AddRecord extends StatefulWidget {
 
 class _AddRecordState extends State<AddRecord>
     with SingleTickerProviderStateMixin {
+  late AnimationController _animationController;
   late FocusNode hintFocus;
   final _formKey = GlobalKey<FormState>();
   bool isLoading = false;
@@ -56,17 +50,19 @@ class _AddRecordState extends State<AddRecord>
         date: _date, weight: _weight, note: _note, profileId: profileId);
     final record = await RecordsDatabase.instance.addRecord(newRecord);
 
-    // List<WeightRecord> recordsClone = graph.records;
-
-    //print('record: $record');
-
-    widget.setInvisible();
+    _animationController.reverse();
+    Navigator.pop(context);
 
     return record;
   }
 
   @override
   void initState() {
+    _animationController = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 300),
+    );
+    _animationController.forward();
     super.initState();
 
     hintFocus = FocusNode();
@@ -74,9 +70,10 @@ class _AddRecordState extends State<AddRecord>
 
   @override
   void dispose() {
-    super.dispose();
-    widget.animationController.dispose();
+      _animationController.dispose();
     hintFocus.dispose();
+    super.dispose();
+  
   }
 
   @override
@@ -84,8 +81,8 @@ class _AddRecordState extends State<AddRecord>
     late final Animation<Offset> _offsetAnimation = Tween<Offset>(
       begin: Offset(0, 2),
       end: Offset.zero,
-    ).animate(CurvedAnimation(
-        parent: widget.animationController, curve: Curves.ease));
+    ).animate(
+        CurvedAnimation(parent: _animationController, curve: Curves.ease));
 
     FocusScopeNode currentFocus = FocusScope.of(context);
 
@@ -115,11 +112,14 @@ class _AddRecordState extends State<AddRecord>
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'Add a record',
+                          AppLocalizations.of(context)!.addRecord,
                           style: Theme.of(context).textTheme.headline5,
                           textAlign: TextAlign.start,
                         ),
-                        NeuCloseButton(onPressed: widget.setInvisible),
+                        NeuCloseButton(onPressed: () {
+                          _animationController.reverse();
+                          Navigator.pop(context);
+                        }),
                       ],
                     ),
                     SizedBox(
@@ -164,7 +164,10 @@ class _AddRecordState extends State<AddRecord>
                       children: [
                         Expanded(
                             child:
-                                CancelButton(onPressed: widget.setInvisible)),
+                                CancelButton(onPressed: () {
+                          _animationController.reverse();
+                          Navigator.pop(context);
+                                })),
                         SizedBox(
                           width: 20.0,
                         ),

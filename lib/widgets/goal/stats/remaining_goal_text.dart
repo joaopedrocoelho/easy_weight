@@ -1,11 +1,11 @@
 import 'package:easy_weight/utils/convert_unit.dart';
-import 'package:flutter/material.dart';
+
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
-import 'package:easy_weight/models/records_model.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:easy_weight/models/weight_unit.dart';
 import 'package:easy_weight/models/goal_model.dart';
 import 'package:easy_weight/utils/format_weight.dart';
-import 'package:easy_weight/utils/render_stats.dart';
+
 import 'package:provider/provider.dart';
 
 class RemainingGoalText extends StatelessWidget {
@@ -45,7 +45,7 @@ class RemainingGoalText extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text('Left', style: theme.textTheme.caption),
+              Text(AppLocalizations.of(context)!.goalRemaining, style: theme.textTheme.caption),
               Padding(
                 padding: const EdgeInsets.only(left: 5.0),
                 child: _showRemaining(),

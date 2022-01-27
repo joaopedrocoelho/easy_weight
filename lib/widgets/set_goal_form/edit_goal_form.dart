@@ -1,6 +1,6 @@
 import 'package:easy_weight/utils/convert_unit.dart';
 import 'package:easy_weight/utils/logger_instace.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:easy_weight/models/goal_model.dart';
 import 'package:easy_weight/models/records_model.dart';
@@ -103,7 +103,7 @@ class _EditGoalState extends State<EditGoal>
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'Set a goal',
+                          AppLocalizations.of(context)!.addGoal,
                           style: Theme.of(context).textTheme.headline5,
                           textAlign: TextAlign.start,
                         ),

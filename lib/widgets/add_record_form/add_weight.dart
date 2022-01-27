@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:easy_weight/models/button_mode.dart';
 import 'package:easy_weight/models/weight_unit.dart';
@@ -66,7 +66,9 @@ class _AddWeightTextFieldState extends State<AddWeightTextField> {
                   cursorColor: theme.defaultTextColor,
                   decoration: InputDecoration(
                     errorStyle: TextStyle(fontSize: 0, height: 0),
-                    hintText: unit.usePounds ? "Weight (lb)" : "Weight (kg)",
+                    hintText: unit.usePounds
+                        ? AppLocalizations.of(context)!.weightHint + " (lb)"
+                        : AppLocalizations.of(context)!.weightHint + " (kg)",
                     hintStyle: bodyText1?.copyWith(fontSize: 16),
                     contentPadding: EdgeInsets.only(
                         top: 14.0, left: 18, right: 14, bottom: 18),
@@ -87,7 +89,7 @@ class _AddWeightTextFieldState extends State<AddWeightTextField> {
               ? Padding(
                   padding: const EdgeInsets.only(top: 8.0, left: 20),
                   child: Text(
-                    'Please enter weight',
+                    AppLocalizations.of(context)!.weightError,
                     style: TextStyle(fontSize: 14, color: Color(0xffE8407A)),
                   ),
                 )

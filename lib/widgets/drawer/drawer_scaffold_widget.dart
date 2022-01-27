@@ -1,5 +1,5 @@
 import 'package:easy_weight/models/goal_model.dart';
-import 'package:easy_weight/models/profile_model.dart';
+
 import 'package:easy_weight/models/profiles_list_model.dart';
 import 'package:easy_weight/models/records_model.dart';
 import 'package:easy_weight/models/user_settings.dart';
@@ -7,12 +7,11 @@ import 'package:easy_weight/models/weight_record.dart';
 import 'package:easy_weight/utils/database.dart';
 import 'package:easy_weight/widgets/buttons/menu_button.dart';
 import 'package:easy_weight/widgets/change_unit/unit_toggle.dart';
-import 'package:easy_weight/widgets/neumorphic/neumorphic_button.dart';
+
 import 'package:easy_weight/widgets/profiles/add_profile_form.dart';
 import 'package:easy_weight/widgets/profiles/profile_bar.dart';
-import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:provider/provider.dart';
 
@@ -64,7 +63,7 @@ class _DrawerScaffoldWidgetState extends State<DrawerScaffoldWidget>
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("Profiles", style: theme.textTheme.headline4),
+                    Text(AppLocalizations.of(context)!.profiles, style: theme.textTheme.headline4),
                     NeumorphicButton(
                         onPressed: () {
                           showDialog(
@@ -148,18 +147,22 @@ class _DrawerScaffoldWidgetState extends State<DrawerScaffoldWidget>
 
                 Align(
             alignment: Alignment.bottomLeft,
-            child: Row(
-              children: [
-                MenuButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: UnitToggle(),
-                ),
-              ],
+            child: Padding(
+              padding: const EdgeInsets.only(left:10.0,top:10),
+              child: Row(
+                children: [
+                  MenuButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                  SizedBox(width: 20,),
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: UnitToggle(),
+                  ),
+                ],
+              ),
             ),
           ),
             ],

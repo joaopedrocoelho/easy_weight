@@ -1,7 +1,8 @@
   import 'package:easy_weight/models/user_settings.dart';
-  import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
   import 'package:flutter_neumorphic/flutter_neumorphic.dart';
   import 'package:easy_weight/models/weight_unit.dart';
+import 'package:intl/intl.dart' show toBeginningOfSentenceCase;
   import 'package:provider/provider.dart';
 
   class NeuHeightField extends StatefulWidget {
@@ -25,14 +26,9 @@
   }
 
   class _NeuHeightFieldState extends State<NeuHeightField> {
-    TextEditingController _textController = TextEditingController();
 
-    @override
-    void initState() {
-      // TODO: implement initState
 
-      super.initState();
-    }
+
 
     @override
     Widget build(BuildContext context) {
@@ -54,7 +50,8 @@
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.only(left:18.0,bottom: 14, top:10),
-                    child: Text("Height", style: bodyText1?.copyWith(fontSize: 16),),
+                    child: Text(
+                      toBeginningOfSentenceCase(AppLocalizations.of(context)!.height)!, style: bodyText1?.copyWith(fontSize: 16),),
                   ),
                 ),
                 Expanded(
@@ -66,7 +63,7 @@
                     decoration: InputDecoration(
                         hintText: widget.hintText,
                         hintStyle: bodyText1?.copyWith(fontSize: 16),
-                        suffixText: UserSettings.getUnit() == 'metric' ? "cm" : "ft" ,
+                        suffixText: unit.usePounds ? "ft" : "cm" ,
                         suffixStyle: bodyText1?.copyWith(fontSize: 16),
                         contentPadding:
                             EdgeInsets.only(top: 14.0, right: 8, bottom: 18,left: 0),

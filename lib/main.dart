@@ -3,7 +3,8 @@ import 'package:easy_weight/models/profile_model.dart';
 import 'package:easy_weight/models/profiles_list_model.dart';
 import 'package:easy_weight/models/user_settings.dart';
 import 'package:easy_weight/utils/logger_instace.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:easy_weight/models/goal_model.dart';
 import 'package:easy_weight/models/records_model.dart';
@@ -27,7 +28,8 @@ Future<List<Profile>> _getProfiles(BuildContext context) async {
   final profiles = await RecordsDatabase.instance.getProfiles();
   print("profiles db: $profiles");
   Provider.of<ProfilesListModel>(context, listen: false).updateList(profiles);
-  Provider.of<ProfilesListModel>(context, listen: false).selectProfile(UserSettings.getProfile() ?? 0);
+  Provider.of<ProfilesListModel>(context, listen: false)
+      .selectProfile(UserSettings.getProfile() ?? 0);
   return profiles;
 }
 
@@ -42,10 +44,11 @@ Future<List<WeightRecord>> _getRecords(BuildContext context) async {
 }
 
 Future<Goal?> _getGoal(BuildContext context) async {
-  Goal? goal = await RecordsDatabase.instance.getGoal(UserSettings.getProfile() ?? 0);
+  Goal? goal =
+      await RecordsDatabase.instance.getGoal(UserSettings.getProfile() ?? 0);
   if (goal != null) {
     Provider.of<GoalModel>(context, listen: false).updateGoalRecord(goal);
-    
+
     logger.i('_getGoal $goal');
     return goal;
   } else {
@@ -64,7 +67,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => GoalModel()),
         ChangeNotifierProvider(create: (context) => ProfilesListModel()),
         ChangeNotifierProvider(create: (context) => ButtonMode()),
-        ChangeNotifierProvider(create: (context) => WeightUnit(UserSettings.getUnit())),
+        ChangeNotifierProvider(
+            create: (context) => WeightUnit(UserSettings.getUnit())),
         FutureProvider<List<Profile>?>(
           create: (context) {
             return _getProfiles(context);
@@ -101,9 +105,21 @@ class MyApp extends StatelessWidget {
       ],
       builder: (context, child) {
         return NeumorphicApp(
+          localizationsDelegates: [
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+            AppLocalizations.delegate,
+          ],
+          supportedLocales: [
+            Locale('en', ''),
+            Locale('pt', ''),
+            Locale('ja', ''),
+            Locale.fromSubtags(languageCode: 'zh', scriptCode: 'Hans'),
+            Locale.fromSubtags(languageCode: 'zh', scriptCode: 'Hant')
+          ],
           debugShowCheckedModeBanner: false,
           title: 'Easy Weight',
-
           themeMode: ThemeMode.system,
           theme: NeumorphicThemeData(
               textTheme: TextTheme(

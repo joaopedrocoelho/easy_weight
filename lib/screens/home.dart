@@ -1,7 +1,7 @@
 import 'package:easy_weight/models/profiles_list_model.dart';
 import 'package:easy_weight/widgets/buttons/menu_button.dart';
 import 'package:easy_weight/widgets/drawer/drawer_scaffold_widget.dart';
-import 'package:easy_weight/widgets/drawer/drawer_widget.dart';
+
 import 'package:easy_weight/widgets/profiles/profile_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
@@ -44,18 +44,6 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
 
   bool isLoading = false;
 
-  void _setVisible(String form) {
-    setState(() {
-      if (form == 'add') {
-        _addController.forward();
-      } else if (form == 'edit') {
-        _editController.forward();
-      } else {
-        _goalController.forward();
-      }
-    });
-  }
-
   void _setinVisible(String form) {
     setState(() {
       if (form == 'add') {
@@ -91,11 +79,9 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     FocusScopeNode currentFocus = FocusScope.of(context);
-    final theme = NeumorphicTheme.currentTheme(context);
-    bool isUsingDark = NeumorphicTheme.isUsingDark(context);
 
     return Consumer3<RecordsListModel, ButtonMode, ProfilesListModel>(
-        builder: (context, recordsModel,  buttonMode, profilesList, child) {
+        builder: (context, recordsModel, buttonMode, profilesList, child) {
       final bool mode = context.read<ButtonMode>().isEditing;
 
       final List<WeightRecord> records =
@@ -107,107 +93,111 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
 
       double editWeight = context.watch<ButtonMode>().weight;
 
-      //print('editWeight: $editWeight');
+      void _setVisible(String form) {
+        if (form == 'edit') {
+          showDialog(
+              context: context,
+              builder: (context) {
+                return Scaffold(
+                  backgroundColor: Colors.transparent,
+                  body: EditRecord(
+                    date: context.watch<ButtonMode>().date,
+                    weight: editWeight,
+                    note: context.watch<ButtonMode>().note,
+                    records: records,
+                  ),
+                );
+              });
+        } else {
+          showDialog(
+              context: context,
+              builder: (context) {
+                return Scaffold(
+                  backgroundColor: Colors.transparent,
+                  body: AddRecord(
+                    records: records,
+                  ),
+                );
+              });
+        }
+      }
 
       return Scaffold(
         key: _scaffoldKey,
         resizeToAvoidBottomInset: true,
         drawer: DrawerScaffoldWidget(),
         body: SafeArea(
-          child: Stack(children: [
-            SingleChildScrollView(
-              child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            CurrentWeightStats(
-                              currentWeight: renderCurrentWeight(records),
-                              weekTrend: renderWeekTrend(records),
-                              monthTrend: renderMonthTrend(records),
-                              allTimeTrend: renderTotal(records),
-                            ),
-                            records.isNotEmpty
-                                ? GoalStatsContainer(
-                                    setVisible: () {
-                                      showDialog(
-                                          context: context,
-                                          builder: (context) {
-                                            return Scaffold(
-                                              backgroundColor: Colors.transparent,
-                                              body: EditGoal(
-                                                profileId: profilesList.selectedProfileID,
-                                              ),
-                                            );
-                                          });
-                                    },
-                                  )
-                                : DisabledGoal()
-                          ],
-                        ),
-                        records.isNotEmpty
-                            ? GraphContainer(records: records, context: context)
-                            : EmptyGraphContainer(),
-                      ],
-                    ),
-                  ]),
-            ),
-            Positioned(
-                bottom: 0,
-                left: 0,
-                child: MenuButton(
-                  onPressed: () {
-                    _scaffoldKey.currentState?.openDrawer();
-                  },
-                )),
-
-            /* Positioned(
-                bottom: 0,
-                left: 0,
-                child: Container(width: 100, child: UnitToggle())) */
-            Positioned(
-              bottom: 0,
-              right: 0,
-              child: Container(
-                height: 100,
-                child: EditButtons(
-                  onPressed: () {
-                    _setVisible(mode ? 'edit' : 'add');
-                  },
+          child: Column(
+                     mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Flexible(
+                flex: 2,
+                fit: FlexFit.loose,
+                child: SingleChildScrollView(
+                  
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      CurrentWeightStats(
+                        currentWeight: renderCurrentWeight(records),
+                        weekTrend: renderWeekTrend(records),
+                        monthTrend: renderMonthTrend(records),
+                        allTimeTrend: renderTotal(records),
+                      ),
+                      
+                      records.isNotEmpty
+                          ? GoalStatsContainer(
+                              setVisible: () {
+                                showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return Scaffold(
+                                        backgroundColor:
+                                            Colors.transparent,
+                                        body: EditGoal(
+                                          profileId: profilesList
+                                              .selectedProfileID,
+                                        ),
+                                      );
+                                    });
+                              },
+                            )
+                          : DisabledGoal()
+                    ],
+                  ),
                 ),
               ),
-            ),
-            EditRecord(
-              animationController: _editController,
-              setVisible: () {
-                _setVisible('edit');
-              },
-              setInvisible: () {
-                currentFocus.focusedChild?.unfocus();
-                _setinVisible('edit');
-              },
-              date: context.watch<ButtonMode>().date,
-              weight: editWeight,
-              note: context.watch<ButtonMode>().note,
-              records: records,
-            ),
-            AddRecord(
-              animationController: _addController,
-              setVisible: () {
-                _setVisible('add');
-              },
-              setInvisible: () {
-                currentFocus.focusedChild?.unfocus();
-                _setinVisible('add');
-              },
-              records: records,
-            ),
-          ]),
+             
+             Flexible(
+               flex: 4,
+               child: 
+              records.isNotEmpty
+                  ? GraphContainer(records: records, context: context)
+                  : EmptyGraphContainer()
+                  ),
+            
+             Padding(
+               padding: const EdgeInsets.only(left:10.0, right: 10.0),
+               child: Row(
+                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                 children: [
+                   MenuButton(
+                     onPressed: () {
+                       _scaffoldKey.currentState?.openDrawer();
+                     },
+                   ),
+                   EditButtons(
+                     onPressed: () {
+                       _setVisible(mode ? 'edit' : 'add');
+                     },
+                   ),
+                 ],
+               ),
+             ),
+              
+            ],
+          ),
         ),
       );
     });
