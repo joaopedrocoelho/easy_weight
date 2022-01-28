@@ -115,6 +115,7 @@ class MyApp extends StatelessWidget {
             Locale('en', ''),
             Locale('pt', ''),
             Locale('ja', ''),
+            Locale('es', ''),
             Locale.fromSubtags(languageCode: 'zh', scriptCode: 'Hans'),
             Locale.fromSubtags(languageCode: 'zh', scriptCode: 'Hant')
           ],

@@ -73,7 +73,7 @@ class WeightTrend extends StatelessWidget {
             Text(period, style: theme.textTheme.caption),
             Spacer(),
             setIcon(variation),
-            SizedBox(width: 4,),
+            SizedBox(width: 12,),
             unit.usePounds ? variationTextPound : variationTextKg
           ],
         ),
