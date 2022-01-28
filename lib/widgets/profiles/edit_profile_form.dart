@@ -85,9 +85,7 @@ class _EditProfileState extends State<EditProfile>
   late FocusNode hintFocus;
   final _formKey = GlobalKey<FormState>();
   bool isLoading = false;
-  bool _hideEmojiPicker = true;
-  bool _hideGenderPicker = true;
-  bool _hideColorPicker = true;
+
 
   late AnimationController _emojiPickerController;
   late AnimationController _slideAnimationController;
@@ -256,11 +254,7 @@ class _EditProfileState extends State<EditProfile>
                               });
                               
                             },
-                            onTap: () {
-                              setState(() {
-                                _hideEmojiPicker = true;
-                              });
-                            },
+                            
                             hintFocus: hintFocus),
                         SizedBox(
                           height: 30.0,
@@ -408,6 +402,8 @@ class _EditProfileState extends State<EditProfile>
                                   }
                                 },
                               );
+                              _slideAnimationController.reverse();
+                              Navigator.pop(context);
                             })),
                           ],
                         )

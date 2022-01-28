@@ -47,7 +47,7 @@ class ProfileBar extends StatefulWidget {
 }
 
 class _ProfileBarState extends State<ProfileBar> {
-  late String genderString;
+  
   late String birthdayString;
   late String heightString;
   bool _isOpen = false;
@@ -55,17 +55,17 @@ class _ProfileBarState extends State<ProfileBar> {
   String getGenderString(Gender? gender) {
     switch (gender) {
       case Gender.male:
-        return 'M';
+        return AppLocalizations.of(context)!.male[0].toUpperCase();
       case Gender.female:
-        return "F";
+        return AppLocalizations.of(context)!.female[0].toUpperCase();
       case Gender.intersex:
-        return "I";
+        return AppLocalizations.of(context)!.interSex[0].toUpperCase();
       case Gender.non_binary:
-        return "N";
+        return AppLocalizations.of(context)!.nonBinary[0].toUpperCase();
       case Gender.transgender:
-        return "T";
+        return AppLocalizations.of(context)!.transGender[0].toUpperCase();
       case Gender.other:
-        return "O";
+        return AppLocalizations.of(context)!.other[0].toUpperCase();
       case Gender.undefined:
         return "-";
       default:
@@ -87,7 +87,7 @@ class _ProfileBarState extends State<ProfileBar> {
   @override
   void initState() {
   
-    genderString = getGenderString(widget.gender);
+    
     birthdayString = widget.birthday != null
         ? DateFormat.yMd().format(widget.birthday!)
         : "-";
@@ -97,7 +97,7 @@ class _ProfileBarState extends State<ProfileBar> {
 
   @override
   void didUpdateWidget(covariant ProfileBar oldWidget) {
-    genderString = getGenderString(widget.gender);
+    
     birthdayString = widget.birthday != null
         ? DateFormat.yMd().format(widget.birthday!)
         : "-";
