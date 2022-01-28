@@ -44,17 +44,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
 
   bool isLoading = false;
 
-  void _setinVisible(String form) {
-    setState(() {
-      if (form == 'add') {
-        _addController.reverse();
-      } else if (form == 'edit') {
-        _editController.reverse();
-      } else {
-        _goalController.reverse();
-      }
-    });
-  }
+  
 
   @override
   void initState() {
@@ -133,21 +123,26 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
               Flexible(
                 flex: 2,
                 fit: FlexFit.loose,
-                child: SingleChildScrollView(
-                  
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      CurrentWeightStats(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Flexible(
+                      flex: 5,
+                      child: CurrentWeightStats(
                         currentWeight: renderCurrentWeight(records),
                         weekTrend: renderWeekTrend(records),
                         monthTrend: renderMonthTrend(records),
                         allTimeTrend: renderTotal(records),
                       ),
-                      
-                      records.isNotEmpty
-                          ? GoalStatsContainer(
+                    ),
+                    Spacer(
+                      flex: 1,
+                    ),
+                    records.isNotEmpty
+                        ? Flexible(
+                          flex: 6,
+                          child: GoalStatsContainer(
                               setVisible: () {
                                 showDialog(
                                     context: context,
@@ -162,37 +157,45 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                       );
                                     });
                               },
-                            )
-                          : DisabledGoal()
-                    ],
-                  ),
+                            ),
+                        )
+                        : Flexible(
+                            flex: 1,
+                          child: DisabledGoal())
+                  ],
                 ),
               ),
              
              Flexible(
-               flex: 4,
+               flex: 5,
                child: 
               records.isNotEmpty
                   ? GraphContainer(records: records, context: context)
                   : EmptyGraphContainer()
                   ),
             
-             Padding(
-               padding: const EdgeInsets.only(left:10.0, right: 10.0),
-               child: Row(
-                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                 children: [
-                   MenuButton(
-                     onPressed: () {
-                       _scaffoldKey.currentState?.openDrawer();
-                     },
+             Flexible(
+               flex:1,
+               child: Padding(
+                 padding: const EdgeInsets.only(left:16.0, right: 16.0, bottom: 16),
+                 child: Align(
+                   alignment: Alignment.bottomCenter,
+                   child: Row(
+                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                     children: [
+                       MenuButton(
+                         onPressed: () {
+                           _scaffoldKey.currentState?.openDrawer();
+                         },
+                       ),
+                       EditButtons(
+                         onPressed: () {
+                           _setVisible(mode ? 'edit' : 'add');
+                         },
+                       ),
+                     ],
                    ),
-                   EditButtons(
-                     onPressed: () {
-                       _setVisible(mode ? 'edit' : 'add');
-                     },
-                   ),
-                 ],
+                 ),
                ),
              ),
               

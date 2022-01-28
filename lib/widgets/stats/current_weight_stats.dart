@@ -21,31 +21,29 @@ class CurrentWeightStats extends StatelessWidget {
   Widget build(BuildContext context) {
     var theme = NeumorphicTheme.currentTheme(context);
 
-    return Expanded(
-      child: Padding(
-        padding: const EdgeInsets.only(top:10.0,left:10,right: 10),
-        child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
-            
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(bottom: 3.0),
-                child: Text(AppLocalizations.of(context)!.currentWeight,
-                    style: theme.textTheme.caption),
-              ),
-              BigWeightHeadline(weight: currentWeight),
-              WeightTrend(
-                  variation: weekTrend,
-                  period: AppLocalizations.of(context)!.weekStat),
-              WeightTrend(
-                  variation: monthTrend,
-                  period: AppLocalizations.of(context)!.monthStat),
-              WeightTrend(
-                  variation: allTimeTrend,
-                  period: AppLocalizations.of(context)!.totalStat)
-            ]),
-      ),
+    return Padding(
+      padding: const EdgeInsets.only(top:12.0,left:4),
+      child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(bottom: 3.0),
+              child: Text(AppLocalizations.of(context)!.currentWeight,
+                  style: theme.textTheme.caption),
+            ),
+            BigWeightHeadline(weight: currentWeight),
+            WeightTrend(
+                variation: weekTrend,
+                period: AppLocalizations.of(context)!.weekStat),
+            WeightTrend(
+                variation: monthTrend,
+                period: AppLocalizations.of(context)!.monthStat),
+            WeightTrend(
+                variation: allTimeTrend,
+                period: AppLocalizations.of(context)!.totalStat)
+          ]),
     );
   }
 }

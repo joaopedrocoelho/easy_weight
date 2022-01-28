@@ -208,7 +208,7 @@ class MyApp extends StatelessWidget {
                     fontWeight: FontWeight.w800),
                 subtitle1: TextStyle(
                     fontFamily: 'Noto Sans',
-                    color: Color(0xff212733),
+                    color: Color(0xffB6C5D5),
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
                     letterSpacing: 0.5),

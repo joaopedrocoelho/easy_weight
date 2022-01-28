@@ -40,18 +40,16 @@ class RemainingGoalText extends StatelessWidget {
                   style: theme.textTheme.subtitle2?.copyWith(height: 1));
         }
 
-        return Container(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(AppLocalizations.of(context)!.goalRemaining, style: theme.textTheme.caption),
-              Padding(
-                padding: const EdgeInsets.only(left: 5.0),
-                child: _showRemaining(),
-              )
-            ],
-          ),
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(AppLocalizations.of(context)!.goalRemaining, style: theme.textTheme.caption),
+            Padding(
+              padding: const EdgeInsets.only(left: 5.0),
+              child: _showRemaining(),
+            )
+          ],
         );
       },
     );

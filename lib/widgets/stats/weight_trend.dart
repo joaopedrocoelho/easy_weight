@@ -63,8 +63,8 @@ class WeightTrend extends StatelessWidget {
           : Text('0.0lb',
               style: theme.textTheme.subtitle2?.copyWith(height: 1));
 
-      return Container(
-        width: 150,
+      return Flexible(
+        flex: 1,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.end,
           crossAxisAlignment: CrossAxisAlignment.center,

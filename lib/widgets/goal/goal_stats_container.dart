@@ -23,18 +23,20 @@ class GoalStatsContainer extends StatelessWidget {
 
     return Consumer3<GoalModel, WeightUnit, RecordsListModel>(
         builder: (context, goalModel, unit, records, child) {
-      return Expanded(
-        child: Padding(
-          padding: const EdgeInsets.only(right: 10.0,  top: 10),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              GestureDetector(onTap: setVisible, child: GoalCircle()),
-              SizedBox(
-                height: 10,
-              ),
-              Row(
+      return Padding(
+        padding: const EdgeInsets.only(top:10.0,right:4),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            GestureDetector(onTap: setVisible, child: GoalCircle()),
+            SizedBox(
+              height: 10,
+            ),
+            FractionallySizedBox(
+              alignment: Alignment.center,
+              widthFactor: 0.9,
+              child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -51,8 +53,8 @@ class GoalStatsContainer extends StatelessWidget {
                     )
                 ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       );
     });

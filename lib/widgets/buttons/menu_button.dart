@@ -12,14 +12,17 @@ class MenuButton extends StatelessWidget {
   Widget build(BuildContext context) {
     var theme = NeumorphicTheme.currentTheme(context);
 
-    return NeuButton(
-                  child: Icon(
-                    Icons.menu_rounded,
-                    color: theme.defaultTextColor,
-                    size: 30,
-                  ),
-                  onPressed: onPressed,
-                  isVisible: true,
-                  );
+    return Container(
+      height: 60,
+      child: NeuButton(
+                    child: Icon(
+                      Icons.menu_rounded,
+                      color: theme.defaultTextColor,
+                      size: 30,
+                    ),
+                    onPressed: onPressed,
+                    isVisible: true,
+                    ),
+    );
   }
 }
