@@ -1,3 +1,4 @@
+import 'package:easy_weight/utils/logger_instace.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:easy_weight/models/weight_record.dart';
@@ -62,6 +63,8 @@ class RecordsListModel extends ChangeNotifier {
       List<DateTime> usedDates, DateTime currentDate) {
     DateTime lastAvailableDate =
         DateTime(currentDate.year, currentDate.month, currentDate.day);
+        
+       // logger.i(lastAvailableDate);
     while (usedDates.contains(lastAvailableDate)) {
       lastAvailableDate = lastAvailableDate.subtract(Duration(days: 1));
     }

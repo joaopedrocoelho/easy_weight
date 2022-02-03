@@ -1,3 +1,4 @@
+import 'package:easy_weight/utils/logger_instace.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:intl/intl.dart';
@@ -37,8 +38,11 @@ class _NeuDatePickerState extends State<NeuDatePicker> {
         firstDate: DateTime(2000),
         lastDate: DateTime.now(),
         selectableDayPredicate: (date) {
-          //print('usedDates from _selectDate:$usedDates');
-          return usedDates.contains(date) ? false : true;
+          int usedIndex = usedDates.indexWhere((usedDate) {
+            return usedDate.month == date.month && usedDate.day == date.day;
+          });
+          logger.i(usedIndex);
+          return usedIndex != -1 ? false : true;
         });
 
     if (_datePicker != null) {
@@ -52,7 +56,7 @@ class _NeuDatePickerState extends State<NeuDatePicker> {
 
   @override
   void initState() {
-    print("selectedDate: ${widget.selectedDate}");
+    logger.i("Used Dates", widget.usedDates);
 
     super.initState();
   }
