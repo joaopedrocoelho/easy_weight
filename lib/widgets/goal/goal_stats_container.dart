@@ -28,6 +28,7 @@ class GoalStatsContainer extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
           children: [
             GestureDetector(onTap: setVisible, child: GoalCircle()),
             SizedBox(

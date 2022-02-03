@@ -42,6 +42,7 @@ class _EditGoalState extends State<EditGoal>
 
   Future addGoal() async {
     Goal newGoal = Goal(
+        date: DateTime.now(),
         weight: _goal,
         initialWeight: _initialWeight,
         profileId: widget.profileId);
@@ -50,6 +51,7 @@ class _EditGoalState extends State<EditGoal>
 
   Future updateGoal() async {
     Goal newGoal = Goal(
+        date: DateTime.now(),
         weight: _goal,
         initialWeight: _initialWeight,
         profileId: widget.profileId);
@@ -161,6 +163,7 @@ class _EditGoalState extends State<EditGoal>
                             });
 
                             Goal newGoal = Goal(
+                                date: DateTime.now(),
                                 weight: _goal,
                                 initialWeight: _initialWeight,
                                 profileId: widget.profileId);

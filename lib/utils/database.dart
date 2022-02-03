@@ -30,7 +30,7 @@ class RecordsDatabase {
     final dbPath = await getDatabasesPath();
     final path = join(dbPath, filePath);
 
-    return await openDatabase(path, version: 1, onCreate: _createDB);
+    return await openDatabase(path, version: 2, onCreate: _createDB, onUpgrade:  _upgradeDB);
   }
 
   Future _createDB(Database db, int version) async {
@@ -66,6 +66,7 @@ class RecordsDatabase {
     db.execute('''
       CREATE TABLE $goalTable (
         ${GoalFields.id} INTEGER PRIMARY KEY NOT NULL,
+        ${GoalFields.date} TEXT NOT NULL,
         ${GoalFields.weight} DOUBLE NOT NULL,
         ${GoalFields.initialWeight} DOUBLE NOT NULL,
         ${GoalFields.profileId} INTEGER NOT NULL,
@@ -82,6 +83,13 @@ class RecordsDatabase {
     db.close();
   }
 
+
+//upgrade DB
+  Future _upgradeDB(Database db, int oldVersion, int newVersion) async {
+    if (oldVersion < 2) {
+     
+    }
+  }
   //profiles
 
   Future<List<Profile>> getProfiles() async {
@@ -197,7 +205,7 @@ class RecordsDatabase {
     //print("db: $db");
 
     List<Map<String, dynamic>> goal = await db.rawQuery(
-        'SELECT ${GoalFields.weight}, ${GoalFields.initialWeight}, ${GoalFields.profileId} FROM $goalTable WHERE ${GoalFields.profileId}= $profileId');
+        'SELECT ${GoalFields.weight}, ${GoalFields.date}, ${GoalFields.initialWeight}, ${GoalFields.profileId} FROM $goalTable WHERE ${GoalFields.profileId}= $profileId');
 
     logger.i("Getting goal for profile $profileId");
     late Goal goalConverted;
@@ -208,6 +216,7 @@ class RecordsDatabase {
               {
                 logger.i("Goal found: ${goal[GoalFields.weight]}", goal),
                 goalConverted = Goal(
+                    date: DateTime.parse(goal[GoalFields.date]),
                     weight: goal[GoalFields.weight],
                     initialWeight: goal[GoalFields.initialWeight],
                     profileId:goal[GoalFields.profileId] )

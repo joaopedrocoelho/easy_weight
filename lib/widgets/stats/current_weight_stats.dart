@@ -24,6 +24,7 @@ class CurrentWeightStats extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(top:12.0,left:4),
       child: Column(
+        mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           

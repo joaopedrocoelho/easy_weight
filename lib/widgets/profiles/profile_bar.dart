@@ -15,6 +15,7 @@ import 'package:easy_weight/widgets/profiles/edit_profile_form.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'dart:io';
 
 class ProfileBar extends StatefulWidget {
   final int id;
@@ -83,16 +84,24 @@ class _ProfileBarState extends State<ProfileBar> {
       return "-";
     }
   }
+  
+  String formatBirthday(DateTime birthday) {
+    return Platform.localeName == 'en_US' ?
+    DateFormat.yMd().format(birthday) :
+    DateFormat('dd/MM/yyyy').format(birthday);
+    
+  }
 
   @override
   void initState() {
   
     
     birthdayString = widget.birthday != null
-        ? DateFormat.yMd().format(widget.birthday!)
+        ? formatBirthday(widget.birthday!)
         : "-";
       heightString = getHeightString(widget.height);
     super.initState();
+   
   }
 
   @override
@@ -110,6 +119,7 @@ class _ProfileBarState extends State<ProfileBar> {
   Widget build(BuildContext context) {
     var theme = NeumorphicTheme.currentTheme(context);
     
+     
 
     Widget _dropDownArrow() {
       return GestureDetector(

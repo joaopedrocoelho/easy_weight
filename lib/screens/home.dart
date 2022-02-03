@@ -118,10 +118,10 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
         drawer: DrawerScaffoldWidget(),
         body: SafeArea(
           child: Column(
-                     mainAxisAlignment: MainAxisAlignment.start,
+                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Flexible(
-                flex: 2,
+                flex: 3,
                 fit: FlexFit.loose,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -160,14 +160,14 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                             ),
                         )
                         : Flexible(
-                            flex: 1,
+                            flex: 6,
                           child: DisabledGoal())
                   ],
                 ),
               ),
              
-             Flexible(
-               flex: 5,
+             Expanded(
+               flex: 7,
                child: 
               records.isNotEmpty
                   ? GraphContainer(records: records, context: context)
