@@ -1,3 +1,4 @@
+import 'package:easy_weight/models/ad_state.dart';
 import 'package:easy_weight/models/goal_model.dart';
 
 import 'package:easy_weight/models/profiles_list_model.dart';
@@ -13,6 +14,7 @@ import 'package:easy_weight/widgets/profiles/profile_bar.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
 
 class DrawerScaffoldWidget extends StatefulWidget {
@@ -24,9 +26,27 @@ class DrawerScaffoldWidget extends StatefulWidget {
 
 class _DrawerScaffoldWidgetState extends State<DrawerScaffoldWidget>
     with TickerProviderStateMixin {
+  late BannerAd banner;
   late AnimationController _addProfileFormController;
+  Widget? adWidget;
 
-  void addProfile() {}
+  @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+    final adState = Provider.of<AdState>(context);
+    adState.initialization.then((status) {
+      setState(() {
+        banner = BannerAd(
+            adUnitId: adState.bannerAdUnitId,
+            size: AdSize.banner,
+            request: AdRequest(),
+            listener: adState.bannerAdListener)
+          ..load();
+        adWidget = Flexible(flex: 1, child: AdWidget(ad: banner));
+      });
+    });
+  }
 
   @override
   void initState() {
@@ -51,32 +71,33 @@ class _DrawerScaffoldWidgetState extends State<DrawerScaffoldWidget>
     var theme = NeumorphicTheme.currentTheme(context);
 
     return Consumer<ProfilesListModel>(builder: (context, profilesList, child) {
-    
-
       return Scaffold(
         body: SafeArea(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              if(adWidget != null) adWidget!,
               Flexible(
-                flex:1,
+                flex: 1,
                 child: Padding(
-                  padding: const EdgeInsets.only(left:16, right: 16, top: 12, bottom: 12),
+                  padding: const EdgeInsets.only(
+                      left: 16, right: 16, top: 12, bottom: 12),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(AppLocalizations.of(context)!.profiles, style: theme.textTheme.headline4),
+                      Text(AppLocalizations.of(context)!.profiles,
+                          style: theme.textTheme.headline4),
                       NeumorphicButton(
                           onPressed: () {
                             showDialog(
                                 context: context,
                                 builder: (context) {
                                   return Scaffold(
-                                    backgroundColor:  Colors.transparent,
+                                    backgroundColor: Colors.transparent,
                                     body: AddProfile(),
                                   );
                                 });
-              
+
                             _addProfileFormController.forward();
                           },
                           style: NeumorphicStyle(
@@ -89,10 +110,8 @@ class _DrawerScaffoldWidgetState extends State<DrawerScaffoldWidget>
                                 BorderRadius.circular(15)),
                           ),
                           child: Center(
-                              child: Icon(
-                                  Icons.add_circle_outline_rounded,
-                                  color: theme.defaultTextColor,
-                                  size: 30)))
+                              child: Icon(Icons.add_circle_outline_rounded,
+                                  color: theme.defaultTextColor, size: 30)))
                     ],
                   ),
                 ),
@@ -113,11 +132,9 @@ class _DrawerScaffoldWidgetState extends State<DrawerScaffoldWidget>
                             BorderRadius.circular(15)),
                       ),
                       child: ConstrainedBox(
-                          constraints: BoxConstraints.expand(),
-                  child: ListView.builder(
-                    physics: AlwaysScrollableScrollPhysics(),
-                     
-                          
+                        constraints: BoxConstraints.expand(),
+                        child: ListView.builder(
+                          physics: AlwaysScrollableScrollPhysics(),
                           itemCount: profilesList.profilesCount,
                           shrinkWrap: true,
                           scrollDirection: Axis.vertical,
@@ -136,7 +153,9 @@ class _DrawerScaffoldWidgetState extends State<DrawerScaffoldWidget>
                                 onSelect: (_) async {
                                   profilesList.selectProfile(
                                       profilesList.profiles[index].id!);
-                                      Provider.of<GoalModel>(context, listen: false).getGoal(profilesList.profiles[index].id!);
+                                  Provider.of<GoalModel>(context, listen: false)
+                                      .getGoal(
+                                          profilesList.profiles[index].id!);
                                   await UserSettings.setProfile(
                                       profilesList.profiles[index].id!);
                                   _getRecords(context);
@@ -147,30 +166,32 @@ class _DrawerScaffoldWidgetState extends State<DrawerScaffoldWidget>
                     ),
                   ),
                 ),
-
-                Flexible(
-                  flex: 1,
-                  child: Align(
-                            alignment: Alignment.bottomLeft,
-                            child: Padding(
-                              padding: const EdgeInsets.only(left:16.0,top:12,bottom:16),
-                              child: Row(
-                  children: [
-                    MenuButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
+              Flexible(
+                flex: 1,
+                child: Align(
+                  alignment: Alignment.bottomLeft,
+                  child: Padding(
+                    padding:
+                        const EdgeInsets.only(left: 16.0, top: 12, bottom: 16),
+                    child: Row(
+                      children: [
+                        MenuButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                        ),
+                        SizedBox(
+                          width: 20,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: UnitToggle(),
+                        ),
+                      ],
                     ),
-                    SizedBox(width: 20,),
-                    Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: UnitToggle(),
-                    ),
-                  ],
-                              ),
-                            ),
-                          ),
+                  ),
                 ),
+              ),
             ],
           ),
         ),

@@ -34,6 +34,7 @@ dependencies:
   logger: ^1.1.0
   flutter_localizations:
     sdk: flutter
+  google_mobile_ads: ^1.0.1
 
 
   cupertino_icons: ^1.0.2

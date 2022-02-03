@@ -1,3 +1,4 @@
+import 'package:easy_weight/models/ad_state.dart';
 import 'package:easy_weight/models/db/profiles_table.dart';
 import 'package:easy_weight/models/profile_model.dart';
 import 'package:easy_weight/models/profiles_list_model.dart';
@@ -11,6 +12,7 @@ import 'package:easy_weight/models/records_model.dart';
 import 'package:easy_weight/models/weight_record.dart';
 import 'package:easy_weight/models/weight_unit.dart';
 import 'package:easy_weight/widgets/provide_records.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 import 'package:provider/provider.dart';
 
@@ -19,9 +21,11 @@ import 'package:easy_weight/models/button_mode.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  final initFuture = MobileAds.instance.initialize();
+  final adState = AdState(initFuture);
   await UserSettings.init();
 
-  runApp(MyApp());
+  runApp(Provider.value(value: adState, builder: (context, child) => MyApp()));
 }
 
 Future<List<Profile>> _getProfiles(BuildContext context) async {
