@@ -34,18 +34,16 @@ class GoalStatsContainer extends StatelessWidget {
             SizedBox(
               height: 10,
             ),
-            FractionallySizedBox(
-              alignment: Alignment.center,
-              widthFactor: 0.9,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
+            Expanded(
+              child: ListView(
+                shrinkWrap: true,
+                scrollDirection: Axis.horizontal,
                 children: [
                   CurrentGoalText(
                     goal: goalModel.currentGoal,
                     usePounds: unit.usePounds,
                   ),
-                  Spacer(),
+                  SizedBox(width: 10,),
                   if (goalModel.currentGoal != null)
                     RemainingGoalText(
                       goal: goalModel.currentGoal!,
