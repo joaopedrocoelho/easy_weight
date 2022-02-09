@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 
 class CancelButton extends StatelessWidget {
@@ -24,7 +24,7 @@ class CancelButton extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(4.0),
           child: Center(
-              child: Text('CANCEL',
+              child: Text(AppLocalizations.of(context)!.cancelBtn.toUpperCase(),
                   style: buttonTheme?.copyWith(
                       color: isUsingDark
                           ? theme.defaultTextColor

@@ -46,16 +46,16 @@ class _EditButtonsState extends State<EditButtons> {
     return Consumer<ButtonMode>(builder: (context, buttonMode, child) {
       //buttonMode.isEditing ? _setEditVisible() : _setEditInVisible();
 
-      return Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Container(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              //delete button
-                 AnimatedOpacity(
-                  duration: Duration(milliseconds: 200),
-                  opacity: buttonMode.isEditing ? 1.0 : 0.0,
+      return Container(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            //delete button
+               AnimatedOpacity(
+                duration: Duration(milliseconds: 200),
+                opacity: buttonMode.isEditing ? 1.0 : 0.0,
+                child: Container(
+                  height: 60,
                   child: NeuButton(
                     child: Icon(
                       Icons.delete_outline_rounded,
@@ -68,20 +68,23 @@ class _EditButtonsState extends State<EditButtons> {
                           weight: buttonMode.weight,
                           note: buttonMode.note,
                           profileId: buttonMode.profileId);
-                
+              
                       Provider.of<RecordsListModel>(context, listen: false)
                           .deleteRecord(deletedRecord);
-                
+              
                       deleteRecordFromDB(deletedRecord);
                       buttonMode.setAdd();
                     },
                     isVisible: buttonMode.isEditing,
                   ),
                 ),
-              SizedBox(
-                width: 20.0,
               ),
-              NeuButton(
+            SizedBox(
+              width: 20.0,
+            ),
+            Container(
+              height: 60,
+              child: NeuButton(
                   onPressed: widget.onPressed,
                   child: buttonMode.isEditing
                       ? Icon(Icons.mode_edit_outline_rounded,
@@ -89,8 +92,8 @@ class _EditButtonsState extends State<EditButtons> {
                       : Icon(Icons.add_circle_outline_rounded,
                           color: theme.defaultTextColor, size: 30),
                   isVisible: true),
-            ],
-          ),
+            ),
+          ],
         ),
       );
     });

@@ -15,12 +15,12 @@ class UserSettings {
       _preferences = await SharedPreferences.getInstance();
 
   static Future setUnit(Unit unit) async =>
-      await _preferences.setString(_unit, unit.toString());    
+      await _preferences.setString(_unit, unit.toString().split('.').last);    
 
   static Future setProfile(int profile) async =>
       await _preferences.setInt(_selectedProfile, profile);
   
   static int? getProfile() => _preferences.getInt(_selectedProfile);
-  static Unit getUnit() => _preferences.getString(_unit) == Unit.metric.toString() ? Unit.metric : Unit.imperial;
+  static Unit getUnit() => _preferences.getString(_unit) == 'metric' ? Unit.metric : Unit.imperial;
   
 }

@@ -1,12 +1,12 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_neumorphic/flutter_neumorphic.dart';
-import 'package:easy_weight/models/records_model.dart';
-import 'package:easy_weight/models/weight_record.dart';
-import 'package:easy_weight/models/weight_unit.dart';
-import 'package:easy_weight/models/goal_model.dart';
-import 'package:provider/provider.dart';
 
-class CurrentGoalText extends StatelessWidget {
+import 'package:easy_weight/utils/convert_unit.dart';
+import 'package:easy_weight/utils/logger_instace.dart';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:easy_weight/models/goal_model.dart';
+
+
+class CurrentGoalText extends StatefulWidget {
   final Goal? goal;
 
   final bool usePounds;
@@ -15,18 +15,28 @@ class CurrentGoalText extends StatelessWidget {
       : super(key: key);
 
   @override
+  State<CurrentGoalText> createState() => _CurrentGoalTextState();
+}
+
+class _CurrentGoalTextState extends State<CurrentGoalText> {
+  late String goalToPound; 
+
+  @override
   Widget build(BuildContext context) {
     final theme = NeumorphicTheme.currentTheme(context);
 
-    String goalToPound =
-        goal != null ? (goal!.weight * 2.20462).toStringAsFixed(1) : '-';
+
+    goalToPound =
+        widget.goal != null ? kgToLbs(widget.goal!.weight).toStringAsFixed(0) : '-';
+
+    
 
     Text _showGoal() {
-      if (goal != null) {
-        return usePounds
+      if (widget.goal != null) {
+        return widget.usePounds
             ? Text('$goalToPound',
                 style: theme.textTheme.subtitle2?.copyWith(height: 1))
-            : Text('${goal!.weight}',
+            : Text('${widget.goal!.weight.toStringAsFixed(1)}',
                 style: theme.textTheme.subtitle2?.copyWith(height: 1));
       } else {
         return Text('-', style: theme.textTheme.subtitle2?.copyWith(height: 1));
@@ -38,7 +48,7 @@ class CurrentGoalText extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Text('Goal', style: theme.textTheme.caption),
+          Text(AppLocalizations.of(context)!.goalWeight, style: theme.textTheme.caption),
           Padding(
             padding: const EdgeInsets.only(left: 5.0),
             child: _showGoal(),

@@ -1,3 +1,4 @@
+import 'package:easy_weight/utils/convert_unit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:easy_weight/models/button_mode.dart';
@@ -34,7 +35,7 @@ class GraphSpot extends StatefulWidget {
 class _GraphSpotState extends State<GraphSpot> {
   @override
   Widget build(BuildContext context) {
-    String weightToPound = (widget.weight * 2.20462).toStringAsFixed(1);
+    String weightToPound = kgToLbs(widget.weight).toStringAsFixed(1);
 
     return Consumer2<ButtonMode, WeightUnit>(
       builder: (context, mode, unit, child) {

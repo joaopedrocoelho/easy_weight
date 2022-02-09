@@ -14,9 +14,12 @@ class NeuFormContainer extends StatelessWidget {
     return Neumorphic(
       padding: EdgeInsets.all(20.0),
       style: NeumorphicStyle(
-        boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(20.0)),
+        boxShape: NeumorphicBoxShape.roundRect(BorderRadius.only(
+          topLeft: Radius.circular(20.0),
+          topRight: Radius.circular(20.0),
+        )),
         depth: 5,
-        intensity: 0.8,
+        intensity: 0.4,
       ),
       child: Container(
         height: height != null ? height : 420,

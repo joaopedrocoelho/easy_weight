@@ -1,16 +1,16 @@
+import 'package:easy_weight/utils/convert_unit.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_weight/models/button_mode.dart';
 import 'package:easy_weight/models/records_model.dart';
 import 'package:easy_weight/models/weight_unit.dart';
 
 import 'package:easy_weight/widgets/add_record_form/add_note.dart';
-import 'package:easy_weight/widgets/add_record_form/add_weight.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:easy_weight/widgets/add_record_form/neu_close_button.dart';
-import 'package:easy_weight/widgets/add_record_form/neu_date_picker.dart';
+
 import 'package:easy_weight/widgets/buttons/cancel_button.dart';
 import 'package:easy_weight/widgets/buttons/save_button.dart';
 
-import 'package:intl/intl.dart';
 import 'package:easy_weight/models/weight_record.dart';
 import 'package:easy_weight/utils/database.dart';
 import 'package:easy_weight/widgets/edit_record_form/edit_weight.dart';
@@ -20,9 +20,7 @@ import 'package:provider/provider.dart';
 import 'package:easy_weight/widgets/add_record_form/neu_form_container.dart';
 
 class EditRecord extends StatefulWidget {
-  final AnimationController animationController;
-  final VoidCallback setVisible;
-  final VoidCallback setInvisible;
+
 
   final List<WeightRecord> records;
 
@@ -31,9 +29,7 @@ class EditRecord extends StatefulWidget {
   final String note;
 
   EditRecord({
-    required this.animationController,
-    required this.setVisible,
-    required this.setInvisible,
+
     required this.records,
     required this.weight,
     required this.date,
@@ -46,27 +42,33 @@ class EditRecord extends StatefulWidget {
 
 class _EditRecordState extends State<EditRecord>
     with SingleTickerProviderStateMixin {
+  late AnimationController _animationController;
+
   late FocusNode hintFocus;
   final _formKey = GlobalKey<FormState>();
   bool isLoading = false;
 
   //form fields state
   double _weight = 0.0;
-  String _initialWeight = '';
-  String _initialNote = '';
+
 
   String _note = '';
 
   Future updateRecord() async {
-    WeightRecord editedRecord =
-        new WeightRecord(date: widget.date, weight: _weight, note: _note, profileId: 0);
+    WeightRecord editedRecord = new WeightRecord(
+        date: widget.date, weight: _weight, note: _note, profileId: 0);
     final record = await RecordsDatabase.instance.updateRecord(editedRecord);
 
-    widget.setInvisible();
+    Navigator.pop(context);
   }
 
   @override
   void initState() {
+    _animationController = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 300),
+    );
+    _animationController.forward();
     super.initState();
 
     hintFocus = FocusNode();
@@ -74,17 +76,18 @@ class _EditRecordState extends State<EditRecord>
 
   @override
   void dispose() {
-    super.dispose();
-    widget.animationController.dispose();
+      _animationController.dispose();
 
     hintFocus.dispose();
+    super.dispose();
+  
   }
 
   @override
   Widget build(BuildContext context) {
     return Consumer2<ButtonMode, WeightUnit>(
         builder: (context, buttonMode, unit, child) {
-      String _initialWeight = buttonMode.weight.toString();
+ 
       FocusScopeNode currentFocus = FocusScope.of(context);
 
       return SlideTransition(
@@ -92,7 +95,7 @@ class _EditRecordState extends State<EditRecord>
             begin: Offset(0, 1),
             end: Offset.zero,
           ).animate(CurvedAnimation(
-              parent: widget.animationController, curve: Curves.ease)),
+              parent: _animationController, curve: Curves.ease)),
           child: Align(
             alignment: Alignment.bottomCenter,
             child: NeuFormContainer(
@@ -106,11 +109,14 @@ class _EditRecordState extends State<EditRecord>
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'Edit Record',
+                         AppLocalizations.of(context)!.editRecord,
                           style: Theme.of(context).textTheme.headline5,
                           textAlign: TextAlign.start,
                         ),
-                        NeuCloseButton(onPressed: widget.setInvisible)
+                        NeuCloseButton(onPressed: () {
+                          _animationController.reverse();
+                          Navigator.pop(context);
+                        })
                       ],
                     ),
                     SizedBox(
@@ -120,15 +126,11 @@ class _EditRecordState extends State<EditRecord>
                         hintFocus: hintFocus,
                         initialValue: _weight.toString(),
                         onSaved: (value) {
-                          unit.usePounds
-                              ? setState(() {
-                                  print('hey pound');
-                                  _weight = (double.parse(value!) / 2.20462)
-                                      .ceilToDouble();
-                                })
-                              : setState(() {
-                                  _weight = double.parse(value!);
-                                });
+                          setState(() {
+                            unit.usePounds
+                                ? _weight = lbsToKg(double.parse(value!))
+                                : _weight = double.parse(value!);
+                          });
                         }),
                     SizedBox(
                       height: 30.0,
@@ -155,7 +157,8 @@ class _EditRecordState extends State<EditRecord>
                             _weight = 0.0;
                             _note = '';
                           });
-                          widget.setInvisible();
+                          _animationController.reverse();
+                          Navigator.pop(context);
                         })),
                         SizedBox(
                           width: 20.0,
@@ -173,7 +176,7 @@ class _EditRecordState extends State<EditRecord>
                                 date: widget.date,
                                 weight: _weight,
                                 note: _note,
-                                profileId:0 );
+                                profileId: 0);
 
                             Provider.of<RecordsListModel>(context,
                                     listen: false)
@@ -188,7 +191,8 @@ class _EditRecordState extends State<EditRecord>
                             buttonMode.selectedIndex = null;
 
                             currentFocus.focusedChild?.unfocus();
-                            widget.setInvisible();
+                            _animationController.reverse();
+                            Navigator.pop(context);
                           }
                         }))
                       ],

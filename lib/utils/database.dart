@@ -3,6 +3,7 @@ import 'package:easy_weight/models/db/records_table.dart';
 import 'package:easy_weight/models/db/goal_table.dart';
 import 'package:easy_weight/models/profile_model.dart';
 import 'package:easy_weight/models/profiles_list_model.dart';
+import 'package:easy_weight/utils/logger_instace.dart';
 import 'package:provider/provider.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
@@ -29,7 +30,8 @@ class RecordsDatabase {
     final dbPath = await getDatabasesPath();
     final path = join(dbPath, filePath);
 
-    return await openDatabase(path, version: 1, onCreate: _createDB);
+    return await openDatabase(path,
+        version: 2, onCreate: _createDB);
   }
 
   Future _createDB(Database db, int version) async {
@@ -45,7 +47,7 @@ class RecordsDatabase {
          )
     ''');
 
-    ProfileModel _defaultProfile = ProfileModel(id: 0);
+    Profile _defaultProfile = Profile(id: 0);
 
     final int insert = await db.insert(profilesTable, _defaultProfile.toJson());
 
@@ -65,6 +67,7 @@ class RecordsDatabase {
     db.execute('''
       CREATE TABLE $goalTable (
         ${GoalFields.id} INTEGER PRIMARY KEY NOT NULL,
+        ${GoalFields.date} TEXT NOT NULL,
         ${GoalFields.weight} DOUBLE NOT NULL,
         ${GoalFields.initialWeight} DOUBLE NOT NULL,
         ${GoalFields.profileId} INTEGER NOT NULL,
@@ -81,44 +84,96 @@ class RecordsDatabase {
     db.close();
   }
 
+/* //upgrade DB
+  Future _upgradeDB(Database db, int oldVersion, int newVersion) async {
+    if (oldVersion < 2) {
+    Future<List<Map<String, Object?>>> records =  db.query(recordsTable);
+    Future<List<Map<String, Object?>>> goals =  db.query(goalTable);
+
+    logger.i("old db",records);
+    logger.i("old db",goals);
+
+     /*  db.execute('''
+      CREATE TABLE $profilesTable (
+        ${ProfileFields.id} INTEGER PRIMARY KEY AUTOINCREMENT,
+        ${ProfileFields.name} TEXT NULL,
+        ${ProfileFields.height} REAL NULL,
+        ${ProfileFields.birthday} TEXT NULL,
+        ${ProfileFields.emoji} TEXT NULL,
+        ${ProfileFields.gender} TEXT NULL,
+        ${ProfileFields.color} TEXT NULL
+         )
+    ''');
+
+      Profile _defaultProfile = Profile(id: 0);
+
+      final int insert =
+          await db.insert(profilesTable, _defaultProfile.toJson());
+
+      print("defaultProfile inserted with id: $insert");
+
+      db.execute('''
+     ALTER TABLE $recordsTable
+     ADD COLUMN ${RecordFields.id} INTEGER PRIMARY KEY AUTOINCREMENT
+    ''');
+
+      db.execute('''
+      ALTER TABLE $recordsTable
+      ADD COLUMN ${RecordFields.profileId} INTEGER NOT NULL DEFAULT 0,
+      ''');
+
+      db.execute('''
+    ALTER TABLE $recordsTable
+    ADD COLUMN  FOREIGN KEY(${RecordFields.profileId}) REFERENCES $profilesTable(${ProfileFields.id})
+    ''');
+ */
+    
+    }
+  } */
   //profiles
 
-  Future<List<ProfileModel>> getProfiles() async {
+  Future<List<Profile>> getProfiles() async {
     final db = await instance.database;
-    
 
     final profiles = await db.rawQuery(
-      'SELECT * FROM $profilesTable ORDER BY ${ProfileFields.id} ASC');
+        'SELECT * FROM $profilesTable ORDER BY ${ProfileFields.id} ASC');
 
-    print("profiles: $profiles");
-    List<ProfileModel> profilesConverted =toProfileList(profiles);
+    profiles.forEach((profile) {
+      logger.i("PROFILE: ${profile[ProfileFields.name]}", profile);
+    });
+
+    List<Profile> profilesConverted = toProfileList(profiles);
 
     return profilesConverted;
   }
 
-  Future<int> addProfile(ProfileModel profile) async {
+  Future<int> addProfile(Profile profile) async {
     final db = await instance.database;
 
     return await db.insert(profilesTable, profile.toJson());
   }
 
-  Future<int> updateProfile(ProfileModel profile) async {
+  Future<int> updateProfile(Profile profile) async {
     final db = await instance.database;
 
-    return await db.update(profilesTable, profile.toJson(), where: '${ProfileFields.id} = ?', whereArgs: [profile.id]);
+    return await db.update(profilesTable, profile.toJson(),
+        where: '${ProfileFields.id} = ?', whereArgs: [profile.id]);
   }
 
   Future<int> deleteProfile(int id) async {
     final db = await instance.database;
-
-    return await db.delete(profilesTable, where: '${ProfileFields.id} = ?', whereArgs: [id]);
+    await db.delete(recordsTable,
+        where: '${RecordFields.profileId} = ?', whereArgs: [id]);
+    return await db.delete(profilesTable,
+        where: '${ProfileFields.id} = ?', whereArgs: [id]);
   }
 
   //records
 
   Future<int> addRecord(WeightRecord record) async {
     final db = await instance.database;
-   
+
+    logger.d("Added record to profile: ${record.profileId}", record.toJson());
 
     final id = await db.insert(recordsTable, record.toJson());
 
@@ -128,12 +183,11 @@ class RecordsDatabase {
 
   Future<List<WeightRecord>> getRecords(int profileId) async {
     final db = await instance.database;
-    
+
     //print("db: $db");
 
     List<Map<String, dynamic>> records = await db.rawQuery(
-      'SELECT * FROM $recordsTable WHERE ${RecordFields.profileId} = $profileId ORDER BY date(${RecordFields.date}) ASC'
-      );
+        'SELECT * FROM $recordsTable WHERE ${RecordFields.profileId} = $profileId ORDER BY date(${RecordFields.date}) ASC');
 
     List<WeightRecord> recordsConverted = toWeightRecordList(records);
 
@@ -178,28 +232,33 @@ class RecordsDatabase {
 
     final id = await db.insert(goalTable, goal.toJson());
 
-    // print('record id : $id');
+    if (id != -1) {
+      logger.i("Goal added with id: $id", goal.toJson());
+    }
     return id;
   }
 
-  Future<Goal?> getGoal() async {
+  Future<Goal?> getGoal(int profileId) async {
     final db = await instance.database;
 
     //print("db: $db");
 
     List<Map<String, dynamic>> goal = await db.rawQuery(
-        'SELECT ${GoalFields.weight}, ${GoalFields.initialWeight} FROM $goalTable WHERE ${GoalFields.id}=1');
+        'SELECT ${GoalFields.weight}, ${GoalFields.date}, ${GoalFields.initialWeight}, ${GoalFields.profileId} FROM $goalTable WHERE ${GoalFields.profileId}= $profileId');
 
-    print("goal db $goal");
+    logger.i("Getting goal for profile $profileId");
     late Goal goalConverted;
 
     if (goal.isNotEmpty) {
       goal.forEachIndexed((goal, index) => {
             if (index == 0)
               {
+                logger.i("Goal found: ${goal[GoalFields.weight]}", goal),
                 goalConverted = Goal(
+                    date: DateTime.parse(goal[GoalFields.date]),
                     weight: goal[GoalFields.weight],
-                    initialWeight: goal[GoalFields.initialWeight])
+                    initialWeight: goal[GoalFields.initialWeight],
+                    profileId: goal[GoalFields.profileId])
               }
           });
 
@@ -212,11 +271,13 @@ class RecordsDatabase {
   Future<int> updateGoal(Goal goal) async {
     final db = await instance.database;
 
+    logger.i("Updating Goal with id: ${goal.profileId}", goal.toJson());
+
     return db.update(
       goalTable,
       goal.toJson(),
-      where: '${GoalFields.id} = ?',
-      whereArgs: [1],
+      where: '${GoalFields.profileId} = ?',
+      whereArgs: [goal.profileId],
     );
   }
 

@@ -1,35 +1,49 @@
 import 'package:easy_weight/models/profile_model.dart';
+import 'package:easy_weight/models/user_settings.dart';
+import 'package:easy_weight/utils/logger_instace.dart';
 import 'package:flutter/material.dart';
 
 class ProfilesListModel extends ChangeNotifier {
-  /* ProfileModel? _selectedProfile; */
-  List<ProfileModel> profiles = [];
+  Profile? selectedProfile;
+  List<Profile> profiles = [];
 
-  List<ProfileModel> get getProfiles => profiles;
+  List<Profile> get getProfiles => profiles;
   int get profilesCount => profiles.length;
-  /* int get selectedProfileID => _selectedProfile?.id ?? -1; */
+  get selectedProfileID => selectedProfile?.id ?? 0;
 
-  ProfilesListModel({List<ProfileModel>? profiles}) {
+  ProfilesListModel({List<Profile>? profiles}) {
     profiles = profiles ?? [];
   }
 
-  void addProfile(ProfileModel profile) {
+  void addProfile(Profile profile) {
     profiles.add(profile);
     notifyListeners();
   }
 
-  void removeProfile(ProfileModel profile) {
+  void removeProfile(Profile profile) {
     profiles.remove(profile);
     notifyListeners();
   }
 
-  void updateList(List<ProfileModel> newProfiles) {
+  void updateList(List<Profile> newProfiles) {
     this.profiles = newProfiles;
     notifyListeners();
   }
 
- /*  void selectProfile(int id) {
-    _selectedProfile = profiles.firstWhere((profile) => profile.id == id);
+  void updateProfile(int id, Profile editedProfile) {
+    int profileIndex = profiles.indexWhere((profile) => profile.id == id);
+    this.profiles[profileIndex] = editedProfile;
     notifyListeners();
-  } */
+  }
+
+  void selectProfile(int id) {
+    selectedProfile =
+        profiles.firstWhere((profile) => profile.id == id, orElse: () {
+      return profiles.first;
+    });
+
+    logger.i("selected profile: $selectedProfileID");
+    UserSettings.setProfile(selectedProfile!.id!);
+    notifyListeners();
+  }
 }

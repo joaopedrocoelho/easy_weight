@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
+
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:easy_weight/models/records_model.dart';
 import 'package:provider/provider.dart';
 
@@ -26,7 +27,7 @@ class EmptyGraphContainer extends StatelessWidget {
                   ),
                 )
               : Text(
-                  'Add your current weight to start',
+                  AppLocalizations.of(context)!.addCurrentWeight,
                   style: theme.textTheme.headline3,
                   textAlign: TextAlign.center,
                 ),

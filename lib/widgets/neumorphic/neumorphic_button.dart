@@ -5,12 +5,14 @@ class NeuButton extends StatefulWidget {
   final VoidCallback onPressed;
   final Widget? child;
   final bool isVisible;
+  final double? intensity;
 
   const NeuButton(
       {Key? key,
       required this.onPressed,
       this.child,
-      required this.isVisible})
+      required this.isVisible,
+      this.intensity})
       : super(key: key);
 
   @override
@@ -60,7 +62,7 @@ class _NeuButtonState extends State<NeuButton> {
                 color: theme.baseColor,
                 depth: depth,
                 surfaceIntensity: 0.3,
-                intensity: 0.9,
+                intensity: widget.intensity ?? 0.9,
                 shape: NeumorphicShape.convex,
                 boxShape:
                     NeumorphicBoxShape.roundRect(BorderRadius.circular(15)),

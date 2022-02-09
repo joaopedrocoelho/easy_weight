@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 
 class SaveButton extends StatelessWidget {
@@ -9,7 +9,7 @@ class SaveButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = NeumorphicTheme.currentTheme(context);
-    final shadowLightColor = theme.shadowLightColorEmboss;
+    
     final buttonTheme = theme.textTheme.button;
 
     return NeumorphicButton(
@@ -25,7 +25,7 @@ class SaveButton extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(4.0),
           child: Center(
-              child: Text('SAVE',
+              child: Text(AppLocalizations.of(context)!.saveBtn.toUpperCase(),
                   style: buttonTheme
                       ?.copyWith(color: Color(0xffFFFFFF)))),
         ),

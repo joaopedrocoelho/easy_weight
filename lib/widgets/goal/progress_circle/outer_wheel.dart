@@ -30,51 +30,54 @@ class OuterWheel extends StatelessWidget {
         return percentage > 0 ? percentage.ceil() : 0;
       }
 
-      return Container(
-        height: 148,
-        width: 148,
-        decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: theme.shadowDarkColor,
-            boxShadow: [
-              BoxShadow(
-                blurRadius: 15,
-                offset: Offset(-5, -5),
-                color: theme.shadowLightColor.withOpacity(0.5),
-              ),
-              BoxShadow(
+      return Transform.scale(
+        scale: 1,
+        child: Container(
+          height: 148,
+          width: 148,
+          decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: theme.shadowDarkColor,
+              boxShadow: [
+                BoxShadow(
                   blurRadius: 15,
-                  offset: Offset(8, 8),
-                  color: theme.shadowDarkColor.withOpacity(0.9))
-            ],
-            border: Border.all(color: theme.baseColor, width: 8)),
-        child: Stack(
-          children: [
-            Center(
-              child: Container(
-                width: 108,
-                height: 108,
-                child: CustomPaint(
-                  child: Center(),
-                  painter: ProgressPainter(
-                      gradient: [
-                        Color(0xFF12c2e9),
-                        Color(0xFFc471ed),
-                        //Color(0xFFf64f59)
-                      ],
-                      completedPercentage: goal.currentGoal != null
-                          ? getPercentage(goal.currentGoal!.initialWeight,
-                                  _currentWeight, goal.currentGoal!.weight)
-                              .toDouble()
-                          : 0,
-                      circleWidth: 24),
+                  offset: Offset(-5, -5),
+                  color: theme.shadowLightColor.withOpacity(0.5),
+                ),
+                BoxShadow(
+                    blurRadius: 15,
+                    offset: Offset(8, 8),
+                    color: theme.shadowDarkColor.withOpacity(0.9))
+              ],
+              border: Border.all(color: theme.baseColor, width: 8)),
+          child: Stack(
+            children: [
+              Center(
+                child: Container(
+                  width: 108,
+                  height: 108,
+                  child: CustomPaint(
+                    child: Center(),
+                    painter: ProgressPainter(
+                        gradient: [
+                          Color(0xFF12c2e9),
+                          Color(0xFFc471ed),
+                          //Color(0xFFf64f59)
+                        ],
+                        completedPercentage: goal.currentGoal != null
+                            ? getPercentage(goal.currentGoal!.initialWeight,
+                                    _currentWeight, goal.currentGoal!.weight)
+                                .toDouble()
+                            : 0,
+                        circleWidth: 24),
+                  ),
                 ),
               ),
-            ),
-            Center(
-              child: InnerWheel(),
-            )
-          ],
+              Center(
+                child: InnerWheel(),
+              )
+            ],
+          ),
         ),
       );
     });

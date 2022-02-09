@@ -23,21 +23,5 @@ class NeuCloseButton extends StatelessWidget {
       child: Icon(Icons.close_rounded, size: 15, color: theme.defaultTextColor),
     );
 
-    /* Container(
-                      width: 20.0,
-                      height: 20.0,
-                      decoration: const ShapeDecoration(
-                        color: Colors.grey,
-                        shape: CircleBorder(),
-                      ),
-                      child: IconButton(
-                        icon: Icon(
-                          Icons.close_rounded,
-                        ),
-                        color: Colors.black,
-                        iconSize: 15.0,
-                        padding: EdgeInsets.all(0.0),
-                        onPressed: widget.setInvisible,
-                      ); */
   }
 }
