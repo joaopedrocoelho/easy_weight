@@ -34,6 +34,7 @@
               <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-5758087039130918~7888221001"/>
+            <uses-permission android:name="com.android.vending.BILLING" />
 
     </application>
 </manifest>
