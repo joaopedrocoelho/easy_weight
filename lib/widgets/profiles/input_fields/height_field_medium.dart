@@ -51,7 +51,9 @@ import 'package:intl/intl.dart' show toBeginningOfSentenceCase;
                   child: Padding(
                     padding: const EdgeInsets.only(left:18.0,bottom: 14, top:10),
                     child: Text(
-                      toBeginningOfSentenceCase(AppLocalizations.of(context)!.height)!, style: bodyText1?.copyWith(fontSize: 16),),
+                      toBeginningOfSentenceCase(AppLocalizations.of(context)!.height)!, style: bodyText1?.copyWith(fontSize: 16),
+                      maxLines: 1,
+                      overflow: TextOverflow.fade,),
                   ),
                 ),
                 Expanded(
