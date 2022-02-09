@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:easy_weight/widgets/stats/big_weight_headline.dart';
 import 'package:easy_weight/widgets/stats/weight_trend.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CurrentWeightStats extends StatelessWidget {
   final double? currentWeight;
@@ -22,23 +22,29 @@ class CurrentWeightStats extends StatelessWidget {
     var theme = NeumorphicTheme.currentTheme(context);
 
     return Padding(
-      padding:
-          const EdgeInsets.only(left: 20.0, right: 20.0, bottom: 20.0, top: 10),
-      child: Container(
-        child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(bottom: 3.0),
-                child: Text('Current', style: theme.textTheme.caption),
-              ),
-              BigWeightHeadline(weight: currentWeight),
-              WeightTrend(variation: weekTrend, period: 'Week'),
-              WeightTrend(variation: monthTrend, period: 'Month'),
-              WeightTrend(variation: allTimeTrend, period: 'Total')
-            ]),
-      ),
+      padding: const EdgeInsets.only(top:12.0,left:4),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(bottom: 3.0),
+              child: Text(AppLocalizations.of(context)!.currentWeight,
+                  style: theme.textTheme.caption),
+            ),
+            BigWeightHeadline(weight: currentWeight),
+            WeightTrend(
+                variation: weekTrend,
+                period: AppLocalizations.of(context)!.weekStat),
+            WeightTrend(
+                variation: monthTrend,
+                period: AppLocalizations.of(context)!.monthStat),
+            WeightTrend(
+                variation: allTimeTrend,
+                period: AppLocalizations.of(context)!.totalStat)
+          ]),
     );
   }
 }

@@ -1,5 +1,6 @@
 import 'package:easy_weight/models/profile_model.dart';
 import 'package:easy_weight/widgets/add_record_form/neu_close_button.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 
@@ -48,9 +49,10 @@ class _NeuGenderPickerState extends State<NeuGenderPicker>
           child: Neumorphic(
             style: NeumorphicStyle(intensity: 0.4),
             child: Container(
-              height: 180,
+              
               width: MediaQuery.of(context).size.width * 0.8,
               child: Column(
+                mainAxisSize: MainAxisSize.min,
                 children: [
                   Align(
                     alignment: Alignment.topRight,
@@ -66,12 +68,12 @@ class _NeuGenderPickerState extends State<NeuGenderPicker>
                     padding: const EdgeInsets.all(10.0),
                     child: Wrap(
                       children: [
-                        _buildGender("Male", Gender.male),
-                        _buildGender("Female", Gender.female),
-                        _buildGender("Non binary", Gender.non_binary),
-                        _buildGender("Transgender", Gender.transgender),
-                        _buildGender("Intersex", Gender.intersex),
-                        _buildGender("Other", Gender.other),
+                        _buildGender(AppLocalizations.of(context)!.male, Gender.male),
+                        _buildGender(AppLocalizations.of(context)!.female, Gender.female),
+                        _buildGender(AppLocalizations.of(context)!.nonBinary, Gender.non_binary),
+                        _buildGender(AppLocalizations.of(context)!.transGender, Gender.transgender),
+                        _buildGender(AppLocalizations.of(context)!.interSex, Gender.intersex),
+                        _buildGender(AppLocalizations.of(context)!.other, Gender.other),
                         //NeumorphicRadio(child: Text("male"),)
                       ],
                     ),

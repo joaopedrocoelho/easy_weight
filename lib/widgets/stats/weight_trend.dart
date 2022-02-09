@@ -1,5 +1,5 @@
 import 'package:easy_weight/utils/convert_unit.dart';
-import 'package:flutter/material.dart';
+
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:easy_weight/models/weight_unit.dart';
 import 'package:provider/provider.dart';
@@ -63,20 +63,18 @@ class WeightTrend extends StatelessWidget {
           : Text('0.0lb',
               style: theme.textTheme.subtitle2?.copyWith(height: 1));
 
-      return Container(
+      return Flexible(
+        flex: 1,
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.end,
           crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
           children: [
             Text(period, style: theme.textTheme.caption),
-            Padding(
-              padding: EdgeInsets.only(left: renderPadding(period)),
-              child: setIcon(variation),
-            ),
-            Padding(
-              padding: EdgeInsets.only(left: 8.0),
-              child: unit.usePounds ? variationTextPound : variationTextKg,
-            )
+            Spacer(),
+            setIcon(variation),
+            SizedBox(width: 12,),
+            unit.usePounds ? variationTextPound : variationTextKg
           ],
         ),
       );

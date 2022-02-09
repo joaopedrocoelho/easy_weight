@@ -11,10 +11,11 @@ class DisabledGoal extends StatelessWidget {
     final theme = NeumorphicTheme.currentTheme(context);
 
     return Padding(
-        padding: const EdgeInsets.only(right: 20.0, bottom: 20.0, top: 10),
+        padding: const EdgeInsets.only(right: 4.0,  top: 10),
         child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
             children: [
               Container(
                 height: 148,

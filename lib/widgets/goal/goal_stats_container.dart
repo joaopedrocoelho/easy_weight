@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
+
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:easy_weight/models/records_model.dart';
 import 'package:easy_weight/models/weight_unit.dart';
-import 'package:easy_weight/utils/database.dart';
+
 import 'package:easy_weight/utils/render_stats.dart';
 import 'package:easy_weight/widgets/goal/goal_circle.dart';
 
@@ -24,33 +24,36 @@ class GoalStatsContainer extends StatelessWidget {
     return Consumer3<GoalModel, WeightUnit, RecordsListModel>(
         builder: (context, goalModel, unit, records, child) {
       return Padding(
-        padding: const EdgeInsets.only(right: 10.0, bottom: 20.0, top: 10),
+        padding: const EdgeInsets.only(top:10.0,right:4),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
           children: [
             GestureDetector(onTap: setVisible, child: GoalCircle()),
             SizedBox(
               height: 10,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                CurrentGoalText(
-                  goal: goalModel.currentGoal,
-                  usePounds: unit.usePounds,
-                ),
-                if (goalModel.currentGoal != null)
-                  Padding(
-                    padding: const EdgeInsets.only(left: 20.0),
-                    child: RemainingGoalText(
+            FractionallySizedBox(
+              alignment: Alignment.center,
+              widthFactor: 0.9,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  CurrentGoalText(
+                    goal: goalModel.currentGoal,
+                    usePounds: unit.usePounds,
+                  ),
+                  Spacer(),
+                  if (goalModel.currentGoal != null)
+                    RemainingGoalText(
                       goal: goalModel.currentGoal!,
                       currentWeight: renderCurrentWeight(records.records)!,
                       usePounds: unit.usePounds,
-                    ),
-                  )
-              ],
+                    )
+                ],
+              ),
             ),
           ],
         ),

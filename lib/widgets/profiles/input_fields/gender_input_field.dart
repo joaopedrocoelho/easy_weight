@@ -1,4 +1,4 @@
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:easy_weight/models/profile_model.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 
@@ -42,7 +42,7 @@ class _GenderInputFieldState extends State<GenderInputField> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "Gender",
+              AppLocalizations.of(context)!.gender,
               style: bodyText1?.copyWith(fontSize: 16),
             ),
             SizedBox(

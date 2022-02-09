@@ -1,4 +1,4 @@
-import 'package:easy_weight/models/db/records_table.dart';
+
 import 'package:easy_weight/models/profile_model.dart';
 import 'package:easy_weight/models/profiles_list_model.dart';
 import 'package:easy_weight/models/user_settings.dart';
@@ -6,14 +6,16 @@ import 'package:easy_weight/models/weight_unit.dart';
 import 'package:easy_weight/utils/convert_unit.dart';
 import 'package:easy_weight/utils/database.dart';
 import 'package:easy_weight/utils/logger_instace.dart';
-import 'package:easy_weight/widgets/buttons/edit_buttons.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 import 'package:easy_weight/widgets/dialog/neu_alert_dialog.dart';
 import 'package:easy_weight/widgets/neumorphic/neumorphic_button.dart';
 import 'package:easy_weight/widgets/profiles/edit_profile_form.dart';
-import 'package:flutter/material.dart';
+
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'dart:io';
 
 class ProfileBar extends StatefulWidget {
   final int id;
@@ -46,7 +48,7 @@ class ProfileBar extends StatefulWidget {
 }
 
 class _ProfileBarState extends State<ProfileBar> {
-  late String genderString;
+  
   late String birthdayString;
   late String heightString;
   bool _isOpen = false;
@@ -54,17 +56,17 @@ class _ProfileBarState extends State<ProfileBar> {
   String getGenderString(Gender? gender) {
     switch (gender) {
       case Gender.male:
-        return 'M';
+        return AppLocalizations.of(context)!.male[0].toUpperCase();
       case Gender.female:
-        return "F";
+        return AppLocalizations.of(context)!.female[0].toUpperCase();
       case Gender.intersex:
-        return "I";
+        return AppLocalizations.of(context)!.interSex[0].toUpperCase();
       case Gender.non_binary:
-        return "N";
+        return AppLocalizations.of(context)!.nonBinary[0].toUpperCase();
       case Gender.transgender:
-        return "T";
+        return AppLocalizations.of(context)!.transGender[0].toUpperCase();
       case Gender.other:
-        return "O";
+        return AppLocalizations.of(context)!.other[0].toUpperCase();
       case Gender.undefined:
         return "-";
       default:
@@ -82,21 +84,29 @@ class _ProfileBarState extends State<ProfileBar> {
       return "-";
     }
   }
+  
+  String formatBirthday(DateTime birthday) {
+    return Platform.localeName == 'en_US' ?
+    DateFormat.yMd().format(birthday) :
+    DateFormat('dd/MM/yyyy').format(birthday);
+    
+  }
 
   @override
   void initState() {
   
-    genderString = getGenderString(widget.gender);
+    
     birthdayString = widget.birthday != null
-        ? DateFormat.yMd().format(widget.birthday!)
+        ? formatBirthday(widget.birthday!)
         : "-";
       heightString = getHeightString(widget.height);
     super.initState();
+   
   }
 
   @override
   void didUpdateWidget(covariant ProfileBar oldWidget) {
-    genderString = getGenderString(widget.gender);
+    
     birthdayString = widget.birthday != null
         ? DateFormat.yMd().format(widget.birthday!)
         : "-";
@@ -109,6 +119,7 @@ class _ProfileBarState extends State<ProfileBar> {
   Widget build(BuildContext context) {
     var theme = NeumorphicTheme.currentTheme(context);
     
+     
 
     Widget _dropDownArrow() {
       return GestureDetector(
@@ -134,6 +145,7 @@ class _ProfileBarState extends State<ProfileBar> {
           children: [
             Text(
               title.toUpperCase(),
+              textAlign: TextAlign.center,
               style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w700,
@@ -206,7 +218,7 @@ class _ProfileBarState extends State<ProfileBar> {
                       SizedBox(
                         width: 10,
                       ),
-                      Text(widget.name ?? 'No name',
+                      Text(widget.name ?? AppLocalizations.of(context)!.noName,
                           style: TextStyle(
                               fontSize: 20, fontWeight: FontWeight.w700)),
                       Spacer(),
@@ -228,10 +240,10 @@ class _ProfileBarState extends State<ProfileBar> {
                       crossAxisCount: 2,
                       shrinkWrap: true,
                       children: [
-                        _profileField("gender", getGenderString(widget.gender)),
+                        _profileField(AppLocalizations.of(context)!.gender, getGenderString(widget.gender)),
                         _profileField(
-                            "height", getHeightString(widget.height) ),
-                        _profileField("birthday", birthdayString),
+                            AppLocalizations.of(context)!.height, getHeightString(widget.height) ),
+                        _profileField(AppLocalizations.of(context)!.birthday, birthdayString),
                         Container(
                           //color field
                           child: Column(
@@ -239,7 +251,7 @@ class _ProfileBarState extends State<ProfileBar> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Text(
-                                "COLOR",
+                                AppLocalizations.of(context)!.color.toUpperCase(),
                                 style: TextStyle(
                                     fontSize: 14,
                                     fontWeight: FontWeight.w700,
@@ -308,7 +320,7 @@ class _ProfileBarState extends State<ProfileBar> {
                                       backgroundColor: Colors.transparent,
                                       body: Center(
                                         child: NeuDialogBox(
-                                          message: "Are you sure you want to delete this profile?",
+                                          message: AppLocalizations.of(context)!.deleteProfileDialog,
                                           onPressed: deleteProfile,
                                         ),
                                       ),

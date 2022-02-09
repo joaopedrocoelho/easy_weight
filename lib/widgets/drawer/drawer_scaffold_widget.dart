@@ -1,5 +1,5 @@
 import 'package:easy_weight/models/goal_model.dart';
-import 'package:easy_weight/models/profile_model.dart';
+
 import 'package:easy_weight/models/profiles_list_model.dart';
 import 'package:easy_weight/models/records_model.dart';
 import 'package:easy_weight/models/user_settings.dart';
@@ -7,12 +7,11 @@ import 'package:easy_weight/models/weight_record.dart';
 import 'package:easy_weight/utils/database.dart';
 import 'package:easy_weight/widgets/buttons/menu_button.dart';
 import 'package:easy_weight/widgets/change_unit/unit_toggle.dart';
-import 'package:easy_weight/widgets/neumorphic/neumorphic_button.dart';
+
 import 'package:easy_weight/widgets/profiles/add_profile_form.dart';
 import 'package:easy_weight/widgets/profiles/profile_bar.dart';
-import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:provider/provider.dart';
 
@@ -59,47 +58,50 @@ class _DrawerScaffoldWidgetState extends State<DrawerScaffoldWidget>
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text("Profiles", style: theme.textTheme.headline4),
-                    NeumorphicButton(
-                        onPressed: () {
-                          showDialog(
-                              context: context,
-                              builder: (context) {
-                                return Scaffold(
-                                  backgroundColor:  Colors.transparent,
-                                  body: AddProfile(),
-                                );
-                              });
-
-                          _addProfileFormController.forward();
-                        },
-                        style: NeumorphicStyle(
-                          color: theme.baseColor,
-                          depth: 5,
-                          surfaceIntensity: 0.3,
-                          intensity: 0.9,
-                          shape: NeumorphicShape.convex,
-                          boxShape: NeumorphicBoxShape.roundRect(
-                              BorderRadius.circular(15)),
-                        ),
-                        child: Center(
-                            child: Icon(
-                                Icons.add_circle_outline_rounded,
-                                color: theme.defaultTextColor,
-                                size: 30)))
-                  ],
+              Flexible(
+                flex:1,
+                child: Padding(
+                  padding: const EdgeInsets.only(left:16, right: 16, top: 12, bottom: 12),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(AppLocalizations.of(context)!.profiles, style: theme.textTheme.headline4),
+                      NeumorphicButton(
+                          onPressed: () {
+                            showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return Scaffold(
+                                    backgroundColor:  Colors.transparent,
+                                    body: AddProfile(),
+                                  );
+                                });
+              
+                            _addProfileFormController.forward();
+                          },
+                          style: NeumorphicStyle(
+                            color: theme.baseColor,
+                            depth: 5,
+                            surfaceIntensity: 0.3,
+                            intensity: 0.9,
+                            shape: NeumorphicShape.convex,
+                            boxShape: NeumorphicBoxShape.roundRect(
+                                BorderRadius.circular(15)),
+                          ),
+                          child: Center(
+                              child: Icon(
+                                  Icons.add_circle_outline_rounded,
+                                  color: theme.defaultTextColor,
+                                  size: 30)))
+                    ],
+                  ),
                 ),
               ),
               if (profilesList.profiles.length > 0)
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                    height: MediaQuery.of(context).size.height * 0.7,
+                Flexible(
+                  flex: 7,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
                     child: Neumorphic(
                       style: NeumorphicStyle(
                         color: theme.baseColor,
@@ -112,7 +114,7 @@ class _DrawerScaffoldWidgetState extends State<DrawerScaffoldWidget>
                       ),
                       child: ConstrainedBox(
                           constraints: BoxConstraints.expand(),
-                child: ListView.builder(
+                  child: ListView.builder(
                     physics: AlwaysScrollableScrollPhysics(),
                      
                           
@@ -146,22 +148,29 @@ class _DrawerScaffoldWidgetState extends State<DrawerScaffoldWidget>
                   ),
                 ),
 
-                Align(
-            alignment: Alignment.bottomLeft,
-            child: Row(
-              children: [
-                MenuButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
+                Flexible(
+                  flex: 1,
+                  child: Align(
+                            alignment: Alignment.bottomLeft,
+                            child: Padding(
+                              padding: const EdgeInsets.only(left:16.0,top:12,bottom:16),
+                              child: Row(
+                  children: [
+                    MenuButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                    ),
+                    SizedBox(width: 20,),
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: UnitToggle(),
+                    ),
+                  ],
+                              ),
+                            ),
+                          ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: UnitToggle(),
-                ),
-              ],
-            ),
-          ),
             ],
           ),
         ),

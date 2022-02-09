@@ -140,7 +140,7 @@ class _GraphContainerState extends State<GraphContainer> {
       ...spots,
     ];
 
-    return Column(mainAxisAlignment: MainAxisAlignment.start, children: [
+    return Column(mainAxisAlignment: MainAxisAlignment.center, children: [
       //bottom titles widget
 
       Row(

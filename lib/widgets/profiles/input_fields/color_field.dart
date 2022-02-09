@@ -1,8 +1,9 @@
-import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:intl/intl.dart' show toBeginningOfSentenceCase;
 
 class ColorInputField extends StatefulWidget {
-  Color color;
+  final Color color;
   ColorInputField({required this.color, Key? key}) : super(key: key);
 
   @override
@@ -27,7 +28,7 @@ class _ColorInputFieldState extends State<ColorInputField> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            "Color",
+            toBeginningOfSentenceCase(AppLocalizations.of(context)!.color)!,
             style: bodyText1?.copyWith(fontSize: 16),
           ),
           SizedBox(

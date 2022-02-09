@@ -1,4 +1,5 @@
-import 'package:flutter/material.dart';
+
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 
 class AddNoteTextField extends StatelessWidget {
@@ -27,7 +28,7 @@ class AddNoteTextField extends StatelessWidget {
           onSaved: onSaved,
           cursorColor: theme.defaultTextColor,
           decoration: InputDecoration(
-            hintText: "Add Note",
+            hintText: AppLocalizations.of(context)!.noteHint,
             hintStyle: bodyText1?.copyWith(fontSize: 16),
             contentPadding:
                 EdgeInsets.only(top: 14.0, left: 18, right: 14, bottom: 18),

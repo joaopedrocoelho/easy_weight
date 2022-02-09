@@ -12,8 +12,8 @@ class MenuButton extends StatelessWidget {
   Widget build(BuildContext context) {
     var theme = NeumorphicTheme.currentTheme(context);
 
-    return Padding(
-      padding: const EdgeInsets.all(18.0),
+    return Container(
+      height: 60,
       child: NeuButton(
                     child: Icon(
                       Icons.menu_rounded,
