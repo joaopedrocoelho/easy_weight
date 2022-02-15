@@ -22,7 +22,7 @@ class CurrentWeightStats extends StatelessWidget {
     var theme = NeumorphicTheme.currentTheme(context);
 
     return Padding(
-      padding: const EdgeInsets.only(top:12.0,left:4),
+      padding: const EdgeInsets.only(top:12.0),
       child: Column(
         mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,

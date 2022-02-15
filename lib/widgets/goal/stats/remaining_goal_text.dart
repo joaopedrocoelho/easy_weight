@@ -26,9 +26,17 @@ class RemainingGoalText extends StatelessWidget {
 
     return Consumer<WeightUnit>(
       builder: (context, unit, child) {
-        double _remaining = (currentWeight - goal.weight) > 0
-            ? limitDecimals((currentWeight - goal.weight), 1)
-            : limitDecimals(-(currentWeight - goal.weight), 1);
+          double setRemaining() {
+           if((currentWeight - goal.weight) > 0) {
+             return limitDecimals((currentWeight - goal.weight), 1);
+           } else if ((currentWeight - goal.weight) < 0) {
+             return limitDecimals(-(currentWeight - goal.weight), 1);
+           } else {
+             return 0;
+           }
+          }
+
+        double _remaining = setRemaining();
 
         String remainingToPound = kgToLbs(_remaining).toStringAsFixed(1);
 

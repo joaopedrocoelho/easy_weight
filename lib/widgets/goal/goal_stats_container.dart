@@ -47,7 +47,7 @@ class GoalStatsContainer extends StatelessWidget {
                   if (goalModel.currentGoal != null)
                     RemainingGoalText(
                       goal: goalModel.currentGoal!,
-                      currentWeight: renderCurrentWeight(records.records)!,
+                      currentWeight: renderCurrentWeight(records.records)?? 0,
                       usePounds: unit.usePounds,
                     )
                 ],

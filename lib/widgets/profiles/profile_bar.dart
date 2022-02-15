@@ -1,7 +1,10 @@
 
+import 'package:easy_weight/models/goal_model.dart';
 import 'package:easy_weight/models/profile_model.dart';
 import 'package:easy_weight/models/profiles_list_model.dart';
+import 'package:easy_weight/models/records_model.dart';
 import 'package:easy_weight/models/user_settings.dart';
+import 'package:easy_weight/models/weight_record.dart';
 import 'package:easy_weight/models/weight_unit.dart';
 import 'package:easy_weight/utils/convert_unit.dart';
 import 'package:easy_weight/utils/database.dart';
@@ -113,6 +116,24 @@ class _ProfileBarState extends State<ProfileBar> {
     heightString = getHeightString(widget.height);
     super.didUpdateWidget(oldWidget);
   }
+  
+
+  Future<List<WeightRecord>> _getRecords(BuildContext context) async {
+    Provider.of<RecordsListModel>(context, listen: false).isLoading = true;
+    List<WeightRecord> records =
+        await RecordsDatabase.instance.getRecords(UserSettings.getProfile()!);
+    Provider.of<RecordsListModel>(context, listen: false)
+        .updateRecordsList(records);
+    Provider.of<RecordsListModel>(context, listen: false).isLoading = false;
+    return records;
+  }
+
+  
+
+  Future<Goal?> _getGoal(BuildContext context) async {
+   Provider.of<GoalModel>(context, listen: false)
+                                      .getGoal(UserSettings.getProfile()!);
+}
 
 
   @override
@@ -169,11 +190,16 @@ class _ProfileBarState extends State<ProfileBar> {
             profilesList.profiles[widget.index].toJson());
         await RecordsDatabase.instance.deleteProfile(widget.id);
         if (widget.id == profilesList.selectedProfileID) {
-          profilesList.selectProfile(0); //select first profile
+          Profile newSelectedProfile = profilesList.profiles.firstWhere((profile) => profile.id != profilesList.selectedProfileID);
 
+          profilesList.selectProfile(newSelectedProfile.id!); 
+          UserSettings.setProfile(newSelectedProfile.id!);
+          _getRecords(context);//select first profile
         }
         List<Profile> updatedList =
             await RecordsDatabase.instance.getProfiles();
+         _getRecords(context);
+         _getGoal(context);
         profilesList.updateList(updatedList);
         setState(() {
           _isOpen = false;

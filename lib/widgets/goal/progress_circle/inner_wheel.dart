@@ -16,7 +16,7 @@ class InnerWheel extends StatelessWidget {
     var theme = NeumorphicTheme.currentTheme(context);
 
     List<WeightRecord> records = context.watch<RecordsListModel>().records;
-    double _currentWeight = renderCurrentWeight(records)!;
+    double _currentWeight = renderCurrentWeight(records) ?? 0;
 
     return Consumer<GoalModel>(builder: (context, goalModel, child) {
       return Container(

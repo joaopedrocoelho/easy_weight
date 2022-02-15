@@ -124,7 +124,7 @@ class _EditRecordState extends State<EditRecord>
                     ),
                     EditWeightTextField(
                         hintFocus: hintFocus,
-                        initialValue: _weight.toString(),
+                        initialValue: buttonMode.weight.toString(),
                         onSaved: (value) {
                           setState(() {
                             unit.usePounds
@@ -140,7 +140,7 @@ class _EditRecordState extends State<EditRecord>
                       height: 30.0,
                     ),
                     AddNoteTextField(
-                        initialValue: _note,
+                        initialValue: buttonMode.note,
                         onSaved: (value) {
                           setState(() {
                             _note = value!;

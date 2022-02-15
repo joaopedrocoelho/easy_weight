@@ -1,4 +1,6 @@
-import 'package:flutter/material.dart';
+
+import 'dart:io';
+
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:intl/intl.dart';
 
@@ -7,11 +9,19 @@ class EditDateForm extends StatelessWidget {
 
   const EditDateForm({Key? key, required this.date}) : super(key: key);
 
+
+
+  String formatDate(DateTime date) {
+    return Platform.localeName == 'en_US'
+        ? DateFormat.Md().format(date)
+        : DateFormat('dd/MM').format(date);
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = NeumorphicTheme.currentTheme(context);
     final bodyText1 = theme.textTheme.bodyText1;
-    String _formattedCurrentDate = DateFormat('MM/dd').format(date);
+    
 
     return NeumorphicButton(
         style: NeumorphicStyle(
@@ -28,7 +38,7 @@ class EditDateForm extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              '$_formattedCurrentDate',
+              '${formatDate(date)}',
               style: bodyText1?.copyWith(fontSize: 16),
             ),
             Icon(

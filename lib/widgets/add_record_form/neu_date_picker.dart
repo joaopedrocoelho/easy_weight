@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:easy_weight/utils/logger_instace.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
@@ -30,6 +32,8 @@ class NeuDatePicker extends StatefulWidget {
 }
 
 class _NeuDatePickerState extends State<NeuDatePicker> {
+  String formattedInitialDate = '';
+
   Future<Null> _selectDate(BuildContext context, List<DateTime> usedDates,
       DateTime initialDate) async {
     dynamic _datePicker = await showDatePicker(
@@ -41,12 +45,13 @@ class _NeuDatePickerState extends State<NeuDatePicker> {
           int usedIndex = usedDates.indexWhere((usedDate) {
             return usedDate.month == date.month && usedDate.day == date.day;
           });
-          logger.i(usedIndex);
+
           return usedIndex != -1 ? false : true;
         });
 
     if (_datePicker != null) {
       setState(() {
+        formattedInitialDate = formatDate(_datePicker);
         widget.callback(
           _datePicker,
         );
@@ -54,9 +59,23 @@ class _NeuDatePickerState extends State<NeuDatePicker> {
     }
   }
 
+  String formatDate(DateTime date) {
+    return Platform.localeName == 'en_US'
+        ? DateFormat.Md().format(date)
+        : DateFormat('dd/MM').format(date);
+  }
+
   @override
   void initState() {
-    logger.i("Used Dates", widget.usedDates);
+    //logger.i("Used Dates", widget.usedDates);
+
+    DateTime initialDate = Provider.of<RecordsListModel>(context, listen: false)
+        .findLastAvailableDate(
+            Provider.of<RecordsListModel>(context, listen: false).getUsedDates(
+                Provider.of<RecordsListModel>(context, listen: false).records),
+            DateTime.now());
+
+    formattedInitialDate = formatDate(initialDate);
 
     super.initState();
   }
@@ -69,33 +88,34 @@ class _NeuDatePickerState extends State<NeuDatePicker> {
     return Consumer<RecordsListModel>(
       builder: (context, records, child) {
         return NeumorphicButton(
-                style: NeumorphicStyle(
-                  shape: NeumorphicShape.concave,
-                  boxShape:
-                      NeumorphicBoxShape.roundRect(BorderRadius.circular(25)),
-                  depth: -3,
-                  intensity: 0.9,
+            style: NeumorphicStyle(
+              shape: NeumorphicShape.concave,
+              boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(25)),
+              depth: -3,
+              intensity: 0.9,
+            ),
+            padding:
+                EdgeInsets.only(top: 14.0, left: 18, right: 14, bottom: 18),
+            onPressed: () {
+              _selectDate(
+                  context,
+                  records.getUsedDates(records.records),
+                  records.findLastAvailableDate(
+                      records.getUsedDates(records.records), DateTime.now()));
+            },
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  formattedInitialDate,
+                  style: bodyText1?.copyWith(fontSize: 16),
                 ),
-                padding:
-                    EdgeInsets.only(top: 14.0, left: 18, right: 14, bottom: 18),
-                onPressed: () {
-                  _selectDate(
-                      context, widget.usedDates, records.lastAvailableDate);
-                },
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      records.formattedCurrentDate,
-                      style: bodyText1?.copyWith(fontSize: 16),
-                    ),
-                    Icon(
-                      Icons.calendar_today,
-                      color: theme.defaultTextColor,
-                    ),
-                  ],
-                ))       
-            ;
+                Icon(
+                  Icons.calendar_today,
+                  color: theme.defaultTextColor,
+                ),
+              ],
+            ));
       },
     );
   }

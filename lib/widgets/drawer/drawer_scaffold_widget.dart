@@ -1,4 +1,5 @@
 import 'package:easy_weight/models/ad_state.dart';
+import 'package:easy_weight/models/button_mode.dart';
 import 'package:easy_weight/models/goal_model.dart';
 
 import 'package:easy_weight/models/profiles_list_model.dart';
@@ -76,7 +77,7 @@ class _DrawerScaffoldWidgetState extends State<DrawerScaffoldWidget>
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              if(adWidget != null) adWidget!,
+              if (adWidget != null) adWidget!,
               Flexible(
                 flex: 1,
                 child: Padding(
@@ -159,6 +160,12 @@ class _DrawerScaffoldWidgetState extends State<DrawerScaffoldWidget>
                                   await UserSettings.setProfile(
                                       profilesList.profiles[index].id!);
                                   _getRecords(context);
+                                  if (Provider.of<ButtonMode>(context,
+                                          listen: false)
+                                      .isEditing)
+                                    Provider.of<ButtonMode>(context,
+                                            listen: false)
+                                        .setAdd();
                                 });
                           },
                         ),
