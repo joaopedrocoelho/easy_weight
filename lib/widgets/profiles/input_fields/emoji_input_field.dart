@@ -1,9 +1,5 @@
-import 'package:easy_weight/models/profiles_list_model.dart';
-import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
-import 'package:easy_weight/models/weight_unit.dart';
-import 'package:provider/provider.dart';
+
 
 class EmojiInputField extends StatefulWidget {
   final String emoji;
@@ -18,11 +14,11 @@ class EmojiInputField extends StatefulWidget {
 }
 
 class _EmojiInputFieldState extends State<EmojiInputField> {
-  TextEditingController _textController = TextEditingController();
+  //TextEditingController _textController = TextEditingController();
 
   @override
   void initState() {
-    // TODO: implement initState
+    
 
     super.initState();
   }

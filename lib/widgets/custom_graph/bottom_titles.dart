@@ -1,11 +1,11 @@
 import 'dart:io';
 
-import 'package:flutter/material.dart';
+
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:easy_weight/models/weight_record.dart';
-import 'package:easy_weight/utils/render_graph.dart';
+
 import 'package:easy_weight/utils/indexed_iterables.dart';
-import 'package:provider/provider.dart';
+
 import 'package:intl/intl.dart';
 
 class BottomTitles extends StatefulWidget {
@@ -58,7 +58,7 @@ class _BottomTitlesState extends State<BottomTitles> {
       return bottomTitles;
     }
 
-    List<Widget> bottomTitles = renderBottomTitles();
+    
 
     return Container(
       width: widget.graphWidth,

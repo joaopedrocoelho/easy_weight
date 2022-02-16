@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:easy_weight/models/weight_unit.dart';
 import 'package:provider/provider.dart';
@@ -24,11 +23,11 @@ class NeuTextFieldMedium extends StatefulWidget {
 }
 
 class _NeuTextFieldMediumState extends State<NeuTextFieldMedium> {
-  TextEditingController _textController = TextEditingController();
+  //TextEditingController _textController = TextEditingController();
 
   @override
   void initState() {
-    // TODO: implement initState
+   
 
     super.initState();
   }

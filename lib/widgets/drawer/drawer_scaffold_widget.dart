@@ -33,7 +33,7 @@ class _DrawerScaffoldWidgetState extends State<DrawerScaffoldWidget>
 
   @override
   void didChangeDependencies() {
-    // TODO: implement didChangeDependencies
+
     super.didChangeDependencies();
     final adState = Provider.of<AdState>(context);
     adState.initialization.then((status) {
@@ -51,7 +51,7 @@ class _DrawerScaffoldWidgetState extends State<DrawerScaffoldWidget>
 
   @override
   void initState() {
-    // TODO: implement initState
+   
     _addProfileFormController =
         AnimationController(vsync: this, duration: Duration(milliseconds: 300));
     super.initState();

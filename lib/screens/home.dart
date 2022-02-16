@@ -2,21 +2,19 @@ import 'package:easy_weight/models/profiles_list_model.dart';
 import 'package:easy_weight/widgets/buttons/menu_button.dart';
 import 'package:easy_weight/widgets/drawer/drawer_scaffold_widget.dart';
 
-import 'package:easy_weight/widgets/profiles/profile_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:easy_weight/models/button_mode.dart';
 import 'package:easy_weight/models/records_model.dart';
 import 'package:easy_weight/models/weight_record.dart';
-import 'package:easy_weight/utils/format_date.dart';
+
 import 'package:easy_weight/utils/render_stats.dart';
 import 'package:easy_weight/widgets/buttons/edit_buttons.dart';
-import 'package:easy_weight/widgets/change_unit/unit_toggle.dart';
+
 import 'package:easy_weight/widgets/custom_graph/empty_graph_container.dart';
-import 'package:easy_weight/widgets/goal/disabled_goal.dart';
+
 import 'package:easy_weight/widgets/goal/goal_stats_container.dart';
-import 'package:easy_weight/widgets/goal/progress_circle/circle_container_test.dart';
-import 'package:easy_weight/widgets/goal/progress_circle/outer_wheel.dart';
+
 import 'package:easy_weight/widgets/graph_container.dart';
 import 'package:easy_weight/widgets/set_goal_form/edit_goal_form.dart';
 
@@ -44,8 +42,6 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
 
   bool isLoading = false;
 
-  
-
   @override
   void initState() {
     _addController =
@@ -68,7 +64,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    FocusScopeNode currentFocus = FocusScope.of(context);
+    //FocusScopeNode currentFocus = FocusScope.of(context);
 
     return Consumer3<RecordsListModel, ButtonMode, ProfilesListModel>(
         builder: (context, recordsModel, buttonMode, profilesList, child) {
@@ -118,7 +114,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
         drawer: DrawerScaffoldWidget(),
         body: SafeArea(
           child: Column(
-                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Flexible(
                 flex: 3,
@@ -140,63 +136,58 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                       flex: 1,
                     ),
                     Flexible(
-                          flex: 6,
-                          child: GoalStatsContainer(
-                              setVisible: () {
-                                records.isNotEmpty ?
-                                showDialog(
-                                    context: context,
-                                    builder: (context) {
-                                      return Scaffold(
-                                        backgroundColor:
-                                            Colors.transparent,
-                                        body: EditGoal(
-                                          profileId: profilesList
-                                              .selectedProfileID,
-                                        ),
-                                      );
-                                    }) : null;
-                              },
-                            ),
-                        )
-                        
+                      flex: 6,
+                      child: GoalStatsContainer(
+                        setVisible: () {
+                          records.isNotEmpty
+                              ? showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return Scaffold(
+                                      backgroundColor: Colors.transparent,
+                                      body: EditGoal(
+                                        profileId:
+                                            profilesList.selectedProfileID,
+                                      ),
+                                    );
+                                  })
+                              : null;
+                        },
+                      ),
+                    )
                   ],
                 ),
               ),
-             
-             Expanded(
-               flex: 7,
-               child: 
-              records.isNotEmpty
-                  ? GraphContainer(records: records, context: context)
-                  : EmptyGraphContainer()
+              Expanded(
+                  flex: 7,
+                  child: records.isNotEmpty
+                      ? GraphContainer(records: records, context: context)
+                      : EmptyGraphContainer()),
+              Flexible(
+                flex: 1,
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                      left: 16.0, right: 16.0, bottom: 16),
+                  child: Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        MenuButton(
+                          onPressed: () {
+                            _scaffoldKey.currentState?.openDrawer();
+                          },
+                        ),
+                        EditButtons(
+                          onPressed: () {
+                            _setVisible(mode ? 'edit' : 'add');
+                          },
+                        ),
+                      ],
+                    ),
                   ),
-            
-             Flexible(
-               flex:1,
-               child: Padding(
-                 padding: const EdgeInsets.only(left:16.0, right: 16.0, bottom: 16),
-                 child: Align(
-                   alignment: Alignment.bottomCenter,
-                   child: Row(
-                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                     children: [
-                       MenuButton(
-                         onPressed: () {
-                           _scaffoldKey.currentState?.openDrawer();
-                         },
-                       ),
-                       EditButtons(
-                         onPressed: () {
-                           _setVisible(mode ? 'edit' : 'add');
-                         },
-                       ),
-                     ],
-                   ),
-                 ),
-               ),
-             ),
-              
+                ),
+              ),
             ],
           ),
         ),

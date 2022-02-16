@@ -1,6 +1,6 @@
 import 'package:easy_weight/models/user_settings.dart';
 import 'package:flutter/material.dart';
-import 'package:easy_weight/models/weight_record.dart';
+
 
 class WeightUnit with ChangeNotifier {
   bool usePounds = false; //2,20462

@@ -1,6 +1,6 @@
 import 'package:easy_weight/models/profile_model.dart';
 import 'package:flutter/material.dart';
-import 'package:easy_weight/models/button_mode.dart';
+
 import 'package:easy_weight/models/goal_model.dart';
 import 'package:easy_weight/models/records_model.dart';
 import 'package:easy_weight/models/weight_record.dart';

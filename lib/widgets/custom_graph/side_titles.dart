@@ -1,5 +1,5 @@
 import 'package:easy_weight/utils/convert_unit.dart';
-import 'package:flutter/material.dart';
+
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:easy_weight/models/weight_unit.dart';
 import 'package:easy_weight/utils/render_graph.dart';
@@ -7,7 +7,7 @@ import 'package:easy_weight/utils/render_graph.dart';
 import 'package:provider/provider.dart';
 import 'package:easy_weight/utils/indexed_iterables.dart';
 
-class SideTitles extends StatelessWidget {
+class SideTitles extends StatefulWidget {
   final List<int> sideTitleWeights;
   final double graphHeight;
   final double maxDisplayedWeight;
@@ -23,6 +23,11 @@ class SideTitles extends StatelessWidget {
       required this.paddingTop,
       required this.bottomTitlesHeight});
 
+  @override
+  State<SideTitles> createState() => _SideTitlesState();
+}
+
+class _SideTitlesState extends State<SideTitles> {
   late List<Widget> titles;
 
   @override
@@ -41,17 +46,17 @@ class SideTitles extends StatelessWidget {
 
       //render left side guide weights
       List<Widget> renderSideTitleWeights() {
-        List<Widget> titles = sideTitleWeights.mapIndexed((weight, index) {
+        List<Widget> titles = widget.sideTitleWeights.mapIndexed((weight, index) {
           Size whatsTheSize =
               _textSize(weight.toString(), theme.textTheme.caption!);
 
           String weightToPound = kgToLbs(weight.toDouble()).toStringAsFixed(0);
 
           return Positioned(
-            bottom: (yPos(weight.toDouble(), graphHeight, maxDisplayedWeight,
-                        minDisplayedWeight) -
+            bottom: (yPos(weight.toDouble(), widget.graphHeight, widget.maxDisplayedWeight,
+                        widget.minDisplayedWeight) -
                     (whatsTheSize.height * 0.5)) +
-                bottomTitlesHeight // this makes the title centered ,
+                widget.bottomTitlesHeight // this makes the title centered ,
             ,
             child: Text(
               unit.usePounds ? weightToPound : weight.toString(),

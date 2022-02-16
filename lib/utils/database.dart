@@ -2,9 +2,9 @@ import 'package:easy_weight/models/db/profiles_table.dart';
 import 'package:easy_weight/models/db/records_table.dart';
 import 'package:easy_weight/models/db/goal_table.dart';
 import 'package:easy_weight/models/profile_model.dart';
-import 'package:easy_weight/models/profiles_list_model.dart';
+
 import 'package:easy_weight/utils/logger_instace.dart';
-import 'package:provider/provider.dart';
+
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import 'package:easy_weight/models/weight_record.dart';
@@ -30,8 +30,7 @@ class RecordsDatabase {
     final dbPath = await getDatabasesPath();
     final path = join(dbPath, filePath);
 
-    return await openDatabase(path,
-        version: 2, onCreate: _createDB);
+    return await openDatabase(path, version: 2, onCreate: _createDB);
   }
 
   Future _createDB(Database db, int version) async {

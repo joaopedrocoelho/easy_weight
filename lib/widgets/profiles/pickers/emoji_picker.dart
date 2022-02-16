@@ -17,7 +17,7 @@ class _NeuEmojiPickerState extends State<NeuEmojiPicker>
 
   @override
   void initState() {
-    // TODO: implement initState
+    
     _animationController =
         AnimationController(vsync: this, duration: Duration(milliseconds: 300));
     _slideAnimation = Tween<Offset>(

@@ -16,11 +16,11 @@ class GenderInputField extends StatefulWidget {
 }
 
 class _GenderInputFieldState extends State<GenderInputField> {
-  TextEditingController _textController = TextEditingController();
+  //TextEditingController _textController = TextEditingController();
 
   @override
   void initState() {
-    // TODO: implement initState
+
 
     super.initState();
   }

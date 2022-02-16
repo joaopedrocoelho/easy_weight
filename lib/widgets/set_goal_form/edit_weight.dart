@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:easy_weight/models/weight_unit.dart';
 import 'package:provider/provider.dart';
@@ -20,12 +19,11 @@ class EditWeightTextField extends StatefulWidget {
 }
 
 class _EditWeightTextFieldState extends State<EditWeightTextField> {
-  TextEditingController _textController = TextEditingController();
+  //TextEditingController _textController = TextEditingController();
 
   @override
   void initState() {
-    // TODO: implement initState
-
+   
     super.initState();
   }
 
