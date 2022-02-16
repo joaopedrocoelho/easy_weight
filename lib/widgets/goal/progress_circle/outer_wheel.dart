@@ -20,7 +20,7 @@ class OuterWheel extends StatelessWidget {
     return Consumer2<GoalModel, RecordsListModel>(
         builder: (context, goal, records, child) {
       List<WeightRecord> records = context.watch<RecordsListModel>().records;
-      double _currentWeight = renderCurrentWeight(records)!;
+      double _currentWeight = renderCurrentWeight(records) ?? 0;
 
       int getPercentage(
           double initialWeight, double currentWeight, double goal) {

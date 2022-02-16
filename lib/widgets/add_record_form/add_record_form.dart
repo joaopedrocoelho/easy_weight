@@ -1,5 +1,6 @@
 import 'package:easy_weight/models/user_settings.dart';
 import 'package:easy_weight/utils/convert_unit.dart';
+import 'package:easy_weight/utils/logger_instace.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -92,6 +93,7 @@ class _AddRecordState extends State<AddRecord>
         setState(() {
           _date = newDate;
           records.newFormattedDate(newDate);
+          logger.i("selected date: ${_date.toString()}");
         });
       }
 

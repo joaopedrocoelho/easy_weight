@@ -139,11 +139,11 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                     Spacer(
                       flex: 1,
                     ),
-                    records.isNotEmpty
-                        ? Flexible(
+                    Flexible(
                           flex: 6,
                           child: GoalStatsContainer(
                               setVisible: () {
+                                records.isNotEmpty ?
                                 showDialog(
                                     context: context,
                                     builder: (context) {
@@ -155,13 +155,11 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                               .selectedProfileID,
                                         ),
                                       );
-                                    });
+                                    }) : null;
                               },
                             ),
                         )
-                        : Flexible(
-                            flex: 6,
-                          child: DisabledGoal())
+                        
                   ],
                 ),
               ),

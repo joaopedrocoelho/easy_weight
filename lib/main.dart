@@ -1,9 +1,10 @@
 import 'package:easy_weight/models/ad_state.dart';
-import 'package:easy_weight/models/db/profiles_table.dart';
+
 import 'package:easy_weight/models/profile_model.dart';
 import 'package:easy_weight/models/profiles_list_model.dart';
 import 'package:easy_weight/models/user_settings.dart';
 import 'package:easy_weight/utils/logger_instace.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
@@ -18,9 +19,26 @@ import 'package:provider/provider.dart';
 
 import 'package:easy_weight/utils/database.dart';
 import 'package:easy_weight/models/button_mode.dart';
+import 'dart:io' show Platform;
+
+import 'package:purchases_flutter/purchases_flutter.dart';
+
+//...
+
+Future<void> initPlatformState() async {
+  await Purchases.setDebugLogsEnabled(true);
+  
+  if (Platform.isAndroid) {
+    await Purchases.setup(DotEnv().env['REVENUECAT_API_KEY_ANDROID']!);
+  } 
+  }
+
+
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  
+  await DotEnv().load(fileName: ".env");
   final initFuture = MobileAds.instance.initialize();
   final adState = AdState(initFuture);
   await UserSettings.init();

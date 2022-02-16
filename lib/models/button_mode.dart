@@ -1,3 +1,4 @@
+import 'package:easy_weight/utils/logger_instace.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_weight/models/weight_record.dart';
 
@@ -19,6 +20,8 @@ class ButtonMode with ChangeNotifier {
     note = record.note;
     profileId = record.profileId;
 
+    logger.i("editing record",record.toJson());
+
     //print("Editing: $weight, $date, $note, isEditing: $isEditing");
     notifyListeners();
   }
@@ -26,7 +29,12 @@ class ButtonMode with ChangeNotifier {
   void setAdd() {
     isEditing = false;
     selectedIndex = null;
+    weight = 0.0;
+    date = DateTime.now();
+    profileId = -1;
+    note = '';
     notifyListeners();
+    logger.i("leaving editing mode", "isEditing: $isEditing");
   }
 
   void onGraphSpotTap(int index) {

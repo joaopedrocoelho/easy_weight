@@ -1,3 +1,4 @@
+import 'package:easy_weight/models/profiles_list_model.dart';
 import 'package:easy_weight/utils/convert_unit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
@@ -37,8 +38,8 @@ class _GraphSpotState extends State<GraphSpot> {
   Widget build(BuildContext context) {
     String weightToPound = kgToLbs(widget.weight).toStringAsFixed(1);
 
-    return Consumer2<ButtonMode, WeightUnit>(
-      builder: (context, mode, unit, child) {
+    return Consumer3<ButtonMode, WeightUnit, ProfilesListModel>(
+      builder: (context, mode, unit, profilesList, child) {
         bool _selected = widget.id == mode.selectedIndex ? true : false;
 
         return Positioned(
@@ -50,13 +51,14 @@ class _GraphSpotState extends State<GraphSpot> {
           child: GestureDetector(
             onTap: () {
               mode.onGraphSpotTap(widget.id);
+              
 
               !_selected
                   ? mode.setEditing(WeightRecord(
                       date: widget.date,
                       weight: widget.weight,
                       note: widget.note,
-                      profileId: 0))
+                      profileId: profilesList.selectedProfileID))
                   : mode.setAdd();
             },
             child: Column(

@@ -1,4 +1,5 @@
 import 'package:easy_weight/utils/convert_unit.dart';
+import 'package:easy_weight/utils/logger_instace.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_weight/models/button_mode.dart';
 import 'package:easy_weight/models/records_model.dart';
@@ -20,8 +21,6 @@ import 'package:provider/provider.dart';
 import 'package:easy_weight/widgets/add_record_form/neu_form_container.dart';
 
 class EditRecord extends StatefulWidget {
-
-
   final List<WeightRecord> records;
 
   final double weight;
@@ -29,7 +28,6 @@ class EditRecord extends StatefulWidget {
   final String note;
 
   EditRecord({
-
     required this.records,
     required this.weight,
     required this.date,
@@ -51,15 +49,12 @@ class _EditRecordState extends State<EditRecord>
   //form fields state
   double _weight = 0.0;
 
-
   String _note = '';
 
-  Future updateRecord() async {
-    WeightRecord editedRecord = new WeightRecord(
-        date: widget.date, weight: _weight, note: _note, profileId: 0);
+  Future<int> updateRecord(WeightRecord editedRecord) async {
     final record = await RecordsDatabase.instance.updateRecord(editedRecord);
 
-    Navigator.pop(context);
+    return record;
   }
 
   @override
@@ -76,18 +71,16 @@ class _EditRecordState extends State<EditRecord>
 
   @override
   void dispose() {
-      _animationController.dispose();
+    _animationController.dispose();
 
     hintFocus.dispose();
     super.dispose();
-  
   }
 
   @override
   Widget build(BuildContext context) {
     return Consumer2<ButtonMode, WeightUnit>(
         builder: (context, buttonMode, unit, child) {
- 
       FocusScopeNode currentFocus = FocusScope.of(context);
 
       return SlideTransition(
@@ -109,7 +102,7 @@ class _EditRecordState extends State<EditRecord>
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                         AppLocalizations.of(context)!.editRecord,
+                          AppLocalizations.of(context)!.editRecord,
                           style: Theme.of(context).textTheme.headline5,
                           textAlign: TextAlign.start,
                         ),
@@ -124,7 +117,7 @@ class _EditRecordState extends State<EditRecord>
                     ),
                     EditWeightTextField(
                         hintFocus: hintFocus,
-                        initialValue: _weight.toString(),
+                        initialValue: buttonMode.weight.toString(),
                         onSaved: (value) {
                           setState(() {
                             unit.usePounds
@@ -140,7 +133,7 @@ class _EditRecordState extends State<EditRecord>
                       height: 30.0,
                     ),
                     AddNoteTextField(
-                        initialValue: _note,
+                        initialValue: buttonMode.note,
                         onSaved: (value) {
                           setState(() {
                             _note = value!;
@@ -165,24 +158,24 @@ class _EditRecordState extends State<EditRecord>
                         ),
                         Expanded(child: SaveButton(onPressed: () async {
                           // Validate returns true if the form is valid, or false otherwise.
-                          print(
+                          logger.i(
                               "edit record: ${_formKey.currentState!.validate()}");
                           if (_formKey.currentState!.validate()) {
                             _formKey.currentState!.save();
 
-                            print(
+                            logger.i(
                                 '_weight : $_weight widget.date: ${widget.date} note:$_note');
                             WeightRecord editedRecord = new WeightRecord(
                                 date: widget.date,
                                 weight: _weight,
                                 note: _note,
-                                profileId: 0);
+                                profileId: buttonMode.profileId);
 
                             Provider.of<RecordsListModel>(context,
                                     listen: false)
                                 .editRecord(editedRecord);
 
-                            updateRecord();
+                            updateRecord(editedRecord);
                             setState(() {
                               _weight = 0.0;
                               _note = '';

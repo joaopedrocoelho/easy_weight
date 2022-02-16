@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:easy_weight/models/weight_record.dart';
@@ -23,6 +25,13 @@ class BottomTitles extends StatefulWidget {
 }
 
 class _BottomTitlesState extends State<BottomTitles> {
+  String formatDate(DateTime date) {
+    return Platform.localeName == 'en_US'
+        ? DateFormat.Md().format(date)
+        : DateFormat('dd/MM').format(date);
+        
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = NeumorphicTheme.currentTheme(context);
@@ -35,7 +44,7 @@ class _BottomTitlesState extends State<BottomTitles> {
       List<DateTime> removedOddDates = removeOdds<DateTime>(recordDates);
 
       List<Widget> bottomTitles = removedOddDates.mapIndexed((evenDate, index) {
-        String date = DateFormat('MM/dd').format(evenDate);
+        String date = formatDate(evenDate);
 
         return Positioned(
           left: (index * 100),

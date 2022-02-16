@@ -1,3 +1,4 @@
+import 'package:easy_weight/utils/logger_instace.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_weight/models/button_mode.dart';
 import 'package:easy_weight/models/records_model.dart';
@@ -63,6 +64,8 @@ class _EditButtonsState extends State<EditButtons> {
                       size: 30,
                     ),
                     onPressed: () {
+                       
+                      logger.i('deleting record from profile ${buttonMode.profileId}');
                       WeightRecord deletedRecord = WeightRecord(
                           date: buttonMode.date,
                           weight: buttonMode.weight,
