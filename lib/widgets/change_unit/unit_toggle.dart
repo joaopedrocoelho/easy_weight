@@ -14,7 +14,7 @@ class _UnitToggleState extends State<UnitToggle> {
   late int _selectedIndex;
   @override
   void initState() {
-    // TODO: implement initState
+    
 
     Provider.of<WeightUnit>(context, listen: false).usePounds ? _selectedIndex = 1 : _selectedIndex = 0;
     super.initState();

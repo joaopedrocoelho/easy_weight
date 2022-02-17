@@ -201,210 +201,208 @@ class _AddProfileState extends State<AddProfile> with TickerProviderStateMixin {
     FocusScopeNode currentFocus = FocusScope.of(context);
 
     return Consumer<ProfilesListModel>(builder: (context, profiles, child) {
-      return Stack(children: [
-        SlideTransition(
-          position: _offsetAnimation,
-          child: Align(
-            alignment: Alignment.bottomCenter,
-            child: NeuFormContainer(
-              height: 470,
-              child: Container(
-                child: Form(
-                  key: _formKey,
-                  child: SingleChildScrollView(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              AppLocalizations.of(context)!.addProfile,
-                              style: Theme.of(context).textTheme.headline5,
-                              textAlign: TextAlign.start,
-                            ),
-                            NeuCloseButton(onPressed: () {
-                              _slideAnimationController.reverse();
-                              Navigator.pop(context);
-                            }),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 30.0,
-                        ),
-                        NeuTextField(
-                            initialValue: _name,
-                            errorText:  AppLocalizations.of(context)!.nameError,
-                            hintText:  AppLocalizations.of(context)!.nameHint,
-                            onSaved: (value) {
-                              setState(() {
-                                _name = value ?? "";
-                              });
-                              
-                            },
-                            
-                            hintFocus: hintFocus),
-                        SizedBox(
-                          height: 30.0,
-                        ),
-                        Row(children: [
-                          Expanded(
-                            child: GestureDetector(
-                                onTap: () {
-                                  showDialog(
-                                      context: context,
-                                      builder: (context) {
-                                        return NeuEmojiPicker(
-                                            onEmojiSelected: (category, emoji) {
-                                          setState(() {
-                                            _selectedEmoji =
-                                                emoji.toJson()['emoji'];
-                                          });
-                                         
-                                         logger.i(
-                                              "_selectedEmoji: $_selectedEmoji");
-                                        });
-                                      });
-                                },
-                                child: EmojiInputField(emoji: _selectedEmoji)),
+      return SlideTransition(
+        position: _offsetAnimation,
+        child: Align(
+          alignment: Alignment.bottomCenter,
+          child: NeuFormContainer(
+            height: 470,
+            child: Container(
+              child: Form(
+                key: _formKey,
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            AppLocalizations.of(context)!.addProfile,
+                            style: Theme.of(context).textTheme.headline5,
+                            textAlign: TextAlign.start,
                           ),
+                          NeuCloseButton(onPressed: () {
+                            _slideAnimationController.reverse();
+                            Navigator.pop(context);
+                          }),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 30.0,
+                      ),
+                      NeuTextField(
+                          initialValue: _name,
+                          errorText:  AppLocalizations.of(context)!.nameError,
+                          hintText:  AppLocalizations.of(context)!.nameHint,
+                          onSaved: (value) {
+                            setState(() {
+                              _name = value ?? "";
+                            });
+                            
+                          },
+                          
+                          hintFocus: hintFocus),
+                      SizedBox(
+                        height: 30.0,
+                      ),
+                      Row(children: [
+                        Expanded(
+                          child: GestureDetector(
+                              onTap: () {
+                                showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return NeuEmojiPicker(
+                                          onEmojiSelected: (category, emoji) {
+                                        setState(() {
+                                          _selectedEmoji =
+                                              emoji.toJson()['emoji'];
+                                        });
+                                       
+                                       logger.i(
+                                            "_selectedEmoji: $_selectedEmoji");
+                                      });
+                                    });
+                              },
+                              child: EmojiInputField(emoji: _selectedEmoji)),
+                        ),
+                        SizedBox(
+                          width: 30,
+                        ),
+                        Expanded(
+                          child: GestureDetector(
+                              onTap: () {
+                                showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return NeuGenderPicker(
+                                          initialValue: _gender,
+                                          onChanged: (value) {
+                                            setState(() {
+                                              _gender = value as Gender;
+                                            });
+                                            logger.d("value: $value");
+                                          });
+                                    });
+                              },
+                              child: GenderInputField(gender: _gender)),
+                        )
+                      ]),
+                      SizedBox(
+                        height: 30.0,
+                      ),
+                      NeuBirthdayPicker(
+                          birthday: _birthday,
+                          onSaved: (date) {
+                            setState(() {
+                              _birthday = date;
+                            });
+                          }),
+                      SizedBox(
+                        height: 30.0,
+                      ),
+                      Row(
+                        children: [
+                          NeuHeightField(
+                              initialValue: "",
+                              errorText: "",
+                              hintText: "",
+                              onSaved: (value) {
+                                double height = value != null && value != ''
+                                    ? double.parse(value)
+                                    : 0.0;
+                                setState(() {
+                                  UserSettings.getUnit() ==  Unit.metric
+                                      ? _height = height
+                                      : _height = ftToMeters(height);
+                                  logger.d("Height: $_height");
+                                });
+                              },
+                              hintFocus: hintFocus),
                           SizedBox(
                             width: 30,
                           ),
                           Expanded(
                             child: GestureDetector(
-                                onTap: () {
-                                  showDialog(
-                                      context: context,
-                                      builder: (context) {
-                                        return NeuGenderPicker(
-                                            initialValue: _gender,
-                                            onChanged: (value) {
-                                              setState(() {
-                                                _gender = value as Gender;
-                                              });
-                                              logger.d("value: $value");
+                              onTap: () {
+                                showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return NeuColorPicker(
+                                          onColorChanged: (Color color) {
+                                            setState(() {
+                                              _selectedColor = color;
                                             });
-                                      });
-                                },
-                                child: GenderInputField(gender: _gender)),
-                          )
-                        ]),
-                        SizedBox(
-                          height: 30.0,
-                        ),
-                        NeuBirthdayPicker(
-                            birthday: _birthday,
-                            onSaved: (date) {
-                              setState(() {
-                                _birthday = date;
-                              });
-                            }),
-                        SizedBox(
-                          height: 30.0,
-                        ),
-                        Row(
-                          children: [
-                            NeuHeightField(
-                                initialValue: "",
-                                errorText: "",
-                                hintText: "",
-                                onSaved: (value) {
-                                  double height = value != null && value != ''
-                                      ? double.parse(value)
-                                      : 0.0;
-                                  setState(() {
-                                    UserSettings.getUnit() ==  Unit.metric
-                                        ? _height = height
-                                        : _height = ftToMeters(height);
-                                    logger.d("Height: $_height");
-                                  });
-                                },
-                                hintFocus: hintFocus),
-                            SizedBox(
-                              width: 30,
-                            ),
-                            Expanded(
-                              child: GestureDetector(
-                                onTap: () {
-                                  showDialog(
-                                      context: context,
-                                      builder: (context) {
-                                        return NeuColorPicker(
-                                            onColorChanged: (Color color) {
-                                              setState(() {
-                                                _selectedColor = color;
-                                              });
-                                            },
-                                            selectedColor: _selectedColor);
-                                      });
-                                },
-                                child: ColorInputField(color: _selectedColor),
-                              ),
-                            )
-                          ],
-                        ),
-                        SizedBox(
-                          height: 40,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Expanded(child: CancelButton(onPressed: () {
-                              _slideAnimationController.reverse();
-                              Navigator.pop(context);
-                            })),
-                            SizedBox(
-                              width: 20.0,
-                            ),
-                            Expanded(child: SaveButton(
-                              onPressed: () async {
-                                currentFocus.focusedChild?.unfocus();
-                               
-                                Profile newProfile = Profile(
-                                  name: _name,
-                                  emoji: _selectedEmoji,
-                                  height: _height,
-                                  gender: _gender,
-                                  birthday: _birthday,
-                                  color: _selectedColor,
-                                );
-
-                                addProfile(newProfile).then((value) => {
-                                      if (value != -1)
-                                        {
-                                          _slideAnimationController.reverse(),
-                                          Navigator.pop(context),
-                                        }
-                                      else
-                                        {
-                                          //error handling
-                                        }
+                                          },
+                                          selectedColor: _selectedColor);
                                     });
-
-                                logger.d({
-                                  "name": _name,
-                                  "emoji": _selectedEmoji,
-                                  "height": _height,
-                                  "gender": _gender,
-                                  "color": _selectedColor,
-                                  "birthday": _birthday,
-                                });
                               },
-                            ))
-                          ],
-                        )
-                      ],
-                    ),
+                              child: ColorInputField(color: _selectedColor),
+                            ),
+                          )
+                        ],
+                      ),
+                      SizedBox(
+                        height: 40,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(child: CancelButton(onPressed: () {
+                            _slideAnimationController.reverse();
+                            Navigator.pop(context);
+                          })),
+                          SizedBox(
+                            width: 20.0,
+                          ),
+                          Expanded(child: SaveButton(
+                            onPressed: () async {
+                              currentFocus.focusedChild?.unfocus();
+                             
+                              Profile newProfile = Profile(
+                                name: _name,
+                                emoji: _selectedEmoji,
+                                height: _height,
+                                gender: _gender,
+                                birthday: _birthday,
+                                color: _selectedColor,
+                              );
+
+                              addProfile(newProfile).then((value) => {
+                                    if (value != -1)
+                                      {
+                                        _slideAnimationController.reverse(),
+                                        Navigator.pop(context),
+                                      }
+                                    else
+                                      {
+                                        //error handling
+                                      }
+                                  });
+
+                              logger.d({
+                                "name": _name,
+                                "emoji": _selectedEmoji,
+                                "height": _height,
+                                "gender": _gender,
+                                "color": _selectedColor,
+                                "birthday": _birthday,
+                              });
+                            },
+                          ))
+                        ],
+                      )
+                    ],
                   ),
                 ),
               ),
             ),
           ),
         ),
-      ]);
+      );
     });
   }
 }
