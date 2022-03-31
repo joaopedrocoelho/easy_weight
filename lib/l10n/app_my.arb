@@ -8,7 +8,7 @@
     "monthStat": "လ",
     "totalStat": "လုံးဝသော",
     "goalWeight": "ရည်မှန်းချက်",
-    "goalRemaining": "ကျန်ရစ်နေသော",
+    "goalRemaining": "လက်ဝဲဘက်ဖြစ်သော",
     "addGoal": "ရည်မှန်းချက်ထား",
     "addRecord": "စံချိန်ထည့်ပါ",
     "weightHint": "အလေးချိန်",
@@ -35,5 +35,10 @@
     "nonBinary": "non binary",
     "transGender": "လိင်ပြောင်းလဲခြင်း",
     "interSex": "အပြန်အလှန်ကြား",
-    "other": "အခြား"
+    "other": "အခြား",
+    "proOfferingDesc": "အကန့်အသတ်မရှိ profile များနှင့်အဘယ်သူမျှမကြော်ငြာ",
+    "buy": "ဝယ်ခြမ်း",
+    "purchaseError2": "Play စတိုးနှင့်ပြ a နာတစ်ခုရှိခဲ့သည်",
+    "purchaseError20": "ငွေပေးချေမှုဆိုင်းငံ့ထားသည်။ကျေးဇူးပြု. သင်၏ Play Store အကောင့်ကိုစစ်ဆေးပါ",
+    "purchaseSuccess": "အောင်မြင်စွာဝယ်ယူပါ"
 }

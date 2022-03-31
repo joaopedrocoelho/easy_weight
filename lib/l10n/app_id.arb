@@ -8,10 +8,10 @@
     "monthStat": "Bulan",
     "totalStat": "Total",
     "goalWeight": "Sasaran",
-    "goalRemaining": "Tersisa",
+    "goalRemaining": "Kiri",
     "addGoal": "Menentukan tujuan",
     "addRecord": "Tambahkan catatan",
-    "weightHint": "Berat",
+    "weightHint": "Bobot",
     "weightError": "Silakan masukkan berat badan",
     "noteHint": "Menambahkan catatan",
     "cancelBtn": "Membatalkan",
@@ -35,5 +35,10 @@
     "nonBinary": "Non biner.",
     "transGender": "Transgender",
     "interSex": "Intersex.",
-    "other": "Lainnya"
+    "other": "Lainnya",
+    "proOfferingDesc": "Profil Tidak Terbatas dan Tidak Ada Iklan",
+    "buy": "membeli",
+    "purchaseError2": "Ada masalah dengan Play Store",
+    "purchaseError20": "Pembayaran sedang menunggu.Silakan periksa akun Play Store Anda",
+    "purchaseSuccess": "Beli berhasil"
 }

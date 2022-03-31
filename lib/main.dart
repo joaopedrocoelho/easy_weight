@@ -1,3 +1,4 @@
+
 import 'package:easy_weight/models/ad_state.dart';
 import 'package:easy_weight/models/offerings.dart';
 
@@ -47,6 +48,11 @@ Future main() async {
   final adState = AdState(initFuture);
   initPlatformState();
   await UserSettings.init();
+
+
+  RequestConfiguration configuration =
+       RequestConfiguration(testDeviceIds: ["5FF7A87077B616B2B64C1BBCAD7019BB"]);
+  MobileAds.instance.updateRequestConfiguration(configuration);
 
   runApp(Provider.value(value: adState, builder: (context, child) => MyApp()));
 }

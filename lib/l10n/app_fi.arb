@@ -8,7 +8,7 @@
     "monthStat": "Kuukausi",
     "totalStat": "Kaikki yhteensä",
     "goalWeight": "Päämäärä",
-    "goalRemaining": "Jäljelle jäänyt",
+    "goalRemaining": "Vasemmalle",
     "addGoal": "Asettaa tavoite",
     "addRecord": "Lisää levy",
     "weightHint": "Paino",
@@ -35,5 +35,10 @@
     "nonBinary": "Ei-binaarinen",
     "transGender": "Transsukupuolinen",
     "interSex": "Intersex",
-    "other": "Muut"
+    "other": "Muut",
+    "proOfferingDesc": "Rajoittamattomat profiilit ja mainokset",
+    "buy": "ostaa",
+    "purchaseError2": "Play-myymälässä oli ongelma",
+    "purchaseError20": "Maksu on vireillä.Tarkista Play Store -tilisi",
+    "purchaseSuccess": "Osto onnistunut"
 }

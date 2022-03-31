@@ -8,7 +8,7 @@
     "monthStat": "महीना",
     "totalStat": "कुल",
     "goalWeight": "लक्य",
-    "goalRemaining": "बाकी",
+    "goalRemaining": "देब्रे",
     "addGoal": "एक लक्ष्य सेट",
     "addRecord": "रेकर्ड थप्नुहोस्",
     "weightHint": "तौल",
@@ -35,5 +35,10 @@
     "nonBinary": "नन बाइनरी",
     "transGender": "ट्रान्सेगरको",
     "interSex": "लामो भ्कगडा",
-    "other": "अरु"
+    "other": "अरु",
+    "proOfferingDesc": "असीमित प्रोफाइलहरू र कुनै विज्ञापनहरू छैनन्",
+    "buy": "खरिद गर्नु",
+    "purchaseError2": "त्यहाँ प्ले स्टोरको साथ समस्या थियो",
+    "purchaseError20": "भुक्तानी पेन्डिंग छ।कृपया तपाईंको प्ले स्टोर खाता जाँच गर्नुहोस्",
+    "purchaseSuccess": "सफल खरीद"
 }

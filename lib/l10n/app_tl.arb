@@ -8,7 +8,7 @@
     "monthStat": "Buwan",
     "totalStat": "Kabuuan",
     "goalWeight": "Layunin",
-    "goalRemaining": "Natitira",
+    "goalRemaining": "Kaliwa",
     "addGoal": "Magtakda ng isang layunin",
     "addRecord": "Magdagdag ng rekord",
     "weightHint": "Timbang",
@@ -35,5 +35,10 @@
     "nonBinary": "Hindi binary.",
     "transGender": "Transgender.",
     "interSex": "Intersex.",
-    "other": "Other."
+    "other": "Other.",
+    "proOfferingDesc": "Walang limitasyong mga profile at walang mga ad",
+    "buy": "Buy.",
+    "purchaseError2": "Nagkaroon ng problema sa play store.",
+    "purchaseError20": "Ang pagbabayad ay nakabinbin.Mangyaring suriin ang iyong account sa Play Store.",
+    "purchaseSuccess": "Bumili ng matagumpay"
 }

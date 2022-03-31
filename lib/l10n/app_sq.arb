@@ -8,7 +8,7 @@
     "monthStat": "Muaj",
     "totalStat": "Total",
     "goalWeight": "Qëllim",
-    "goalRemaining": "I mbetur",
+    "goalRemaining": "Lë",
     "addGoal": "Ve nje qellim",
     "addRecord": "Shto një rekord",
     "weightHint": "Peshë",
@@ -35,5 +35,10 @@
     "nonBinary": "Jo binar",
     "transGender": "Transgjinor",
     "interSex": "Ndërsektori",
-    "other": "Tjetri"
+    "other": "Tjetri",
+    "proOfferingDesc": "Profilet e pakufizuara dhe pa reklama",
+    "buy": "blej",
+    "purchaseError2": "Kishte një problem me dyqanin e luajtjes",
+    "purchaseError20": "Pagesa është në pritje.Ju lutemi kontrolloni llogarinë tuaj të dyqanit",
+    "purchaseSuccess": "Blerja e suksesshme"
 }

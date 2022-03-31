@@ -35,5 +35,10 @@
   "nonBinary": "非二元性别",
   "transGender": "跨性别",
   "interSex": "双性人",
-  "other": "其他"
+  "other": "其他",
+  "proOfferingDesc": "无限个人资料，无广告",
+  "buy": "购买",
+  "purchaseError2": "当Play Store发生问题。",
+  "purchaseError20": "付款交易尚未完成. 请检查你的Play Store帐户",
+  "purchaseSuccess": "购买成功。"
 }

@@ -8,7 +8,7 @@
     "monthStat": "Mwezi",
     "totalStat": "Zonse",
     "goalWeight": "Chigoli",
-    "goalRemaining": "Kutsalira",
+    "goalRemaining": "Kumanzere",
     "addGoal": "Khazikitsani cholinga",
     "addRecord": "Onjezerani mbiri",
     "weightHint": "Kulemera",
@@ -35,5 +35,10 @@
     "nonBinary": "Zosagwirizana",
     "transGender": "Transgender",
     "interSex": "Mijax",
-    "other": "Ena"
+    "other": "Ena",
+    "proOfferingDesc": "Mbiri Yopanda malire ndipo palibe zotsatsa",
+    "buy": "gula",
+    "purchaseError2": "Panali vuto ndi malo ogulitsira",
+    "purchaseError20": "Ndalamazo zikudikirira.Chonde onani akaunti yanu yogulitsa",
+    "purchaseSuccess": "Gulani bwino"
 }

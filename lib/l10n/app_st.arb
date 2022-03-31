@@ -8,7 +8,7 @@
     "monthStat": "Khoeli",
     "totalStat": "Kakaretso",
     "goalWeight": "Sepheo",
-    "goalRemaining": "Ho lula",
+    "goalRemaining": "Ka ho le letšehali",
     "addGoal": "Ipehele pakane",
     "addRecord": "Kenya rekoto",
     "weightHint": "Boima",
@@ -35,5 +35,10 @@
     "nonBinary": "Ha se binary",
     "transGender": "Transgender",
     "interSex": "Intedex",
-    "other": "Tse ling"
+    "other": "Tse ling",
+    "proOfferingDesc": "Litaba tse sa lekanyetsoang le ho se na lipapatso",
+    "buy": "reka",
+    "purchaseError2": "Ho bile le bothata ka lebenkele la lipapali",
+    "purchaseError20": "Tefo e ntse e emetse.Ka kopo sheba ak'haonte ea hau ea STOPS",
+    "purchaseSuccess": "Ho reka ka katleho"
 }

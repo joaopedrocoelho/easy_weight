@@ -8,7 +8,7 @@
     "monthStat": "Mes",
     "totalStat": "Total",
     "goalWeight": "Objectiu",
-    "goalRemaining": "Que resta",
+    "goalRemaining": "Esquerre",
     "addGoal": "Fixar un objectiu",
     "addRecord": "Afegiu un registre",
     "weightHint": "Pes",
@@ -35,5 +35,10 @@
     "nonBinary": "No binari",
     "transGender": "Transgènere",
     "interSex": "Resum",
-    "other": "Altre"
+    "other": "Altre",
+    "proOfferingDesc": "Perfils il·limitats i sense anuncis",
+    "buy": "comprar",
+    "purchaseError2": "Hi va haver un problema amb la botiga de jocs",
+    "purchaseError20": "El pagament està pendent.Comproveu el vostre compte de la botiga de jocs",
+    "purchaseSuccess": "Compra amb èxit"
 }

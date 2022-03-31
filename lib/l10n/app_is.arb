@@ -8,7 +8,7 @@
     "monthStat": "Mánuður",
     "totalStat": "Samtals.",
     "goalWeight": "Markmið",
-    "goalRemaining": "Eftirfylgni",
+    "goalRemaining": "Vinstri",
     "addGoal": "Settu markmið",
     "addRecord": "Bæta við skrá",
     "weightHint": "Þyngd",
@@ -35,5 +35,10 @@
     "nonBinary": "Ekki tvöfalt",
     "transGender": "Transgender.",
     "interSex": "Intersex.",
-    "other": "Annað"
+    "other": "Annað",
+    "proOfferingDesc": "Ótakmörkuð snið og engar auglýsingar",
+    "buy": "kaupa",
+    "purchaseError2": "Vandamál kom upp við leikverslunina",
+    "purchaseError20": "Greiðsla er í bið.Vinsamlegast athugaðu spilunarreikninginn þinn",
+    "purchaseSuccess": "Kaupin vel"
 }

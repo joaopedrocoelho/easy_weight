@@ -8,7 +8,7 @@
     "monthStat": "Ay",
     "totalStat": "Ümumi",
     "goalWeight": "Məqsəd",
-    "goalRemaining": "Qalan",
+    "goalRemaining": "Sol",
     "addGoal": "Qolu vurmaq",
     "addRecord": "Rekord əlavə etmək",
     "weightHint": "Ağırlıq",
@@ -18,7 +18,7 @@
     "saveBtn": "Yadda saxla",
     "editRecord": "Redaktə etmək",
     "profiles": "Profillər",
-    "noName": "Ad yoxdur",
+    "noName": "Adsız",
     "gender": "cinsi",
     "height": "hündürlük",
     "birthday": "Ad günü",
@@ -35,5 +35,10 @@
     "nonBinary": "İkili",
     "transGender": "Transgender",
     "interSex": "İntersex",
-    "other": "Digər"
+    "other": "Digər",
+    "proOfferingDesc": "Limitsiz profillər və reklam yoxdur",
+    "buy": "almaq",
+    "purchaseError2": "Oyun mağazasında problem var idi",
+    "purchaseError20": "Ödəniş gözləyir.Zəhmət olmasa, oyun mağazanızın hesabını yoxlayın",
+    "purchaseSuccess": "Uğurlu alın"
 }

@@ -8,7 +8,7 @@
     "monthStat": "Mí",
     "totalStat": "Iomlán",
     "goalWeight": "Sprioc",
-    "goalRemaining": "Fágtha",
+    "goalRemaining": "Ar an eite chlé",
     "addGoal": "Socraigh sprioc",
     "addRecord": "Cuir taifead leis",
     "weightHint": "Ualach",
@@ -30,10 +30,15 @@
     "emojiHint": "Emoji",
     "editProfile": "Cuir próifíl in eagar",
     "deleteProfileDialog": "An bhfuil tú cinnte gur mian leat an phróifíl seo a scriosadh?",
-    "male": "Fireannach",
+    "male": "Fireann",
     "female": "Bean",
     "nonBinary": "Neamhábartha",
     "transGender": "Trasineaslú",
     "interSex": "Idirsex",
-    "other": "Eile"
+    "other": "Eile",
+    "proOfferingDesc": "Próifílí neamhtheoranta agus gan aon fhógraí",
+    "buy": "ceannaigh",
+    "purchaseError2": "Bhí fadhb leis an siopa súgartha",
+    "purchaseError20": "Tá an íocaíocht ar feitheamh.Seiceáil do Chuntas Siopa Súgartha le do thoil",
+    "purchaseSuccess": "Ceannach rathúil"
 }

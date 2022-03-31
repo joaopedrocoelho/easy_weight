@@ -8,7 +8,7 @@
     "monthStat": "میاشت",
     "totalStat": "ټول",
     "goalWeight": "هدف",
-    "goalRemaining": "پاتې",
+    "goalRemaining": "کیڼ",
     "addGoal": "یو هدف وټاکئ",
     "addRecord": "ریکارډ اضافه کړئ",
     "weightHint": "وزن",
@@ -35,5 +35,10 @@
     "nonBinary": "غیر بائنری",
     "transGender": "انتقال",
     "interSex": "انټرسیکس",
-    "other": "نور"
+    "other": "نور",
+    "proOfferingDesc": "نامحدود پروفایلونه او هیڅ اعلانونه ندي",
+    "buy": "وپیرئ",
+    "purchaseError2": "د لوبې پلورنځي سره ستونزه وه",
+    "purchaseError20": "تادیه پاتې ده.مهرباني وکړئ د خپل لوبې پلورنځي حساب وګورئ",
+    "purchaseSuccess": "بریالي پیرود"
 }

@@ -8,7 +8,7 @@
     "monthStat": "Menses",
     "totalStat": "Summa",
     "goalWeight": "Meta",
-    "goalRemaining": "Reliquus",
+    "goalRemaining": "Relictum",
     "addGoal": "PRAETEREO",
     "addRecord": "Addere recordum",
     "weightHint": "Pondus",
@@ -35,5 +35,10 @@
     "nonBinary": "Non binarii",
     "transGender": "Transgender",
     "interSex": "Intersex",
-    "other": "Alius"
+    "other": "Alius",
+    "proOfferingDesc": "Infinitus profiles et non ads",
+    "buy": "buy",
+    "purchaseError2": "Fuit quaestio de fabula copia",
+    "purchaseError20": "Et mercedem pendente.Placere reprehendo vestri fabula copia causa",
+    "purchaseSuccess": "Purchase felix"
 }

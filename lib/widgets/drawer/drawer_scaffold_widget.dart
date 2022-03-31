@@ -10,6 +10,7 @@ import 'package:easy_weight/models/weight_record.dart';
 import 'package:easy_weight/utils/database.dart';
 import 'package:easy_weight/widgets/buttons/menu_button.dart';
 import 'package:easy_weight/widgets/buy_pro_dialog/buy_pro_dialog.dart';
+import 'package:easy_weight/widgets/buy_pro_dialog/error_dialog.dart';
 import 'package:easy_weight/widgets/change_unit/unit_toggle.dart';
 
 import 'package:easy_weight/widgets/profiles/add_profile_form.dart';
@@ -79,7 +80,7 @@ class _DrawerScaffoldWidgetState extends State<DrawerScaffoldWidget>
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              if (adWidget != null && userOfferings.isPro != true) adWidget!,
+              if (adWidget != null && !userOfferings.isPro) adWidget!,
               Flexible(
                 flex: 1,
                 child: Padding(
@@ -99,7 +100,7 @@ class _DrawerScaffoldWidgetState extends State<DrawerScaffoldWidget>
                                 builder: (context) {
                                   return Scaffold(
                                     backgroundColor: Colors.transparent,
-                                    body: BuyProDialog(),
+                                    body: userOfferings.hasError ? ErrorDialog() : BuyProDialog(),
                                   );
                                 });
 

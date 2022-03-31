@@ -8,7 +8,7 @@
     "monthStat": "Hónap",
     "totalStat": "Teljes",
     "goalWeight": "Cél",
-    "goalRemaining": "Többi",
+    "goalRemaining": "Bal",
     "addGoal": "Kitűzni egy célt",
     "addRecord": "Adjon hozzá egy rekordot",
     "weightHint": "Súly",
@@ -35,5 +35,10 @@
     "nonBinary": "Nem bináris",
     "transGender": "Transznemű",
     "interSex": "Intersex",
-    "other": "Egyéb"
+    "other": "Egyéb",
+    "proOfferingDesc": "Korlátlan profilok és nem hirdetések",
+    "buy": "megvesz",
+    "purchaseError2": "Probléma volt a játékboltban",
+    "purchaseError20": "A fizetés függőben van.Kérjük, ellenőrizze a Play Store fiókját",
+    "purchaseSuccess": "Vásárlás sikeres"
 }

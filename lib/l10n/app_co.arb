@@ -8,7 +8,7 @@
     "monthStat": "Mese",
     "totalStat": "Totale",
     "goalWeight": "Scenura",
-    "goalRemaining": "Restendu",
+    "goalRemaining": "Manca",
     "addGoal": "Stabilisce un scopu",
     "addRecord": "Aghjustate un record",
     "weightHint": "Pesciu",
@@ -35,5 +35,10 @@
     "nonBinary": "Non binariu",
     "transGender": "Transgender",
     "interSex": "INTERSEX",
-    "other": "Altru"
+    "other": "Altru",
+    "proOfferingDesc": "Profili illimitati è nè annunci",
+    "buy": "compra",
+    "purchaseError2": "Ci hè statu un prublema cù a tenda di ghjocu",
+    "purchaseError20": "U pagamentu hè pendente.Per piacè verificate u vostru contu Play Store",
+    "purchaseSuccess": "Compra riescita"
 }

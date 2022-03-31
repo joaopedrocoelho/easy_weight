@@ -35,5 +35,10 @@
   "nonBinary": "Xジェンダー",
   "transGender": "トランスジェンダー",
   "interSex": "間性",
-  "other": "他"
+  "other": "他",
+  "proOfferingDesc": "無制限のプロファイル数と広告なし",
+  "buy": "今すぐ買う",
+  "purchaseError2": "Hube un problema con la Play Store. Por favor, inténtalo de nuevo.",
+  "purchaseError20": "El pagamento esta en proceso.",
+  "purchaseSuccess": "Compra exitosa!"
 }

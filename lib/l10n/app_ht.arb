@@ -8,7 +8,7 @@
     "monthStat": "Mwa",
     "totalStat": "Total",
     "goalWeight": "Gòl",
-    "goalRemaining": "Restan",
+    "goalRemaining": "Gòch",
     "addGoal": "Mete yon objektif",
     "addRecord": "Ajoute yon dosye",
     "weightHint": "Pwa",
@@ -35,5 +35,10 @@
     "nonBinary": "Ki pa binè",
     "transGender": "Troke",
     "interSex": "Intersex",
-    "other": "Lòt"
+    "other": "Lòt",
+    "proOfferingDesc": "Des san limit epi pa gen okenn anons",
+    "buy": "achte",
+    "purchaseError2": "Te gen yon pwoblèm ak magazen an Jwe",
+    "purchaseError20": "Peman an annatant.Tanpri tcheke kont Jwe Store ou",
+    "purchaseSuccess": "Achte siksè"
 }

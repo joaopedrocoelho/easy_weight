@@ -8,7 +8,7 @@
     "monthStat": "Meh",
     "totalStat": "Hemî",
     "goalWeight": "Armanc",
-    "goalRemaining": "Jiberma",
+    "goalRemaining": "Çep",
     "addGoal": "Armancek danîn",
     "addRecord": "Tomarek zêde bikin",
     "weightHint": "Pîvan",
@@ -35,5 +35,10 @@
     "nonBinary": "Non Binary",
     "transGender": "Transgender",
     "interSex": "Interex",
-    "other": "Yên din"
+    "other": "Yên din",
+    "proOfferingDesc": "Profîlên bêsînor û bê reklam",
+    "buy": "kirrîn",
+    "purchaseError2": "Di firotgeha lîstikê de pirsgirêkek çêbû",
+    "purchaseError20": "Dravê li benda ye.Ji kerema xwe hesabê Store Store-ê xwe kontrol bikin",
+    "purchaseSuccess": "Kirîna serfiraz"
 }

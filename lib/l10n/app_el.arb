@@ -8,14 +8,14 @@
     "monthStat": "Μήνας",
     "totalStat": "Σύνολο",
     "goalWeight": "Στόχος",
-    "goalRemaining": "Παραμένων",
+    "goalRemaining": "Αριστερά",
     "addGoal": "Ορίστε ένα στόχο",
     "addRecord": "Προσθέστε μια εγγραφή",
     "weightHint": "Βάρος",
     "weightError": "Παρακαλώ εισάγετε βάρος",
     "noteHint": "Προσθήκη σημείωσης",
     "cancelBtn": "Ματαίωση",
-    "saveBtn": "Σώσει",
+    "saveBtn": "Αποθηκεύσετε",
     "editRecord": "Επεξεργασία εγγραφής",
     "profiles": "Προφίλ",
     "noName": "ΧΩΡΙΣ ΟΝΟΜΑ",
@@ -35,5 +35,10 @@
     "nonBinary": "Μη δυαδικός",
     "transGender": "Τρανσέξουαλ",
     "interSex": "Intersex",
-    "other": "Αλλα"
+    "other": "Αλλα",
+    "proOfferingDesc": "Απεριόριστα προφίλ και δεν υπάρχουν διαφημίσεις",
+    "buy": "αγορά",
+    "purchaseError2": "Υπήρξε πρόβλημα με το κατάστημα αναπαραγωγής",
+    "purchaseError20": "Η πληρωμή εκκρεμεί.Ελέγξτε το λογαριασμό σας στο Play Store",
+    "purchaseSuccess": "Αγοράστε επιτυχία"
 }

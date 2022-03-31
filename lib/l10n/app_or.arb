@@ -8,7 +8,7 @@
     "monthStat": "ମାସ",
     "totalStat": "ସମୁଦାୟ",
     "goalWeight": "ଲକ୍ଷ୍ୟ",
-    "goalRemaining": "ଅବଶିଷ୍ଟ |",
+    "goalRemaining": "ବାମ",
     "addGoal": "ଏକ ଲକ୍ଷ୍ୟ ସ୍ଥିର କରନ୍ତୁ |",
     "addRecord": "ଏକ ରେକର୍ଡ ଯୋଡନ୍ତୁ |",
     "weightHint": "ଓଜନ",
@@ -35,5 +35,10 @@
     "nonBinary": "ଅଣ ବାଇନାରୀ |",
     "transGender": "ଟ୍ରାନ୍ସଜେଣ୍ଡର",
     "interSex": "ଆନ୍ତରିକ",
-    "other": "ଅନ୍ୟ"
+    "other": "ଅନ୍ୟ",
+    "proOfferingDesc": "ଅସୀମିତ ପ୍ରୋଫାଇଲ୍ ଏବଂ କ p ଣସି ବିଜ୍ଞାପନ ନାହିଁ |",
+    "buy": "କିଣ |",
+    "purchaseError2": "ପ୍ଲେ ଷ୍ଟୋରରେ ଏକ ସମସ୍ୟା ଥିଲା |",
+    "purchaseError20": "ଦେୟ ବିଚାରାଧୀନ ଅଛି |ଦୟାକରି ଆପଣଙ୍କର ନାଟକ ଷ୍ଟୋର ଆକାଉଣ୍ଟ ଯାଞ୍ଚ କରନ୍ତୁ |",
+    "purchaseSuccess": "ସଫଳ କିଣ |"
 }

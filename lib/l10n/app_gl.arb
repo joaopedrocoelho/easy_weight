@@ -5,10 +5,10 @@
     },
     "currentWeight": "Current.",
     "weekStat": "Semana",
-    "monthStat": "Mes.",
+    "monthStat": "Mes",
     "totalStat": "TOTAL.",
     "goalWeight": "Meta.",
-    "goalRemaining": "Restante",
+    "goalRemaining": "Esquerda.",
     "addGoal": "Definir un obxectivo",
     "addRecord": "Engade un rexistro",
     "weightHint": "Peso.",
@@ -23,7 +23,7 @@
     "height": "Altura",
     "birthday": "Aniversario",
     "color": "Cor.",
-    "pickColor": "Escolla unha cor.",
+    "pickColor": "Escolla unha cor",
     "addProfile": "Engade un perfil",
     "nameError": "Introduza un nome",
     "nameHint": "Nome",
@@ -35,5 +35,10 @@
     "nonBinary": "Non binario",
     "transGender": "Transgender.",
     "interSex": "Intersex",
-    "other": "Outra"
+    "other": "Outra",
+    "proOfferingDesc": "Perfís ilimitados e sen anuncios",
+    "buy": "Compra",
+    "purchaseError2": "Houbo un problema coa tenda de xogos",
+    "purchaseError20": "O pagamento está pendente.Comproba a túa conta de Play Store",
+    "purchaseSuccess": "Compra exitosa"
 }

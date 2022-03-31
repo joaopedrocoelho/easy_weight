@@ -8,7 +8,7 @@
     "monthStat": "মাস",
     "totalStat": "মোট",
     "goalWeight": "লক্ষ্য",
-    "goalRemaining": "অবশিষ্ট",
+    "goalRemaining": "বামে",
     "addGoal": "লক্ষ্য স্থির কর",
     "addRecord": "একটি রেকর্ড যোগ করুন",
     "weightHint": "ওজন",
@@ -35,5 +35,10 @@
     "nonBinary": "অ বাইনারি",
     "transGender": "ট্রান্সজেন্ডার",
     "interSex": "Intersex.",
-    "other": "অন্যান্য"
+    "other": "অন্যান্য",
+    "proOfferingDesc": "আনলিমিটেড প্রোফাইল এবং কোন বিজ্ঞাপন",
+    "buy": "কেনা",
+    "purchaseError2": "খেলার দোকান সঙ্গে একটি সমস্যা ছিল",
+    "purchaseError20": "পেমেন্ট মুলতুবি আছে।আপনার প্লে স্টোর অ্যাকাউন্ট চেক করুন",
+    "purchaseSuccess": "ক্রয় সফল"
 }

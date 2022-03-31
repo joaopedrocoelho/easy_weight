@@ -8,7 +8,7 @@
     "monthStat": "Kuu",
     "totalStat": "Kogusumma",
     "goalWeight": "Eesmärk",
-    "goalRemaining": "Järelejäänud",
+    "goalRemaining": "Lahkus",
     "addGoal": "Eesmärgi saavutama",
     "addRecord": "Lisa rekord",
     "weightHint": "Kaal",
@@ -18,7 +18,7 @@
     "saveBtn": "Säästa",
     "editRecord": "Redigeeri redigeeri",
     "profiles": "Profiilid",
-    "noName": "Pole nime",
+    "noName": "Nimi puudub",
     "gender": "sugu",
     "height": "kõrgus",
     "birthday": "sünnipäev",
@@ -35,5 +35,10 @@
     "nonBinary": "Mitte binaarne",
     "transGender": "Transseksuaal",
     "interSex": "Intersex",
-    "other": "Teine"
+    "other": "Teine",
+    "proOfferingDesc": "Piiramatu profiilide ja reklaame",
+    "buy": "ostma",
+    "purchaseError2": "Play Store'iga oli probleem",
+    "purchaseError20": "Makse on pooleli.Palun kontrollige oma mängupoe kontot",
+    "purchaseSuccess": "Ostke edukas"
 }

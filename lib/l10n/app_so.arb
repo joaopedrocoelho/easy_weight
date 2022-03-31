@@ -8,7 +8,7 @@
     "monthStat": "Bil",
     "totalStat": "Wadar ah",
     "goalWeight": "Himilo",
-    "goalRemaining": "Haraya",
+    "goalRemaining": "Bidix",
     "addGoal": "Deji yool",
     "addRecord": "Ku dar diiwaanka",
     "weightHint": "Culeys",
@@ -35,5 +35,10 @@
     "nonBinary": "Aan laba-laab",
     "transGender": "Translonder",
     "interSex": "Isku daawad",
-    "other": "Kale"
+    "other": "Kale",
+    "proOfferingDesc": "Macluumaad aan xadidneyn oo aan xayeysiis ah",
+    "buy": "soo iibin",
+    "purchaseError2": "Dhibaato ayaa ka dhacday dukaanka ciyaarta",
+    "purchaseError20": "Lacag bixinta ayaa la sugayaa.Fadlan hubi koontadaada dukaanka ciyaarta",
+    "purchaseSuccess": "Soo iibso guul"
 }

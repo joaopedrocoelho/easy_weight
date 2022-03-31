@@ -8,7 +8,7 @@
     "monthStat": "Mesec",
     "totalStat": "Skupaj.",
     "goalWeight": "Cilj",
-    "goalRemaining": "Preostalih",
+    "goalRemaining": "Levo",
     "addGoal": "Nastavite cilj",
     "addRecord": "Dodajte zapisnik",
     "weightHint": "Utež",
@@ -17,7 +17,7 @@
     "cancelBtn": "Prekliči",
     "saveBtn": "Shrani",
     "editRecord": "Edit Record.",
-    "profiles": "Profili",
+    "profiles": "Profili.",
     "noName": "Brez imena",
     "gender": "Spol",
     "height": "Višina",
@@ -35,5 +35,10 @@
     "nonBinary": "Ne binarna",
     "transGender": "Transgeender.",
     "interSex": "Intersex.",
-    "other": "Drugo"
+    "other": "Drugo",
+    "proOfferingDesc": "Neomejeni profili in brez oglasov",
+    "buy": "kupite",
+    "purchaseError2": "Prišlo je do težave s trgovino z igro",
+    "purchaseError20": "Plačilo je v teku.Preverite račun za igranje Play",
+    "purchaseSuccess": "Nakup uspešen."
 }

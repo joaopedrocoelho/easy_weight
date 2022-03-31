@@ -8,7 +8,7 @@
     "monthStat": "Mount",
     "totalStat": "Ganzen",
     "goalWeight": "Goalbesëtz",
-    "goalRemaining": "Sech bleiwen",
+    "goalRemaining": "Lénks",
     "addGoal": "E Zil gesat",
     "addRecord": "Füügt e Rekord",
     "weightHint": "Gewun Du",
@@ -35,5 +35,10 @@
     "nonBinary": "Net binär",
     "transGender": "Ektenderled Zill Zender",
     "interSex": "Intersex",
-    "other": "Aner"
+    "other": "Aner",
+    "proOfferingDesc": "Onlimitéiert Profiler a keng Annoncen",
+    "buy": "kaaf",
+    "purchaseError2": "Do war e Problem mam Play Store",
+    "purchaseError20": "D'Bezuelung ass ofhängeg.Préift w.e.g. Äre Play Store Kont",
+    "purchaseSuccess": "Kaaft erfollegräich"
 }

@@ -3,12 +3,12 @@
     "@addCurrentWeight": {
         "description": "When the user has no weight records."
     },
-    "currentWeight": "Strøm",
+    "currentWeight": "Nåværende",
     "weekStat": "Uke",
     "monthStat": "Måned",
     "totalStat": "Total",
     "goalWeight": "Mål",
-    "goalRemaining": "Gjenstående",
+    "goalRemaining": "Venstre",
     "addGoal": "Sette et mål",
     "addRecord": "Legg til en post",
     "weightHint": "Vekt",
@@ -35,5 +35,10 @@
     "nonBinary": "Ikke-binær",
     "transGender": "Transseksuell",
     "interSex": "Intersex.",
-    "other": "Annen"
+    "other": "Annen",
+    "proOfferingDesc": "Ubegrenset profiler og ingen annonser",
+    "buy": "kjøpe",
+    "purchaseError2": "Det var et problem med Play Store",
+    "purchaseError20": "Betalingen er ventet.Vennligst sjekk din Play Store-konto",
+    "purchaseSuccess": "Kjøp vellykket"
 }

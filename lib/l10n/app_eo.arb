@@ -8,7 +8,7 @@
     "monthStat": "Monato",
     "totalStat": "Totalo",
     "goalWeight": "Celo",
-    "goalRemaining": "Restante",
+    "goalRemaining": "Maldekstre",
     "addGoal": "Ŝanĝu celon",
     "addRecord": "Aldonu rekordon",
     "weightHint": "Pezo",
@@ -35,5 +35,10 @@
     "nonBinary": "Ne duuma",
     "transGender": "Transgenrulo",
     "interSex": "Intersex",
-    "other": "Alia"
+    "other": "Alia",
+    "proOfferingDesc": "Senlima profiloj kaj neniuj reklamoj",
+    "buy": "Aĉeti",
+    "purchaseError2": "Estis problemo kun la Play Store",
+    "purchaseError20": "La pago estas pritraktata.Bonvolu kontroli vian konton pri ludado",
+    "purchaseSuccess": "Aĉeto sukcesa"
 }

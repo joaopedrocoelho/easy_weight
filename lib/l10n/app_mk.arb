@@ -8,7 +8,7 @@
     "monthStat": "Месец",
     "totalStat": "Вкупно",
     "goalWeight": "Цел",
-    "goalRemaining": "Останува",
+    "goalRemaining": "Лево",
     "addGoal": "Поставете цел",
     "addRecord": "Додај рекорд",
     "weightHint": "Тежина",
@@ -35,5 +35,10 @@
     "nonBinary": "Не бинарни",
     "transGender": "Трансгендер",
     "interSex": "Intersex",
-    "other": "Друго"
+    "other": "Друго",
+    "proOfferingDesc": "Неограничени профили и нема реклами",
+    "buy": "Купи",
+    "purchaseError2": "Имаше проблем со Play Store",
+    "purchaseError20": "Плаќањето е во тек.Ве молиме проверете ја вашата сметка за Play Store",
+    "purchaseSuccess": "Набавка успешно"
 }

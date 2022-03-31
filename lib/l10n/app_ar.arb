@@ -3,12 +3,12 @@
     "@addCurrentWeight": {
         "description": "When the user has no weight records."
     },
-    "currentWeight": "تيار",
+    "currentWeight": "حاضر",
     "weekStat": "أسبوع",
     "monthStat": "شهر",
-    "totalStat": "مجموع",
+    "totalStat": "المجموع",
     "goalWeight": "المرمى",
-    "goalRemaining": "متبقي",
+    "goalRemaining": "غادر",
     "addGoal": "ضع هدف",
     "addRecord": "إضافة سجل",
     "weightHint": "وزن",
@@ -19,7 +19,7 @@
     "editRecord": "تحرير سجل",
     "profiles": "مظهر",
     "noName": "لا اسم",
-    "gender": "جنس تذكير أو تأنيث",
+    "gender": "جنس",
     "height": "ارتفاع",
     "birthday": "عيد الميلاد",
     "color": "اللون",
@@ -35,5 +35,10 @@
     "nonBinary": "غير ثنائي",
     "transGender": "transgender.",
     "interSex": "وينلس",
-    "other": "آخر"
+    "other": "آخر",
+    "proOfferingDesc": "لمحات غير محدودة ولا إعلانات",
+    "buy": "يشترى",
+    "purchaseError2": "كانت هناك مشكلة في متجر اللعب",
+    "purchaseError20": "الدفعة معلقة.يرجى التحقق من حساب متجر اللعب الخاص بك",
+    "purchaseSuccess": "شراء ناجحة"
 }

@@ -8,7 +8,7 @@
     "monthStat": "ເດືອນ",
     "totalStat": "ທັງຫມົດ",
     "goalWeight": "ເປົ້າຫມາຍ",
-    "goalRemaining": "ທີ່ຍັງເຫຼືອ",
+    "goalRemaining": "ກ່ໍາ",
     "addGoal": "ກໍານົດເປົ້າຫມາຍ",
     "addRecord": "ຕື່ມການບັນທຶກ",
     "weightHint": "ນ້ໍາຫນັກ",
@@ -35,5 +35,10 @@
     "nonBinary": "ບໍ່ແມ່ນຖານສອງ",
     "transGender": "ຜູ້ຢິງຫັນເປັນ",
     "interSex": "Intheex",
-    "other": "ອື່ນ"
+    "other": "ອື່ນ",
+    "proOfferingDesc": "ຂໍ້ມູນທີ່ບໍ່ຈໍາກັດແລະບໍ່ມີໂຄສະນາ",
+    "buy": "ຊື້",
+    "purchaseError2": "ມີປັນຫາກັບການຫຼີ້ນຫຼີ້ນ",
+    "purchaseError20": "ການຈ່າຍເງິນແມ່ນຍັງຄ້າງຢູ່.ກະລຸນາກວດເບິ່ງບັນຊີ Play Store ຂອງທ່ານ",
+    "purchaseSuccess": "ການຊື້ທີ່ປະສົບຜົນສໍາເລັດ"
 }

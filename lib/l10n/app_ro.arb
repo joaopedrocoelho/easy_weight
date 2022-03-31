@@ -8,7 +8,7 @@
     "monthStat": "Lună",
     "totalStat": "Total",
     "goalWeight": "Poartă",
-    "goalRemaining": "Rămas",
+    "goalRemaining": "Stânga",
     "addGoal": "Setează un scop",
     "addRecord": "Adăugați o înregistrare",
     "weightHint": "Greutate",
@@ -35,5 +35,10 @@
     "nonBinary": "Non binar",
     "transGender": "Transgender.",
     "interSex": "Intersex.",
-    "other": "Alte"
+    "other": "Alte",
+    "proOfferingDesc": "Profiluri nelimitate și fără anunțuri",
+    "buy": "Cumpără",
+    "purchaseError2": "A apărut o problemă cu magazinul de joc",
+    "purchaseError20": "Plata este în așteptare.Verificați contul magazinului de joc",
+    "purchaseSuccess": "Achiziționarea de succes"
 }

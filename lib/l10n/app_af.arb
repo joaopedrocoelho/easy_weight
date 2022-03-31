@@ -8,7 +8,7 @@
     "monthStat": "Maand",
     "totalStat": "Totaal",
     "goalWeight": "Doel",
-    "goalRemaining": "Oorblywend",
+    "goalRemaining": "Links",
     "addGoal": "Stel 'n doel",
     "addRecord": "Voeg 'n rekord by",
     "weightHint": "Gewig",
@@ -35,5 +35,10 @@
     "nonBinary": "Nie binêr",
     "transGender": "Transgender",
     "interSex": "Tussensex",
-    "other": "Ander"
+    "other": "Ander",
+    "proOfferingDesc": "Onbeperkte profiele en geen advertensies nie",
+    "buy": "koop",
+    "purchaseError2": "Daar was 'n probleem met die speelwinkel",
+    "purchaseError20": "Die betaling is hangende.Gaan asseblief jou speelwinkelrekening na",
+    "purchaseSuccess": "Koop suksesvol"
 }
