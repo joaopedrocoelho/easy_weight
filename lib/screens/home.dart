@@ -92,6 +92,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                     note: context.watch<ButtonMode>().note,
                     records: records,
                   ),
+                  resizeToAvoidBottomInset: false,
                 );
               });
         } else {
@@ -99,6 +100,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
               context: context,
               builder: (context) {
                 return Scaffold(
+                   resizeToAvoidBottomInset: false,
                   backgroundColor: Colors.transparent,
                   body: AddRecord(
                     records: records,
@@ -110,7 +112,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
 
       return Scaffold(
         key: _scaffoldKey,
-        resizeToAvoidBottomInset: true,
+        resizeToAvoidBottomInset: false,
         drawer: DrawerScaffoldWidget(),
         body: SafeArea(
           child: Column(
@@ -144,6 +146,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                   context: context,
                                   builder: (context) {
                                     return Scaffold(
+                                       resizeToAvoidBottomInset: false,
                                       backgroundColor: Colors.transparent,
                                       body: EditGoal(
                                         profileId:

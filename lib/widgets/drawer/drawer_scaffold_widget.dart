@@ -76,6 +76,7 @@ class _DrawerScaffoldWidgetState extends State<DrawerScaffoldWidget>
 
     return Consumer2<ProfilesListModel, UserOfferings>(builder: (context, profilesList, userOfferings, child) {
       return Scaffold(
+         resizeToAvoidBottomInset: false,
         body: SafeArea(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -99,6 +100,7 @@ class _DrawerScaffoldWidgetState extends State<DrawerScaffoldWidget>
                                 context: context,
                                 builder: (context) {
                                   return Scaffold(
+                                     resizeToAvoidBottomInset: false,
                                     backgroundColor: Colors.transparent,
                                     body: userOfferings.hasError ? ErrorDialog() : BuyProDialog(),
                                   );

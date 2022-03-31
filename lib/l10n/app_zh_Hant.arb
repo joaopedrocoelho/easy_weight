@@ -37,5 +37,8 @@
   "interSex": "雙性人",
   "other": "其他",
   "proOfferingDesc": "無限個人資料，無廣告",
-  "buy": "購買"
+  "buy": "購買",
+  "purchaseError2": "當Play Store發生問題。",
+  "purchaseError20": "付款交易尚未完成. 請檢查你的Play Store帳戶。",
+  "purchaseSuccess": "購買成功。"
 }

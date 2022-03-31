@@ -1,4 +1,5 @@
 {
+    "@@locale":"hmn",
     "addCurrentWeight": "Ntxiv koj qhov nyhav tam sim no kom pib",
     "@addCurrentWeight": {
         "description": "When the user has no weight records."
