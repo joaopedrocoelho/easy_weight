@@ -8,7 +8,7 @@
     "monthStat": "مهينو",
     "totalStat": "ڪل",
     "goalWeight": "مقصد",
-    "goalRemaining": "جيٽهاٽ",
+    "goalRemaining": "کاٻو",
     "addGoal": "مقصد مقرر ڪريو",
     "addRecord": "رڪارڊ شامل ڪيو",
     "weightHint": "وزن جو وزن",
@@ -35,5 +35,10 @@
     "nonBinary": "غير بصر",
     "transGender": "ٽرانسگيڊر",
     "interSex": "داخل ٿيو",
-    "other": "ٻيو"
+    "other": "ٻيو",
+    "proOfferingDesc": "لامحدود پروفائيل ۽ ڪوبه اشتهار نه",
+    "buy": "خريداري ڪريو",
+    "purchaseError2": "راند جي دڪان سان هڪ مسئلو هو",
+    "purchaseError20": "ادائيگي رڪيل آهي.مهرباني ڪري پنهنجو راند اسٽور اڪائونٽ چيڪ ڪريو",
+    "purchaseSuccess": "ڪامياب ڪامياب"
 }

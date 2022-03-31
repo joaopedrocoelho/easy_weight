@@ -8,7 +8,7 @@
     "monthStat": "Ай",
     "totalStat": "Бардыгы",
     "goalWeight": "Максат",
-    "goalRemaining": "Калган",
+    "goalRemaining": "Сол",
     "addGoal": "Максат коюу",
     "addRecord": "Жазууну кошуу",
     "weightHint": "Салмагы",
@@ -35,5 +35,10 @@
     "nonBinary": "Экилик эмес",
     "transGender": "Трансдар",
     "interSex": "Intersex",
-    "other": "Башка"
+    "other": "Башка",
+    "proOfferingDesc": "Чексиз профилдер жана жарнамалар жок",
+    "buy": "сатып алуу",
+    "purchaseError2": "Play Store дүкөнүндө көйгөй пайда болду",
+    "purchaseError20": "Төлөм күтүлүүдө.Сураныч, Play Store каттоо эсебиңизди текшериңиз",
+    "purchaseSuccess": "Ийгиликтүү сатып алуу"
 }

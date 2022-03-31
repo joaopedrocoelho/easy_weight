@@ -8,7 +8,7 @@
     "monthStat": "Ամիս",
     "totalStat": "Ընդհանուր",
     "goalWeight": "Գոլ",
-    "goalRemaining": "Մնացած",
+    "goalRemaining": "Ձախ",
     "addGoal": "Նպատակը սահմանեք",
     "addRecord": "Ձայնագրություն ավելացնել",
     "weightHint": "Քաշ",
@@ -35,5 +35,10 @@
     "nonBinary": "Ոչ երկուական",
     "transGender": "Տրանսգենդեր",
     "interSex": "Intersex",
-    "other": "Այլ"
+    "other": "Այլ",
+    "proOfferingDesc": "Անսահմանափակ պրոֆիլներ եւ ոչ մի գովազդ",
+    "buy": "գնել",
+    "purchaseError2": "Play Store- ի հետ կապված խնդիր է առաջացել",
+    "purchaseError20": "Վճարը սպասվում է:Խնդրում ենք ստուգել ձեր Play խանութի հաշիվը",
+    "purchaseSuccess": "Գնեք հաջող"
 }

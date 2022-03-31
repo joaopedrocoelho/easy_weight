@@ -1,5 +1,5 @@
 import 'package:easy_weight/utils/logger_instace.dart';
-import 'package:flutter/material.dart';
+
 import 'package:easy_weight/models/button_mode.dart';
 import 'package:easy_weight/models/records_model.dart';
 import 'package:easy_weight/models/weight_record.dart';
@@ -18,13 +18,13 @@ class EditButtons extends StatefulWidget {
 }
 
 class _EditButtonsState extends State<EditButtons> {
-  bool _editVisibility = false;
+  /* bool _editVisibility = false; */
 
   Future deleteRecordFromDB(WeightRecord deletedRecord) async {
     await RecordsDatabase.instance.deleteRecord(deletedRecord);
   }
 
-  void _setEditVisible() {
+  /* void _setEditVisible() {
     Future.delayed(Duration(milliseconds: 100), () {
       setState(() {
         _editVisibility = true;
@@ -38,7 +38,7 @@ class _EditButtonsState extends State<EditButtons> {
         _editVisibility = false;
       });
     });
-  }
+  } */
 
   @override
   Widget build(BuildContext context) {

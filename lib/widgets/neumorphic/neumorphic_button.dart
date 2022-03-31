@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 
 class NeuButton extends StatefulWidget {
@@ -20,7 +20,7 @@ class NeuButton extends StatefulWidget {
 }
 
 class _NeuButtonState extends State<NeuButton> {
-  double _opacity = 0;
+  //double _opacity = 0;
   Tween<double> _startAnimation = Tween<double>(begin: 0, end: 5);
   Tween<double> _reverseAnimation = Tween<double>(begin: 5, end: 0);
 
@@ -29,7 +29,7 @@ class _NeuButtonState extends State<NeuButton> {
     super.initState();
   }
 
-  void _setVisible() {
+  /* void _setVisible() {
     
       setState(() {
         _opacity = 1;
@@ -40,7 +40,7 @@ class _NeuButtonState extends State<NeuButton> {
   void _setInvisible() {
     _opacity = 0;
   }
-
+ */
  
 
   @override

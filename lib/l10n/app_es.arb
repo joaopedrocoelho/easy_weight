@@ -35,5 +35,10 @@
   "nonBinary": "No binario",
   "transGender": "Transgénero",
   "interSex": "Intersexual",
-  "other": "Otro"
+  "other": "Otro",
+  "proOfferingDesc": "Perfiles ilimitados y sin publicidad",
+  "buy": "comprar",
+  "purchaseError2": "Hube un problema con la Play Store. Por favor, inténtalo de nuevo.",
+  "purchaseError20": "El pagamento esta en proceso.",
+  "purchaseSuccess": "Compra exitosa!"
 }

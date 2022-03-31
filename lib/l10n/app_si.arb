@@ -3,12 +3,12 @@
     "@addCurrentWeight": {
         "description": "When the user has no weight records."
     },
-    "currentWeight": "වත්මන්",
+    "currentWeight": "වර්තමාන",
     "weekStat": "සතිය",
     "monthStat": "මාසික",
-    "totalStat": "සමස්ත",
+    "totalStat": "මුළු",
     "goalWeight": "ඉලක්කය",
-    "goalRemaining": "ඉතිරිව ඇත",
+    "goalRemaining": "වමට",
     "addGoal": "ඉලක්කයක් තබා",
     "addRecord": "වාර්තාවක් එක් කරන්න",
     "weightHint": "බර",
@@ -35,5 +35,10 @@
     "nonBinary": "ද්විමය නොවන",
     "transGender": "ට්රාන්ස්ජර්",
     "interSex": "අන්තර්?",
-    "other": "වෙනත්"
+    "other": "වෙනත්",
+    "proOfferingDesc": "අසීමිත පැතිකඩක් සහ දැන්වීම් නොමැත",
+    "buy": "මිලදී ගන්න",
+    "purchaseError2": "ක්රීඩා ගබඩාවේ ගැටලුවක් විය",
+    "purchaseError20": "ගෙවීම විභාග වෙමින් පවතී.කරුණාකර ඔබේ ක්රීඩා වෙළඳසැල් ගිණුම පරීක්ෂා කරන්න",
+    "purchaseSuccess": "මිලදී ගැනීම සාර්ථකයි"
 }

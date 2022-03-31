@@ -8,7 +8,7 @@
     "monthStat": "Mėnuo",
     "totalStat": "Iš viso. \\ T",
     "goalWeight": "Įvartis",
-    "goalRemaining": "Likęs",
+    "goalRemaining": "Kairėje",
     "addGoal": "Nustatyti tikslą",
     "addRecord": "Įrašykite įrašą",
     "weightHint": "Svoris",
@@ -35,5 +35,10 @@
     "nonBinary": "Ne dvejetainis",
     "transGender": "Transseksualas",
     "interSex": "Intersex.",
-    "other": "Kita"
+    "other": "Kita",
+    "proOfferingDesc": "Neribotos profiliai ir nėra skelbimų",
+    "buy": "Pirkti",
+    "purchaseError2": "Su žaidimų parduotuvėje buvo problema",
+    "purchaseError20": "Mokėjimas laukia.Patikrinkite savo \"Play Store\" paskyrą",
+    "purchaseSuccess": "Įsigyti sėkmingą"
 }

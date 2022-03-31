@@ -1,5 +1,4 @@
 {
-    "@@locale": "ceb",
     "addCurrentWeight": "Idugang ang imong gibug-aton sa karon nga timbang",
     "@addCurrentWeight": {
         "description": "When the user has no weight records."
@@ -9,7 +8,7 @@
     "monthStat": "Buwan",
     "totalStat": "Katibuk-an",
     "goalWeight": "Tumong",
-    "goalRemaining": "Nabilin",
+    "goalRemaining": "Sa wala",
     "addGoal": "Paghimo usa ka Tumong",
     "addRecord": "Pagdugang usa ka rekord",
     "weightHint": "Gibug-aton",
@@ -36,5 +35,10 @@
     "nonBinary": "Dili binary",
     "transGender": "Transney",
     "interSex": "Intersex",
-    "other": "Lain"
+    "other": "Lain",
+    "proOfferingDesc": "Walay kutub nga mga profiles ug wala'y mga ad",
+    "buy": "mopalit",
+    "purchaseError2": "Adunay problema sa Play Store",
+    "purchaseError20": "Ang pagbayad pending.Palihug susihon ang imong account sa Tindahan sa Play",
+    "purchaseSuccess": "Malampuson ang pagpalit"
 }

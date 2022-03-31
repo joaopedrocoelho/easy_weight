@@ -8,7 +8,7 @@
     "monthStat": "Месец дана",
     "totalStat": "Тотално",
     "goalWeight": "Голман",
-    "goalRemaining": "Преостали",
+    "goalRemaining": "Лево",
     "addGoal": "Поставили циљ",
     "addRecord": "Додајте запис",
     "weightHint": "Тежина",
@@ -35,5 +35,10 @@
     "nonBinary": "Који не бинарни",
     "transGender": "Трансрондер",
     "interSex": "Интерсекса",
-    "other": "Други"
+    "other": "Други",
+    "proOfferingDesc": "Неограничени профили и без огласа",
+    "buy": "купити",
+    "purchaseError2": "Дошло је до проблема са продавницом Плаи",
+    "purchaseError20": "Плаћање је у току.Проверите свој рачун Плаи Сторе",
+    "purchaseSuccess": "Куповина успешног"
 }

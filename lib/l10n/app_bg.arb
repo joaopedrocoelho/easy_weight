@@ -8,7 +8,7 @@
     "monthStat": "Месец",
     "totalStat": "Обща сума",
     "goalWeight": "Цел",
-    "goalRemaining": "Оставащ",
+    "goalRemaining": "Наляво",
     "addGoal": "Постави си цел",
     "addRecord": "Добавете запис",
     "weightHint": "Тегло",
@@ -30,10 +30,15 @@
     "emojiHint": "Емоджи",
     "editProfile": "Редактирай профил",
     "deleteProfileDialog": "Сигурни ли сте, че искате да изтриете този профил?",
-    "male": "Мъжки пол",
+    "male": "Мъжки",
     "female": "Женски пол",
     "nonBinary": "Не двоичен",
     "transGender": "Транссексуален",
     "interSex": "Intersex.",
-    "other": "ДРУГИ"
+    "other": "ДРУГИ",
+    "proOfferingDesc": "Неограничени профили и без реклами",
+    "buy": "Купува",
+    "purchaseError2": "Имаше проблем с магазина за игра",
+    "purchaseError20": "Плащането е висящо.Моля, проверете профила си в магазина за игра",
+    "purchaseSuccess": "Купете успешен"
 }

@@ -8,7 +8,7 @@
     "monthStat": "Masina",
     "totalStat": "Atoa",
     "goalWeight": "Sini",
-    "goalRemaining": "Totoe",
+    "goalRemaining": "Taumatau",
     "addGoal": "Seti se sini",
     "addRecord": "Faaopopo se faamaumauga",
     "weightHint": "Mamafa",
@@ -35,5 +35,10 @@
     "nonBinary": "Le binary",
     "transGender": "Traggender",
     "interSex": "Intertlox",
-    "other": "Isi"
+    "other": "Isi",
+    "proOfferingDesc": "Faʻatapulaʻaina faʻamatalaga ma leai ni faʻasalalauga",
+    "buy": "faatau",
+    "purchaseError2": "Sa i ai le faafitauli i le faleoloa taalo",
+    "purchaseError20": "O le totogi o loʻo talia.Faʻamolemole siaki lau meaʻai faleoloa",
+    "purchaseSuccess": "Faʻataunuʻuina manuia"
 }

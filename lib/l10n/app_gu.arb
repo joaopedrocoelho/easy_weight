@@ -35,5 +35,10 @@
     "nonBinary": "બિન-દ્વિસંગી",
     "transGender": "ટ્રાન્સજેન્ડર",
     "interSex": "Intersex",
-    "other": "અન્ય"
+    "other": "અન્ય",
+    "proOfferingDesc": "અનલિમિટેડ પ્રોફાઇલ્સ અને કોઈ જાહેરાતો",
+    "buy": "ખરીદો",
+    "purchaseError2": "પ્લે સ્ટોરમાં એક સમસ્યા હતી",
+    "purchaseError20": "ચુકવણી બાકી છે.કૃપા કરીને તમારા પ્લે સ્ટોર એકાઉન્ટને તપાસો",
+    "purchaseSuccess": "સફળ ખરીદી"
 }

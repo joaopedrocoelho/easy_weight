@@ -19,7 +19,7 @@ class GoalStatsContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var theme = NeumorphicTheme.currentTheme(context);
+    //var theme = NeumorphicTheme.currentTheme(context);
 
     return Consumer3<GoalModel, WeightUnit, RecordsListModel>(
         builder: (context, goalModel, unit, records, child) {

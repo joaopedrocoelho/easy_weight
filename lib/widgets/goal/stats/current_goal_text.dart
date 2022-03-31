@@ -1,6 +1,6 @@
 
 import 'package:easy_weight/utils/convert_unit.dart';
-import 'package:easy_weight/utils/logger_instace.dart';
+
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:easy_weight/models/goal_model.dart';

@@ -7,8 +7,8 @@
     "weekStat": "Minggu",
     "monthStat": "Bulan",
     "totalStat": "Jumlahnya",
-    "goalWeight": "Tujuan",
-    "goalRemaining": "Yang tinggal",
+    "goalWeight": "Matlamat",
+    "goalRemaining": "Meninggalkan",
     "addGoal": "Tetapkan matlamat",
     "addRecord": "Tambah rekod",
     "weightHint": "Berat",
@@ -35,5 +35,10 @@
     "nonBinary": "Bukan perduaan",
     "transGender": "Transgender.",
     "interSex": "Intersex.",
-    "other": "Lain"
+    "other": "Lain",
+    "proOfferingDesc": "Profil yang tidak terhad dan tiada iklan",
+    "buy": "beli",
+    "purchaseError2": "Terdapat masalah dengan Play Store",
+    "purchaseError20": "Bayaran belum selesai.Sila semak akaun Play Store anda",
+    "purchaseSuccess": "Pembelian berjaya"
 }

@@ -21,7 +21,7 @@ class EditWeightTextField extends StatefulWidget {
 }
 
 class _EditWeightTextFieldState extends State<EditWeightTextField> {
-  TextEditingController _textController = TextEditingController();
+  //TextEditingController _textController = TextEditingController();
 
  
 

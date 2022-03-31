@@ -1,8 +1,6 @@
 import 'package:easy_weight/models/db/profiles_table.dart';
-import 'package:easy_weight/models/records_model.dart';
-import 'package:easy_weight/utils/logger_instace.dart';
+
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 enum Gender {
   male,
@@ -36,23 +34,23 @@ Gender getGender(String? gender) {
       return Gender.transgender;
     case "intersex":
       return Gender.intersex;
-    case  "other":
+    case "other":
       return Gender.other;
     case "undefined":
-      return Gender.undefined;  
+      return Gender.undefined;
     default:
       return Gender.undefined;
   }
 }
 
 Color getColor(String colorFromDB) {
-  
-  RegExp getColorvalue = RegExp(r'(?<=MaterialColor\(primary value: Color\()[\w\d]*');
+  RegExp getColorvalue =
+      RegExp(r'(?<=MaterialColor\(primary value: Color\()[\w\d]*');
   String color = getColorvalue.stringMatch(colorFromDB).toString();
   //logger.i("parsing profile color from DB:$colorFromDB", color);
 
-  return  color != 'null' ? Color(int.parse(color)) : Colors.transparent;
-  }
+  return color != 'null' ? Color(int.parse(color)) : Colors.transparent;
+}
 
 class Profile {
   final int? id;
@@ -64,46 +62,43 @@ class Profile {
   final Color? color;
   //final RecordsListModel records;
 
-  //Profile constructor 
-   const Profile({
-    this.id,
-    this.name,
-    this.emoji,
-    this.gender,
-    this.height,
-    this.birthday,
-    this.color
-   });
+  //Profile constructor
+  const Profile(
+      {this.id,
+      this.name,
+      this.emoji,
+      this.gender,
+      this.height,
+      this.birthday,
+      this.color});
 
   Map<String, dynamic> toJson() => {
-    ProfileFields.id: this.id,
-    ProfileFields.name: this.name,
-    ProfileFields.birthday: this.birthday != null ? this.birthday!.millisecondsSinceEpoch.toString(): '',
-    ProfileFields.emoji: this.emoji,
-    ProfileFields.gender: this.gender.toString().split('.').last,
-    ProfileFields.height: this.height,
-    ProfileFields.color: this.color.toString(),
-  };
-
+        ProfileFields.id: this.id,
+        ProfileFields.name: this.name,
+        ProfileFields.birthday: this.birthday != null
+            ? this.birthday!.millisecondsSinceEpoch.toString()
+            : '',
+        ProfileFields.emoji: this.emoji,
+        ProfileFields.gender: this.gender.toString().split('.').last,
+        ProfileFields.height: this.height,
+        ProfileFields.color: this.color.toString(),
+      };
 }
 
 List<Profile> toProfileList(List<Map<String, dynamic>> profiles) {
-
-  
   return profiles.map((profile) {
-    
-   
-    return Profile
-      (
-      id: profile[ProfileFields.id],
-      name: profile[ProfileFields.name],
-      emoji: profile[ProfileFields.emoji],
-      gender: getGender(profile[ProfileFields.gender]),
-      height: profile[ProfileFields.height],
-      birthday: profile[ProfileFields.birthday] != '' ? DateTime.fromMillisecondsSinceEpoch(int.parse(profile[ProfileFields.birthday])) : null,
-      color: profile[ProfileFields.color] != 'null' ? getColor(profile['color']) : null
-      );
-          
+    return Profile(
+        id: profile[ProfileFields.id],
+        name: profile[ProfileFields.name],
+        emoji: profile[ProfileFields.emoji],
+        gender: getGender(profile[ProfileFields.gender]),
+        height: profile[ProfileFields.height],
+        birthday: profile[ProfileFields.birthday] != ''
+            ? DateTime.fromMillisecondsSinceEpoch(
+                int.parse(profile[ProfileFields.birthday]))
+            : null,
+        color: profile[ProfileFields.color] != 'null'
+            ? getColor(profile['color'])
+            : null);
   }).toList();
 }
-

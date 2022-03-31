@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
+
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:easy_weight/widgets/goal/stats/current_goal_text.dart';
-import 'package:provider/provider.dart';
+
 
 class DisabledGoal extends StatelessWidget {
   const DisabledGoal({Key? key}) : super(key: key);

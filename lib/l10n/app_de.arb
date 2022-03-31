@@ -3,18 +3,18 @@
     "@addCurrentWeight": {
         "description": "When the user has no weight records."
     },
-    "currentWeight": "Strom",
+    "currentWeight": "Aktuell",
     "weekStat": "Woche",
     "monthStat": "Monat",
     "totalStat": "Gesamt",
     "goalWeight": "Ziel",
-    "goalRemaining": "Verbleibend",
+    "goalRemaining": "Links",
     "addGoal": "Ein Ziel setzen",
     "addRecord": "Rekord hinzufügen",
     "weightHint": "Gewicht",
     "weightError": "Bitte geben Sie an Gewicht.",
     "noteHint": "Notiz hinzufügen",
-    "cancelBtn": "Abbrechen",
+    "cancelBtn": "Stornieren",
     "saveBtn": "Speichern",
     "editRecord": "Rekord bearbeiten",
     "profiles": "Profile",
@@ -35,5 +35,10 @@
     "nonBinary": "Nicht binär",
     "transGender": "Transgender",
     "interSex": "Intex",
-    "other": "Andere"
+    "other": "Andere",
+    "proOfferingDesc": "Unbegrenzte Profile und keine Anzeigen",
+    "buy": "Kaufen",
+    "purchaseError2": "Es gab ein Problem mit dem Spielladen",
+    "purchaseError20": "Die Zahlung ist anhängig.Bitte überprüfen Sie Ihr Play-Shop-Konto",
+    "purchaseSuccess": "Erfolgreich erwerben"
 }

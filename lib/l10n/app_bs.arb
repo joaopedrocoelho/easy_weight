@@ -8,7 +8,7 @@
     "monthStat": "Mjesec",
     "totalStat": "Ukupno",
     "goalWeight": "Gol",
-    "goalRemaining": "Preostao",
+    "goalRemaining": "Lijevo",
     "addGoal": "Postaviti cilj",
     "addRecord": "Dodajte zapis",
     "weightHint": "Težina",
@@ -35,5 +35,10 @@
     "nonBinary": "Ne binaran",
     "transGender": "Transroditi",
     "interSex": "Intersex",
-    "other": "Drugi"
+    "other": "Drugi",
+    "proOfferingDesc": "Neograničeni profili i nema oglasa",
+    "buy": "kupiti",
+    "purchaseError2": "Došlo je do problema sa trgovinama Play",
+    "purchaseError20": "Plaćanje je u toku.Molimo provjerite svoj račun za reprodukciju",
+    "purchaseSuccess": "Kupovina uspješna"
 }

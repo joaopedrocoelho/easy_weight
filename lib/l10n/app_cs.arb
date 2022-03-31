@@ -3,14 +3,14 @@
     "@addCurrentWeight": {
         "description": "When the user has no weight records."
     },
-    "currentWeight": "Aktuální",
+    "currentWeight": "Proud",
     "weekStat": "Týden",
     "monthStat": "Měsíc",
     "totalStat": "Celkový",
     "goalWeight": "Fotbalová branka",
-    "goalRemaining": "Zbývající",
+    "goalRemaining": "Vlevo, odjet",
     "addGoal": "Nastavte cíl",
-    "addRecord": "Přidat záznam.",
+    "addRecord": "Přidat záznam",
     "weightHint": "Hmotnost",
     "weightError": "Zadejte váhu",
     "noteHint": "Přidat poznámku",
@@ -35,5 +35,10 @@
     "nonBinary": "Non binární",
     "transGender": "Transgender",
     "interSex": "Intersex.",
-    "other": "jiný"
+    "other": "jiný",
+    "proOfferingDesc": "Neomezené profily a žádné reklamy",
+    "buy": "Koupit",
+    "purchaseError2": "Došlo k problému s obchodem",
+    "purchaseError20": "Platba probíhá.Zkontrolujte prosím účet Play Store",
+    "purchaseSuccess": "Nákup úspěšnosti"
 }

@@ -1,4 +1,6 @@
+
 import 'package:easy_weight/models/ad_state.dart';
+import 'package:easy_weight/models/offerings.dart';
 
 import 'package:easy_weight/models/profile_model.dart';
 import 'package:easy_weight/models/profiles_list_model.dart';
@@ -27,9 +29,12 @@ import 'package:purchases_flutter/purchases_flutter.dart';
 
 Future<void> initPlatformState() async {
   await Purchases.setDebugLogsEnabled(true);
+  await dotenv.load();
+  
   
   if (Platform.isAndroid) {
-    await Purchases.setup(DotEnv().env['REVENUECAT_API_KEY_ANDROID']!);
+    await Purchases.setup(dotenv.env['REVENUECAT_API_KEY_ANDROID']!);
+  
   } 
   }
 
@@ -38,10 +43,16 @@ Future<void> initPlatformState() async {
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   
-  await DotEnv().load(fileName: ".env");
+  
   final initFuture = MobileAds.instance.initialize();
   final adState = AdState(initFuture);
+  initPlatformState();
   await UserSettings.init();
+
+
+  RequestConfiguration configuration =
+       RequestConfiguration(testDeviceIds: ["5FF7A87077B616B2B64C1BBCAD7019BB"]);
+  MobileAds.instance.updateRequestConfiguration(configuration);
 
   runApp(Provider.value(value: adState, builder: (context, child) => MyApp()));
 }
@@ -85,6 +96,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider(create: (context) => UserOfferings()),
         ChangeNotifierProvider(create: (context) => RecordsListModel()),
         ChangeNotifierProvider(create: (context) => GoalModel()),
         ChangeNotifierProvider(create: (context) => ProfilesListModel()),

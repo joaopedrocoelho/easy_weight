@@ -1,13 +1,12 @@
 import 'dart:io';
 
-import 'package:easy_weight/utils/logger_instace.dart';
-import 'package:flutter/material.dart';
+
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:intl/intl.dart';
-import 'package:easy_weight/models/button_mode.dart';
+
 import 'package:easy_weight/models/records_model.dart';
 import 'package:easy_weight/models/weight_record.dart';
-import 'package:easy_weight/utils/format_date.dart';
+
 
 import 'package:provider/provider.dart';
 

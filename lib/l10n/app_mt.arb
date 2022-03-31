@@ -8,7 +8,7 @@
     "monthStat": "Xahar",
     "totalStat": "Total.",
     "goalWeight": "Għan",
-    "goalRemaining": "Fadal",
+    "goalRemaining": "Xellug",
     "addGoal": "Issettja mira",
     "addRecord": "Żid rekord",
     "weightHint": "Piż",
@@ -33,7 +33,12 @@
     "male": "Malli",
     "female": "Femminil",
     "nonBinary": "Mhux Binarju",
-    "transGender": "Transgender.",
+    "transGender": "Transgender",
     "interSex": "Intersex.",
-    "other": "Oħrajn"
+    "other": "Oħrajn",
+    "proOfferingDesc": "Profili bla limitu u l-ebda reklami",
+    "buy": "Buy.",
+    "purchaseError2": "Kien hemm problema bil-maħżen tal-logħob",
+    "purchaseError20": "Il-ħlas huwa pendenti.Jekk jogħġbok iċċekkja l-kont tal-maħżen tal-logħob tiegħek",
+    "purchaseSuccess": "Xiri ta 'suċċess"
 }

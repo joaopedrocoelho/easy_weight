@@ -1,5 +1,4 @@
 {
-    "@@locale": "hmn",
     "addCurrentWeight": "Ntxiv koj qhov nyhav tam sim no kom pib",
     "@addCurrentWeight": {
         "description": "When the user has no weight records."
@@ -9,7 +8,7 @@
     "monthStat": "Lub hlis",
     "totalStat": "Tag nrho",
     "goalWeight": "Lub hom phiaj",
-    "goalRemaining": "Tseg",
+    "goalRemaining": "Sab laug",
     "addGoal": "Teeb lub hom phiaj",
     "addRecord": "Ntxiv cov ntaub ntawv",
     "weightHint": "Qho hnyav",
@@ -36,5 +35,10 @@
     "nonBinary": "Tsis binary",
     "transGender": "Kev hloov tsheb",
     "interSex": "Ncauj lus",
-    "other": "Lwm"
+    "other": "Lwm",
+    "proOfferingDesc": "Unlimited profiles thiab tsis muaj kev tshaj tawm",
+    "buy": "yuav",
+    "purchaseError2": "Muaj teeb meem nrog lub khw muag khoom",
+    "purchaseError20": "Cov nyiaj them yog tseem tos.Thov txheeb xyuas koj tus lej ua si",
+    "purchaseSuccess": "Yuav khoom ua tiav"
 }

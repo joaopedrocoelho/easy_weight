@@ -1,10 +1,9 @@
-import 'package:flutter/material.dart';
-import 'dart:math';
+
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:easy_weight/models/goal_model.dart';
 import 'package:easy_weight/models/records_model.dart';
 import 'package:easy_weight/models/weight_record.dart';
-import 'package:easy_weight/utils/format_weight.dart';
+
 import 'package:easy_weight/utils/render_stats.dart';
 import 'package:easy_weight/widgets/goal/progress_circle/inner_wheel.dart';
 import 'package:easy_weight/widgets/goal/progress_circle/progress_painter.dart';

@@ -84,7 +84,7 @@ class _EditGoalState extends State<EditGoal>
     return Consumer2<GoalModel, WeightUnit>(
         builder: (context, goalModel, unit, child) {
       FocusScopeNode currentFocus = FocusScope.of(context);
-      final theme = NeumorphicTheme.of(context);
+      //final theme = NeumorphicTheme.of(context);
 
       return SlideTransition(
           position: Tween<Offset>(

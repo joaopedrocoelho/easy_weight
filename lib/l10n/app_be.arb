@@ -8,7 +8,7 @@
     "monthStat": "Месяц",
     "totalStat": "Агульны",
     "goalWeight": "Вароты",
-    "goalRemaining": "Што застаецца",
+    "goalRemaining": "Левы",
     "addGoal": "Усталюйце мэта",
     "addRecord": "Дадаць запіс",
     "weightHint": "Вага",
@@ -35,5 +35,10 @@
     "nonBinary": "Не двайковы",
     "transGender": "Пераездраўноўваць",
     "interSex": "Паўсіўны",
-    "other": "Іншы"
+    "other": "Іншы",
+    "proOfferingDesc": "Неабмежаваныя профілі і без рэкламы",
+    "buy": "купляць",
+    "purchaseError2": "Быў праблема з Play Store",
+    "purchaseError20": "Аплата знаходзіцца на разглядзе.Калі ласка, праверце рахунак Play Store",
+    "purchaseSuccess": "Купля паспяховай"
 }

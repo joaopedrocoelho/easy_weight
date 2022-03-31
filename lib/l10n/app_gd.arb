@@ -8,7 +8,7 @@
     "monthStat": "Mìos",
     "totalStat": "Iomlan",
     "goalWeight": "Amas",
-    "goalRemaining": "Air fhàgail",
+    "goalRemaining": "Clì",
     "addGoal": "Suidhich amas",
     "addRecord": "Cuir clàr ris",
     "weightHint": "Cuideam",
@@ -35,5 +35,10 @@
     "nonBinary": "Neo-bhuineach",
     "transGender": "Tar-ghnèitheach",
     "interSex": "Interx",
-    "other": "Eile"
+    "other": "Eile",
+    "proOfferingDesc": "Pròifilean gun chrìoch agus chan eil sanasan ann",
+    "buy": "ceannaich",
+    "purchaseError2": "Bha duilgheadas ann leis a 'bhùth-chluich",
+    "purchaseError20": "Tha am pàigheadh ri thighinn.Feuch an toir thu sùil air a 'chunntas Play agad",
+    "purchaseSuccess": "Ceannach soirbheachail"
 }

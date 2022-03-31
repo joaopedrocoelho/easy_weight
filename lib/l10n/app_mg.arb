@@ -8,7 +8,7 @@
     "monthStat": "VOLANA",
     "totalStat": "sokajy",
     "goalWeight": "tanjona",
-    "goalRemaining": "sisa tavela",
+    "goalRemaining": "ANKA",
     "addGoal": "Mametraha tanjona",
     "addRecord": "Asio rakitsoratra",
     "weightHint": "Lanja",
@@ -35,5 +35,10 @@
     "nonBinary": "Non binary",
     "transGender": "Transgender",
     "interSex": "Intersex",
-    "other": "Hafa"
+    "other": "Hafa",
+    "proOfferingDesc": "Ny mombamomba tsy manam-petra ary tsy misy doka",
+    "buy": "Buy",
+    "purchaseError2": "Nisy olana tamin'ny fivarotana Play",
+    "purchaseError20": "Miandry ny fandoavam-bola.Azafady mba jereo ny kaontinao Play Store",
+    "purchaseSuccess": "Fividianana mahomby"
 }

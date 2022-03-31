@@ -8,7 +8,7 @@
     "monthStat": "Marama",
     "totalStat": "Pupūtanga",
     "goalWeight": "Whāinga",
-    "goalRemaining": "Toe",
+    "goalRemaining": "Mauī",
     "addGoal": "Whakaritea he whaainga",
     "addRecord": "Tāpirihia he rekoata",
     "weightHint": "Taumaha",
@@ -35,5 +35,10 @@
     "nonBinary": "Kore-rua",
     "transGender": "Transgender",
     "interSex": "Pāhekoheko",
-    "other": "Ētahi atu"
+    "other": "Ētahi atu",
+    "proOfferingDesc": "He Kōwhiringa Koreutu me te Kore Ads",
+    "buy": "hoko",
+    "purchaseError2": "He raru kei te toa takaro",
+    "purchaseError20": "Kei te tatari te utu.Tena tirohia to putea Toa Toa",
+    "purchaseSuccess": "Te hoko angitu"
 }

@@ -8,7 +8,7 @@
     "monthStat": "Wata",
     "totalStat": "Duka",
     "goalWeight": "Gol",
-    "goalRemaining": "M",
+    "goalRemaining": "Na hagu",
     "addGoal": "Sanya manufa",
     "addRecord": "Sanya rikodin",
     "weightHint": "Nauyi",
@@ -35,5 +35,10 @@
     "nonBinary": "Non kerary",
     "transGender": "Transgender",
     "interSex": "Rarraba",
-    "other": "Wani dabam"
+    "other": "Wani dabam",
+    "proOfferingDesc": "Bayanan bayanan marasa iyaka kuma ba talla ba",
+    "buy": "saya",
+    "purchaseError2": "Akwai matsala tare da Store Store",
+    "purchaseError20": "Biyan yana jiran aiki.Da fatan za a duba asusunka na Play Store",
+    "purchaseSuccess": "Siyan nasara"
 }

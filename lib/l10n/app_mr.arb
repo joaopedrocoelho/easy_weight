@@ -8,7 +8,7 @@
     "monthStat": "महिना",
     "totalStat": "एकूण",
     "goalWeight": "लक्ष्य",
-    "goalRemaining": "उर्वरित",
+    "goalRemaining": "डावीकडे",
     "addGoal": "एक ध्येय सेट करा",
     "addRecord": "एक रेकॉर्ड जोडा",
     "weightHint": "वजन",
@@ -35,5 +35,10 @@
     "nonBinary": "नॉन बायरी",
     "transGender": "ट्रान्स्जेंडर",
     "interSex": "Intersex.",
-    "other": "इतर"
+    "other": "इतर",
+    "proOfferingDesc": "अमर्यादित प्रोफाइल आणि कोणतेही जाहिराती",
+    "buy": "खरेदी",
+    "purchaseError2": "Play Store सह समस्या आली",
+    "purchaseError20": "पेमेंट प्रलंबित आहे.कृपया आपला प्ले स्टोअर खाते तपासा",
+    "purchaseSuccess": "खरेदी यशस्वी"
 }

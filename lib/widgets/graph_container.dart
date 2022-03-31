@@ -8,7 +8,7 @@ import 'package:easy_weight/utils/render_graph.dart';
 
 import 'package:easy_weight/widgets/custom_graph/bottom_titles_row.dart';
 import 'package:easy_weight/widgets/custom_graph/gradient_fill.dart';
-import 'package:easy_weight/widgets/custom_graph/horizontal_lines.dart';
+
 import 'package:easy_weight/widgets/custom_graph/lines.dart';
 import 'package:easy_weight/widgets/custom_graph/side_titles.dart';
 import 'package:easy_weight/widgets/custom_graph/spots.dart';
@@ -76,8 +76,8 @@ class _GraphContainerState extends State<GraphContainer> {
     double minWeight = findMinWeight(widget.records);
     double maxWeight = findMaxWeight(widget.records);
     double range = maxWeight - minWeight;
-    int minWeightIndex = getMinWeightIndex(widget.records);
-    int maxWeightIndex = getMaxWeightIndex(widget.records);
+   /*  int minWeightIndex = getMinWeightIndex(widget.records);
+    int maxWeightIndex = getMaxWeightIndex(widget.records); */
     double maxDisplayedWeight = setMaxDisplayedWeight(range, maxWeight);
     double minDisplayedWeight =
         setMinDisplayedWeight(minWeight, maxDisplayedWeight);
@@ -99,8 +99,8 @@ class _GraphContainerState extends State<GraphContainer> {
         : scrollGraphToStart();
 
     //https://chezvoila.com/blog/yaxis/
-    double lowerThirdScale = (minWeight - minDisplayedWeight) /
-        (maxDisplayedWeight - minDisplayedWeight);
+  /*   double lowerThirdScale = (minWeight - minDisplayedWeight) /
+        (maxDisplayedWeight - minDisplayedWeight); */
 
     double bottomTitlesHeight = 30;
 
@@ -120,13 +120,13 @@ class _GraphContainerState extends State<GraphContainer> {
     List<DrawLines> graphLines = renderLines(
         graphHeight, MediaQuery.of(widget.context).size.width, spots);
 
-    List<DrawHorizontalLines> horizontalGuidelines = renderHorizontalLines(
+   /*  List<DrawHorizontalLines> horizontalGuidelines = renderHorizontalLines(
         graphWidth,
         graphHeight,
         paddingTop,
         maxDisplayedWeight,
         minDisplayedWeight,
-        sideTitleWeights);
+        sideTitleWeights); */
 
     List<GFCoordinates> gradientFillBelowGraphCoordinates =
         renderGradientFill(spots);

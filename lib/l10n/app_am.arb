@@ -8,7 +8,7 @@
     "monthStat": "ወር",
     "totalStat": "ጠቅላላ",
     "goalWeight": "ግብ",
-    "goalRemaining": "ቀሪ",
+    "goalRemaining": "ግራ",
     "addGoal": "ግብ ያዘጋጁ",
     "addRecord": "መዝገብ ያክሉ",
     "weightHint": "ክብደት",
@@ -35,5 +35,10 @@
     "nonBinary": "ሁለትዮሽ ያልሆነ",
     "transGender": "ሽግግር",
     "interSex": "ATRASEX",
-    "other": "ሌላ"
+    "other": "ሌላ",
+    "proOfferingDesc": "ያልተገደበ መገለጫዎች እና ማስታወቂያዎች የሉም",
+    "buy": "ግዛ",
+    "purchaseError2": "በ Play መደብር ውስጥ አንድ ችግር ነበር",
+    "purchaseError20": "ክፍያው በመጠባበቅ ላይ ነው.እባክዎ የ Play መደብር መለያዎን ያረጋግጡ",
+    "purchaseSuccess": "ስኬታማ ግ purchase"
 }

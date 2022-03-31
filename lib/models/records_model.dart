@@ -1,4 +1,4 @@
-import 'package:easy_weight/utils/logger_instace.dart';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:easy_weight/models/weight_record.dart';

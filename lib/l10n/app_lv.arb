@@ -8,7 +8,7 @@
     "monthStat": "Mēnesis",
     "totalStat": "Kopā",
     "goalWeight": "Mērķis",
-    "goalRemaining": "Atlikušais",
+    "goalRemaining": "Pa kreisi",
     "addGoal": "Noteikt mērķi",
     "addRecord": "Pievienojiet ierakstu",
     "weightHint": "Svars",
@@ -35,5 +35,10 @@
     "nonBinary": "Bez bināriem",
     "transGender": "Transseksisma",
     "interSex": "Starpsavienojums",
-    "other": "Citi"
+    "other": "Citi",
+    "proOfferingDesc": "Neierobežoti profili un nav reklāmas",
+    "buy": "pirkt",
+    "purchaseError2": "Bija problēma ar Play veikalu",
+    "purchaseError20": "Maksājums tiek izskatīts.Lūdzu, pārbaudiet atskaņošanas veikala kontu",
+    "purchaseSuccess": "Iegādāties veiksmīgu"
 }

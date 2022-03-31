@@ -8,7 +8,7 @@
     "monthStat": "ماه",
     "totalStat": "جمع",
     "goalWeight": "هدف",
-    "goalRemaining": "باقی مانده",
+    "goalRemaining": "ترک کرد",
     "addGoal": "یک هدف مشخص کن",
     "addRecord": "یک رکورد اضافه کنید",
     "weightHint": "وزن",
@@ -23,7 +23,7 @@
     "height": "ارتفاع",
     "birthday": "روز تولد",
     "color": "رنگ",
-    "pickColor": "یک رنگ انتخاب کن",
+    "pickColor": "یک رنگ انتخاب کنید",
     "addProfile": "یک نمایه اضافه کنید",
     "nameError": "لطفا نام را وارد کنید",
     "nameHint": "نام",
@@ -35,5 +35,10 @@
     "nonBinary": "غیر دودویی",
     "transGender": "تغییر جنسیت",
     "interSex": "intersex",
-    "other": "دیگر"
+    "other": "دیگر",
+    "proOfferingDesc": "پروفایل های نامحدود و بدون تبلیغات",
+    "buy": "خرید",
+    "purchaseError2": "مشکلی با فروشگاه Play وجود داشت",
+    "purchaseError20": "پرداخت در انتظار استلطفا حساب Play Store خود را بررسی کنید",
+    "purchaseSuccess": "خرید موفق"
 }

@@ -8,7 +8,7 @@
     "monthStat": "Mese",
     "totalStat": "Totale",
     "goalWeight": "Obbiettivo",
-    "goalRemaining": "Residuo",
+    "goalRemaining": "Sinistra",
     "addGoal": "Stabilire un obiettivo",
     "addRecord": "Aggiungi un record.",
     "weightHint": "Peso",
@@ -35,5 +35,10 @@
     "nonBinary": "Non binario",
     "transGender": "Transgender.",
     "interSex": "Intersex.",
-    "other": "Altro"
+    "other": "Altro",
+    "proOfferingDesc": "Profili illimitati e nessun annuncio",
+    "buy": "acquistare",
+    "purchaseError2": "C'era un problema con il negozio di gioco",
+    "purchaseError20": "Il pagamento è in sospeso.Si prega di controllare il tuo account Play Store",
+    "purchaseSuccess": "Acquistare successo"
 }

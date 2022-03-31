@@ -8,7 +8,7 @@
     "monthStat": "ខេ",
     "totalStat": "បុកសរុប",
     "goalWeight": "ល្បេងកុនកោល",
-    "goalRemaining": "ដេលសល់",
+    "goalRemaining": "ឆេវង",
     "addGoal": "កំណត់គោលដៅមួយ",
     "addRecord": "បន្ថែមកំណត់ត្រាមួយ",
     "weightHint": "តមងន់",
@@ -35,5 +35,10 @@
     "nonBinary": "មិនមានគោលពីរ",
     "transGender": "អ្នកដ្ឋាន",
     "interSex": "ប្រសព្វគ្នា",
-    "other": "ផ្សេងទៀត"
+    "other": "ផ្សេងទៀត",
+    "proOfferingDesc": "ទម្រង់គ្មានដែនកំណត់និងគ្មានការផ្សព្វផ្សាយពាណិជ្ជកម្ម",
+    "buy": "តិញ",
+    "purchaseError2": "មានបញ្ហាជាមួយហាងលេង",
+    "purchaseError20": "ការទូទាត់កំពុងរង់ចាំ។សូមពិនិត្យមើលគណនី Play Store របស់អ្នក",
+    "purchaseSuccess": "ទិញទទួលបានជោគជ័យ"
 }

@@ -8,7 +8,7 @@
     "monthStat": "ਮਹੀਨਾ",
     "totalStat": "ਕੁੱਲ",
     "goalWeight": "ਟੀਚਾ",
-    "goalRemaining": "ਬਾਕੀ",
+    "goalRemaining": "ਖੱਬੇ",
     "addGoal": "ਇੱਕ ਟੀਚਾ ਨਿਰਧਾਰਤ ਕਰੋ",
     "addRecord": "ਇੱਕ ਰਿਕਾਰਡ ਸ਼ਾਮਲ ਕਰੋ",
     "weightHint": "ਭਾਰ",
@@ -20,7 +20,7 @@
     "profiles": "ਪਰੋਫਾਈਲ",
     "noName": "ਕੋਈ ਨਾਮ ਨਹੀਂ",
     "gender": "ਲਿੰਗ",
-    "height": "ਕੱਦ",
+    "height": "ਉਚਾਈ",
     "birthday": "ਜਨਮਦਿਨ",
     "color": "ਰੰਗ",
     "pickColor": "ਰੰਗ ਚੁਣੋ",
@@ -35,5 +35,10 @@
     "nonBinary": "ਗੈਰ ਬਾਈਨਰੀ",
     "transGender": "ਟ੍ਰਾਂਸਜੈਂਡਰ",
     "interSex": "ਇਨਸੈਕਸੈਕਸ",
-    "other": "ਹੋਰ"
+    "other": "ਹੋਰ",
+    "proOfferingDesc": "ਅਸੀਮਤ ਪ੍ਰੋਫਾਈਲਾਂ ਅਤੇ ਕੋਈ ਇਸ਼ਤਿਹਾਰ ਨਹੀਂ",
+    "buy": "ਖਰੀਦੋ",
+    "purchaseError2": "ਪਲੇ ਸਟੋਰ ਨਾਲ ਸਮੱਸਿਆ ਆਈ",
+    "purchaseError20": "ਭੁਗਤਾਨ ਬਕਾਇਆ ਹੈ.ਕਿਰਪਾ ਕਰਕੇ ਆਪਣੇ ਪਲੇ ਸਟੋਰ ਖਾਤੇ ਦੀ ਜਾਂਚ ਕਰੋ",
+    "purchaseSuccess": "ਖਰੀਦ ਸਫਲਤਾਪੂਰਵਕ"
 }

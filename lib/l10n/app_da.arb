@@ -6,9 +6,9 @@
     "currentWeight": "Nuværende",
     "weekStat": "Uge",
     "monthStat": "Måned",
-    "totalStat": "i alt",
+    "totalStat": "Total",
     "goalWeight": "Mål",
-    "goalRemaining": "Resterende",
+    "goalRemaining": "Venstre",
     "addGoal": "Sætte et mål",
     "addRecord": "Tilføj en post",
     "weightHint": "Vægt",
@@ -35,5 +35,10 @@
     "nonBinary": "Ikke-binær.",
     "transGender": "Transgender",
     "interSex": "Intersex.",
-    "other": "Andet"
+    "other": "Andet",
+    "proOfferingDesc": "Ubegrænset profiler og ingen annoncer",
+    "buy": "købe",
+    "purchaseError2": "Der var et problem med Play Store",
+    "purchaseError20": "Betalingen afventer.Tjek venligst din Play Store-konto",
+    "purchaseSuccess": "Køb succes"
 }

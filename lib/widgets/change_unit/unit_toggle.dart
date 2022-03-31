@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+//import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:easy_weight/models/weight_unit.dart';
 import 'package:provider/provider.dart';
@@ -14,7 +14,7 @@ class _UnitToggleState extends State<UnitToggle> {
   late int _selectedIndex;
   @override
   void initState() {
-    // TODO: implement initState
+    
 
     Provider.of<WeightUnit>(context, listen: false).usePounds ? _selectedIndex = 1 : _selectedIndex = 0;
     super.initState();

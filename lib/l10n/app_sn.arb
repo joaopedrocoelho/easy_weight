@@ -8,7 +8,7 @@
     "monthStat": "Mwedzi",
     "totalStat": "Zvese",
     "goalWeight": "Chinangwa",
-    "goalRemaining": "Kusara",
+    "goalRemaining": "Ruboshwe",
     "addGoal": "Gadza Chinangwa",
     "addRecord": "Wedzera rekodhi",
     "weightHint": "Uremu",
@@ -35,5 +35,10 @@
     "nonBinary": "Usiri binary",
     "transGender": "Transgender",
     "interSex": "IntersEx",
-    "other": "Zvimwe"
+    "other": "Zvimwe",
+    "proOfferingDesc": "Unlimited profiles uye hapana kushambadza",
+    "buy": "tenga",
+    "purchaseError2": "Paive nechinetso nechitoro chekutamba",
+    "purchaseError20": "Kubhadhara kuri kumirira.Ndokumbira utarise yako yekutamba yechitoro account",
+    "purchaseSuccess": "Kutenga Kubudirira"
 }

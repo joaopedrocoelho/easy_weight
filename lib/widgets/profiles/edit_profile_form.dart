@@ -198,7 +198,7 @@ class _EditProfileState extends State<EditProfile>
 
   @override
   Widget build(BuildContext context) {
-    final theme = NeumorphicTheme.currentTheme(context);
+    //final theme = NeumorphicTheme.currentTheme(context);
 
 
     late final Animation<Offset> _offsetAnimation = Tween<Offset>(

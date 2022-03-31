@@ -8,7 +8,7 @@
     "monthStat": "Сар",
     "totalStat": "Нийт",
     "goalWeight": "Зорилго",
-    "goalRemaining": "Үлдсэн",
+    "goalRemaining": "Зүүн",
     "addGoal": "Зорилгоо тавь",
     "addRecord": "Бичлэг битгий нэмж өгөх",
     "weightHint": "Жин",
@@ -35,5 +35,10 @@
     "nonBinary": "Дүрэмгүй",
     "transGender": "Транж үйлдвэр",
     "interSex": "Цэгт",
-    "other": "Бусад"
+    "other": "Бусад",
+    "proOfferingDesc": "Хязгааргүй профайл, зар сурталчилгаагүй",
+    "buy": "худалдан авах",
+    "purchaseError2": "Тоглоомын дэлгүүрт асуудал гарсан",
+    "purchaseError20": "Төлбөр хүлээгдэж байна.Тоглоомын дэлгүүрийн дансаа шалгана уу",
+    "purchaseSuccess": "Худалдан авалт амжилттай болсон"
 }

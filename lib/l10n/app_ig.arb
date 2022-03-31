@@ -8,7 +8,7 @@
     "monthStat": "Otu onwa n'ime ato",
     "totalStat": "Kemgbakota",
     "goalWeight": "Ebumnobi",
-    "goalRemaining": "Nke foduru",
+    "goalRemaining": "Keekpe",
     "addGoal": "Setịpụ ihe mgbaru ọsọ",
     "addRecord": "Tinye ndekọ",
     "weightHint": "Aro",
@@ -35,5 +35,10 @@
     "nonBinary": "Ọnụọgụ abụọ",
     "transGender": "Transgender",
     "interSex": "Internet",
-    "other": "Nke ozo"
+    "other": "Nke ozo",
+    "proOfferingDesc": "Profaịlụ na-akparaghị ókè na enweghị mgbasa ozi",
+    "buy": "izu",
+    "purchaseError2": "Enwere nsogbu na Storelọ Ahịa Play",
+    "purchaseError20": "Ịkwụ ụgwọ ahụ na-eche.Biko lelee akaụntụ ụlọ ahịa gị",
+    "purchaseSuccess": "Zụta nke ọma"
 }

@@ -8,7 +8,7 @@
     "monthStat": "Wulan",
     "totalStat": "Total",
     "goalWeight": "Gol",
-    "goalRemaining": "Isih",
+    "goalRemaining": "Kiwa",
     "addGoal": "Setel target",
     "addRecord": "Tambah rekaman",
     "weightHint": "Bobot",
@@ -35,5 +35,10 @@
     "nonBinary": "Non binar",
     "transGender": "Transgender",
     "interSex": "Intersex",
-    "other": "Liyane"
+    "other": "Liyane",
+    "proOfferingDesc": "Profil tanpa wates lan ora ana iklan",
+    "buy": "Tuku",
+    "purchaseError2": "Ana masalah karo Play Store",
+    "purchaseError20": "Pembayaran kasebut ditundha.Mangga priksa akun Play Store sampeyan",
+    "purchaseSuccess": "Tuku sukses"
 }

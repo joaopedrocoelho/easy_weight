@@ -8,21 +8,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:easy_weight/main.dart';
-
 void main() {
   testWidgets('check color', (WidgetTester tester) async {
-      String dbColor = 'MaterialColor(primary value: Color(0xfff44336))';
+    String dbColor = 'MaterialColor(primary value: Color(0xfff44336))';
 
-      Color getColor(String colorFromDB) {
-  RegExp getColorvalue = RegExp(r'(?<=MaterialColor\(primary value: Color\()[\w\d]*');
-  String color = getColorvalue.stringMatch(colorFromDB).toString();
+    Color getColor(String colorFromDB) {
+      RegExp getColorvalue =
+          RegExp(r'(?<=MaterialColor\(primary value: Color\()[\w\d]*');
+      String color = getColorvalue.stringMatch(colorFromDB).toString();
 
-  return Color(int.parse(color));
-}
+      return Color(int.parse(color));
+    }
 
-      Color color = getColor(dbColor);
-      expect(color, Color(0xfff44336));
-  
+    Color color = getColor(dbColor);
+    expect(color, Color(0xfff44336));
   });
 }

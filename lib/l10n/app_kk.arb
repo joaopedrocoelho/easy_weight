@@ -8,7 +8,7 @@
     "monthStat": "Ай",
     "totalStat": "Жалпы",
     "goalWeight": "Нысана",
-    "goalRemaining": "Қалған",
+    "goalRemaining": "Сол",
     "addGoal": "Мақсат қойыңыз",
     "addRecord": "Жазбаны қосыңыз",
     "weightHint": "Салмақ",
@@ -35,5 +35,10 @@
     "nonBinary": "Екілік емес",
     "transGender": "Трансгендер",
     "interSex": "Интересекс",
-    "other": "Өзге"
+    "other": "Өзге",
+    "proOfferingDesc": "Шексіз профильдер және жарнамалар жоқ",
+    "buy": "сатып алу",
+    "purchaseError2": "Play дүкенінде проблема болды",
+    "purchaseError20": "Төлем қаралуда.Ойнату дүкенінің тіркелгісін тексеріңіз",
+    "purchaseSuccess": "Сатып алу сәтті"
 }

@@ -8,7 +8,7 @@
     "monthStat": "Mesiac",
     "totalStat": "Celkom",
     "goalWeight": "Cieľ",
-    "goalRemaining": "Zostávajúci",
+    "goalRemaining": "Vľavo",
     "addGoal": "Dať gól",
     "addRecord": "Pridajte záznam",
     "weightHint": "Hmotnosť",
@@ -35,5 +35,10 @@
     "nonBinary": "Binárny",
     "transGender": "Transsex",
     "interSex": "Intersex",
-    "other": "Druhý"
+    "other": "Druhý",
+    "proOfferingDesc": "Neobmedzené profily a žiadne reklamy",
+    "buy": "kúpiť",
+    "purchaseError2": "Tam bol problém s obchodom",
+    "purchaseError20": "Platba prebieha.Skontrolujte účet hry Play Store",
+    "purchaseSuccess": "Úspešný"
 }

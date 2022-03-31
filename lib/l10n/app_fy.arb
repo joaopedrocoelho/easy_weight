@@ -8,7 +8,7 @@
     "monthStat": "Moanne",
     "totalStat": "Folslein",
     "goalWeight": "Doelpunt",
-    "goalRemaining": "Bliuwend",
+    "goalRemaining": "Links",
     "addGoal": "Stel in doel yn",
     "addRecord": "Foegje in record ta",
     "weightHint": "Gewicht",
@@ -35,5 +35,10 @@
     "nonBinary": "Net binaire",
     "transGender": "Transgender",
     "interSex": "Intersex",
-    "other": "Oar"
+    "other": "Oar",
+    "proOfferingDesc": "Unbeheind profilen en gjin advertinsjes",
+    "buy": "keapje",
+    "purchaseError2": "D'r wie in probleem mei de Play Store",
+    "purchaseError20": "De betelling is yn ôfwachting.Kontrolearje asjebleaft jo Play Store-akkount",
+    "purchaseSuccess": "Keapje suksesfol"
 }

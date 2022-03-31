@@ -8,7 +8,7 @@
     "monthStat": "ತಿಂಗಳು",
     "totalStat": "ಒಟ್ಟು",
     "goalWeight": "ಗುರಿ",
-    "goalRemaining": "ಉಳಿದ",
+    "goalRemaining": "ಎಡ",
     "addGoal": "ಒಂದು ಗುರಿಯನ್ನು ಹೊಂದಿಸಿ",
     "addRecord": "ದಾಖಲೆಯನ್ನು ಸೇರಿಸಿ",
     "weightHint": "ತೂಕ",
@@ -35,5 +35,10 @@
     "nonBinary": "ನಾನ್ ಬೈನರಿ",
     "transGender": "ಮಂಗಳಮುಖಿ",
     "interSex": "ಅಂತರ",
-    "other": "ಇತರೆ"
+    "other": "ಇತರೆ",
+    "proOfferingDesc": "ಅನ್ಲಿಮಿಟೆಡ್ ಪ್ರೊಫೈಲ್ಗಳು ಮತ್ತು ಜಾಹೀರಾತುಗಳು ಇಲ್ಲ",
+    "buy": "ಖರೀದಿಸು",
+    "purchaseError2": "ಪ್ಲೇ ಸ್ಟೋರ್ನಲ್ಲಿ ಸಮಸ್ಯೆ ಕಂಡುಬಂದಿದೆ",
+    "purchaseError20": "ಪಾವತಿ ಬಾಕಿ ಉಳಿದಿದೆ.ದಯವಿಟ್ಟು ನಿಮ್ಮ ಪ್ಲೇ ಸ್ಟೋರ್ ಖಾತೆಯನ್ನು ಪರಿಶೀಲಿಸಿ",
+    "purchaseSuccess": "ಖರೀದಿ ಯಶಸ್ವಿಯಾಗಿದೆ"
 }

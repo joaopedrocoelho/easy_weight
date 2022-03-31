@@ -8,14 +8,14 @@
     "monthStat": "თვე",
     "totalStat": "მთელი",
     "goalWeight": "გოლი",
-    "goalRemaining": "ნარჩენი",
+    "goalRemaining": "მარცხენა",
     "addGoal": "მითითებული მიზანი",
     "addRecord": "ჩანაწერის დამატება",
     "weightHint": "წონა",
     "weightError": "გთხოვთ წონაში",
     "noteHint": "შენიშვნა",
     "cancelBtn": "გაუქმება",
-    "saveBtn": "Შენახვა",
+    "saveBtn": "Გადარჩენა",
     "editRecord": "ჩანაწერის რედაქტირება",
     "profiles": "პროფილები",
     "noName": "Სახელის გარეშე",
@@ -35,5 +35,10 @@
     "nonBinary": "არა ორობითი",
     "transGender": "Ტრანსგენდერი",
     "interSex": "ინტერნისტ",
-    "other": "სხვა"
+    "other": "სხვა",
+    "proOfferingDesc": "შეუზღუდავი პროფილები და რეკლამები",
+    "buy": "ყიდვა",
+    "purchaseError2": "იყო პრობლემა Play Store- თან",
+    "purchaseError20": "გადახდა მიმდინარეობს.გთხოვთ, შეამოწმოთ თქვენი Play Store ანგარიში",
+    "purchaseSuccess": "შეძენა წარმატებული"
 }

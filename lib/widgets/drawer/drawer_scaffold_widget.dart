@@ -1,6 +1,7 @@
 import 'package:easy_weight/models/ad_state.dart';
 import 'package:easy_weight/models/button_mode.dart';
 import 'package:easy_weight/models/goal_model.dart';
+import 'package:easy_weight/models/offerings.dart';
 
 import 'package:easy_weight/models/profiles_list_model.dart';
 import 'package:easy_weight/models/records_model.dart';
@@ -8,6 +9,8 @@ import 'package:easy_weight/models/user_settings.dart';
 import 'package:easy_weight/models/weight_record.dart';
 import 'package:easy_weight/utils/database.dart';
 import 'package:easy_weight/widgets/buttons/menu_button.dart';
+import 'package:easy_weight/widgets/buy_pro_dialog/buy_pro_dialog.dart';
+import 'package:easy_weight/widgets/buy_pro_dialog/error_dialog.dart';
 import 'package:easy_weight/widgets/change_unit/unit_toggle.dart';
 
 import 'package:easy_weight/widgets/profiles/add_profile_form.dart';
@@ -33,7 +36,7 @@ class _DrawerScaffoldWidgetState extends State<DrawerScaffoldWidget>
 
   @override
   void didChangeDependencies() {
-    // TODO: implement didChangeDependencies
+
     super.didChangeDependencies();
     final adState = Provider.of<AdState>(context);
     adState.initialization.then((status) {
@@ -51,7 +54,7 @@ class _DrawerScaffoldWidgetState extends State<DrawerScaffoldWidget>
 
   @override
   void initState() {
-    // TODO: implement initState
+   
     _addProfileFormController =
         AnimationController(vsync: this, duration: Duration(milliseconds: 300));
     super.initState();
@@ -71,13 +74,13 @@ class _DrawerScaffoldWidgetState extends State<DrawerScaffoldWidget>
   Widget build(BuildContext context) {
     var theme = NeumorphicTheme.currentTheme(context);
 
-    return Consumer<ProfilesListModel>(builder: (context, profilesList, child) {
+    return Consumer2<ProfilesListModel, UserOfferings>(builder: (context, profilesList, userOfferings, child) {
       return Scaffold(
         body: SafeArea(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              if (adWidget != null) adWidget!,
+              if (adWidget != null && !userOfferings.isPro) adWidget!,
               Flexible(
                 flex: 1,
                 child: Padding(
@@ -90,6 +93,18 @@ class _DrawerScaffoldWidgetState extends State<DrawerScaffoldWidget>
                           style: theme.textTheme.headline4),
                       NeumorphicButton(
                           onPressed: () {
+                          if(userOfferings.isPro != true && profilesList.profiles.length >= 2) {
+                            //show Purchase dialog
+                            showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return Scaffold(
+                                    backgroundColor: Colors.transparent,
+                                    body: userOfferings.hasError ? ErrorDialog() : BuyProDialog(),
+                                  );
+                                });
+
+                          } else {
                             showDialog(
                                 context: context,
                                 builder: (context) {
@@ -99,7 +114,7 @@ class _DrawerScaffoldWidgetState extends State<DrawerScaffoldWidget>
                                   );
                                 });
 
-                            _addProfileFormController.forward();
+                          }
                           },
                           style: NeumorphicStyle(
                             color: theme.baseColor,

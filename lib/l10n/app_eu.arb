@@ -8,7 +8,7 @@
     "monthStat": "Hil",
     "totalStat": "Guztizko",
     "goalWeight": "Ate",
-    "goalRemaining": "Enparatu",
+    "goalRemaining": "Ezker",
     "addGoal": "Ezarri gol bat",
     "addRecord": "Grabatu erregistroa",
     "weightHint": "Pisu",
@@ -35,5 +35,10 @@
     "nonBinary": "Binary ez",
     "transGender": "Errekunde",
     "interSex": "Terantaje",
-    "other": "Beste"
+    "other": "Beste",
+    "proOfferingDesc": "Profil mugagabeak eta iragarkirik ez",
+    "buy": "erosi",
+    "purchaseError2": "Arazo bat zegoen Play dendarekin",
+    "purchaseError20": "Ordainketa zain dago.Mesedez, egiaztatu zure erreprodukzio-kontua",
+    "purchaseSuccess": "Erosketa arrakastatsua"
 }
