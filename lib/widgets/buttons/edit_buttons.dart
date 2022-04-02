@@ -18,27 +18,12 @@ class EditButtons extends StatefulWidget {
 }
 
 class _EditButtonsState extends State<EditButtons> {
-  /* bool _editVisibility = false; */
+
 
   Future deleteRecordFromDB(WeightRecord deletedRecord) async {
     await RecordsDatabase.instance.deleteRecord(deletedRecord);
   }
 
-  /* void _setEditVisible() {
-    Future.delayed(Duration(milliseconds: 100), () {
-      setState(() {
-        _editVisibility = true;
-      });
-    });
-  }
-
-  void _setEditInVisible() {
-    Future.delayed(Duration(milliseconds: 100), () {
-      setState(() {
-        _editVisibility = false;
-      });
-    });
-  } */
 
   @override
   Widget build(BuildContext context) {

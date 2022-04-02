@@ -92,7 +92,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                     note: context.watch<ButtonMode>().note,
                     records: records,
                   ),
-                  resizeToAvoidBottomInset: false,
+                  
                 );
               });
         } else {
@@ -100,7 +100,6 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
               context: context,
               builder: (context) {
                 return Scaffold(
-                   resizeToAvoidBottomInset: false,
                   backgroundColor: Colors.transparent,
                   body: AddRecord(
                     records: records,
@@ -146,7 +145,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                   context: context,
                                   builder: (context) {
                                     return Scaffold(
-                                       resizeToAvoidBottomInset: false,
+                                      
                                       backgroundColor: Colors.transparent,
                                       body: EditGoal(
                                         profileId:
