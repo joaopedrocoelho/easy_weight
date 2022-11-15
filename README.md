@@ -1,6 +1,15 @@
-# easy_weight
+# EZ Weight Tracker
 
-A new Flutter project.
+A simple weight tracking app built with Flutter. Download it for Android [here](https://play.google.com/store/apps/details?id=com.astrobeats.easyWeightTracker)
+
+https://youtu.be/xSkzhx5N-gc
+|![image](https://user-images.githubusercontent.com/65225269/201841123-067587e4-1180-4a20-8edc-56a295bf5776.png)|![image](https://user-images.githubusercontent.com/65225269/201841216-e5b88f63-0029-467a-b927-dfa4ec2fb33c.png)|![image](https://user-images.githubusercontent.com/65225269/201841255-19c59d8e-9ac7-4dd8-aca2-fcdffaf9476c.png)|
+|---|---|---|
+
+
+
+
+
 
 ## Getting Started
 
